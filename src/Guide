@@ -1,0 +1,61 @@
+sgdrhgdthsth
+srgzdsg
+
+Example
+echo "hello world" >> text | wc -l | cat  -> [cmdgroup[0], cmdgroup[1], cmdgroup[3]]
+
+struct cmdgroup
+args
+rdr
+t_cmdgroup
+
+// Item 0
+cmdgroup[0].args = (char **)[echo, hello world]
+cmdgroup[0].rdr = APPEND;
+cmdgroup[0].rdr_filename = "text";
+
+// Item 1
+cmdgroup[1].args = (char **)[wc, -l]
+cmdgroup[1].rdr = NULL;
+cmdgroup[1].rdr_filename = NULL;
+
+// Item 2
+cmdgroup[2].args = (char **)[cat]
+cmdgroup[2].rdr = NULL;
+cmdgroup[2].rdr_filename = NULL;
+
+// Item 3
+cmdgroup[3].args = (char **)[NULL]
+cmdgroup[3].rdr = NULL;
+cmdgroup[3].rdr_filename = NULL;
+OR
+
+					pipe
+				 /		\
+				/		 \
+			   /		 cat
+			pipe
+		 /			\
+		/			 \
+echo, hello world 		wc, -l
+
+exceve(path, "wc, -l", NULL)
+
+>> > < << 
+
+|
+
+serrsththr\0|\0wegergergrteh\0|\0rsgesfgsef\0|\0dfgerg
+
+echo
+else
+error
+
+
+Quotes
+
+"testing'this"		>   testing'this\n\0
+"testing'this"and'
+this'				>   testing'this\nthis\n\0
+"testing'this"and'
+>this'				>   testing'this\n\nthis\n\0
