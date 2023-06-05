@@ -1,6 +1,3 @@
-sgdrhgdthsth
-srgzdsg
-
 Example
 echo "hello world" >> text | wc -l | cat  -> [cmdgroup[0], cmdgroup[1], cmdgroup[3]]
 
@@ -9,10 +6,21 @@ args
 rdr
 t_cmdgroup
 
+Test Command
+echo asef | areg | esrg\0		argc = 6	echo,asef,|,areg,|,esrg
+"echo asef | areg" | esrg\0		argc = 3	"echo asef | areg",|,esrg
+echo asef | "areg | esrg"\0		argc = 4	echo,asef,|,"areg,|,esrg"
+echo"test" | wc -l				argc = 4	echo"test",|,wc,-l	
+"echo"							argc = 1	"echo"
+"echo"'echo'					argc = 1	"echo"'echo'
+"echo""echo"					argc = 1	"echo""echo"
+"echo"'echo' hello				argc = 2	"echo"'echo',hello
+
 // Item 0
-cmdgroup[0].args = (char **)[echo, hello world]
+cmdgroup[0].args = (char **)[echo, "hello' world"]
 cmdgroup[0].rdr = APPEND;
 cmdgroup[0].rdr_filename = "text";
+cmdgroup[0].pipes = "|"; yes or no?
 
 // Item 1
 cmdgroup[1].args = (char **)[wc, -l]
@@ -28,6 +36,8 @@ cmdgroup[2].rdr_filename = NULL;
 cmdgroup[3].args = (char **)[NULL]
 cmdgroup[3].rdr = NULL;
 cmdgroup[3].rdr_filename = NULL;
+
+
 OR
 
 					pipe
@@ -59,3 +69,10 @@ Quotes
 this'				>   testing'this\nthis\n\0
 "testing'this"and'
 >this'				>   testing'this\n\nthis\n\0
+
+echo "adfgaerg'
+> aerhergh" '
+> arwegseraebr'
+
+line = "adfgaerg'\naerhergh" '\narwegseraebr'\0
+line = adfgaerg'\naerhergh \narwegseraebr\0
