@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/05/31 12:01:29 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/06 10:48:25 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,16 @@ int	main(int argc, char **argv, char **env)
 			add_history(input);
 			printf("Input: %s\n", input);
 			// print_darray(env);
+			printf("Input if using ft_strtrim: %s$\n", ft_strtrim(input, " "));
 			input = reduce_white_spaces(input);
 			input = expand_operators(input);
-			// parse_cmds(input, cmdgroups);
-			// input = reduce_double_operators(input);
-			printf("Input After Expand: %s\n", input);
+			printf("Input After Expand: %s$\n", input);
+			parse_cmds(input, cmdgroups);
 		}
 	}
 }
 
+			// input = reduce_double_operators(input);
 	// char s[] = "lets do this! as sad ";
 	// char d[] = " ";
 
