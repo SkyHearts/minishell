@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/05/29 17:36:56 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/06 15:38:01 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,12 @@
 # define PIPE			'|'
 # define REDIRECT_LEFT	'<'
 # define REDIRECT_RIGHT	'>'
-# define APPEND_LEFT	"<<"
-# define APPEND_RIGHT	">>"
+
+/* Operators/Commands str */
+# define APD_LEFT	"<<"	//1
+# define APD_RIGHT	">>"	//2
+# define RDR_LEFT	"<"		//3
+# define RDR_RIGHT	">"		//4
 
 /* Quotes */
 # define SINGLE_QUOTE '\''
@@ -69,20 +73,32 @@ char	**dup_env(char **env);
 char	**extract_path(char **env_table);
 void	show_env(char **env_table);
 
-/*  */
+/* Input Manipulations */
 char	*expand_operators(char *s);
 char	*reduce_double_operators(char *s);
 int		ft_is_double_operator(char *s, int i);
 
+/* Utils */
+int	has_pipes(char **splitted);
+char **ft_append_2d(char **args, char *str);
+int	is_rdr(char *splitted);
+int	is_pipes(char *splitted);
+
+/* Parsing */
 /* quotes */
 char	*insert_line(char *input);
+int		if_quotes(char input);
 int		check_quotes(char *input);
 
 /* spaces */
 char	*reduce_white_spaces(char *s);
 void	exit_error(void);
 
+/* split */
+char	**ft_split_quoted(char *input, char delim);
+
 void parse_cmds(char *input, t_cmd *cmdgroups);
+void	print_darray(char **array);
 
 
 #endif
