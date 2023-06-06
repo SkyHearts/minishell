@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/05 18:03:38 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/06 15:45:06 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*insert_line(char *input)
 	return (new_input);
 }
 
-void	init_cmdgroups(char *input, t_cmd **cmdgroups)
+/* void	init_cmdgroupsv1(char *input, t_cmd **cmdgroups)
 {
 	int		i;
 	int		pipes;
@@ -88,16 +88,59 @@ void	init_cmdgroups(char *input, t_cmd **cmdgroups)
 	printf("Number of pipes: %d\n", pipes);
 	*cmdgroups = (t_cmd *)malloc (sizeof(t_cmd) * (pipes + 2));
 	(*cmdgroups)[pipes + 1].args = NULL;
+} */
+void	input_commands(char **splitted, t_cmd **cmdgroups)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	j = 0;
+	while (splitted[i])
+	{
+		if (is_rdr(splitted[i]))
+		{
+			(*cmdgroups)[j].rdr = is_rdr(splitted[i++]);
+			if (is_pipes(splitted[i]))
+				exit_error();
+			(*cmdgroups)[j].rdr_filename = ft_strdup(splitted[i]);
+			if (!is_pipes(splitted[i]))
+			{
+				j++;
+				continue;
+			}
+		}
+		(*cmdgroups)[j].args = ft_append_2d((*cmdgroups)[i].args, splitted[i]);
+	}
+}
+
+void	init_cmdgroupsv2(char **splitted, t_cmd **cmdgroups)
+{
+	int		i;
+	int		pipes;
+
+	i = 0;
+	pipes = has_pipes(splitted);
+	printf("Number of pipes: %d\n", pipes);
+	*cmdgroups = (t_cmd *)malloc (sizeof(t_cmd) * (pipes + 2));
+	while (i < (pipes + 2))
+	{
+		(*cmdgroups)[i].args = NULL;
+		(*cmdgroups)[i].rdr = NULL;
+		(*cmdgroups)[i].rdr_filename = NULL;
+	}
+	input_commands(splitted, cmdgroups);
 }
 
 void	parse_cmds(char *input, t_cmd *cmdgroups)
 {
 	char	**splitted;
+	
 
 	printf("Input before split: %s$\n", input);
 	splitted = ft_split_quoted(input, ' ');
 	int	k = -1;
 	while (splitted[++k])
 		printf("splitted %d: %s$\n", k, splitted[k]);
-	// init_cmdgroups(input, &cmdgroups);
+	init_cmdgroupsv2(splitted, &cmdgroups);
 }
