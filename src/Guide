@@ -1,3 +1,6 @@
+Current compiller
+gcc tokenize.c expander.c env.c parsing.c minishell.c ft_split_quote.c utils.c ../utils/libft/libft.a -fsanitize=address -g3 -lreadline && ./a.out
+
 Example
 echo "hello world" >> text | wc -l | cat  -> [cmdgroup[0], cmdgroup[1], cmdgroup[3]]
 
