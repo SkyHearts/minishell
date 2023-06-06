@@ -6,13 +6,13 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 09:01:37 by jyim              #+#    #+#             */
-/*   Updated: 2023/05/31 12:09:27 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/06 10:41:28 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-/* char	*ft_strpbrk(const char *s1, const char *s2)
+char	*ft_strpbrk(const char *s1, const char *s2)
 {
 	int	i;
 	int	j;
@@ -107,7 +107,7 @@ char	*argv_to_str(char **argv)
 	}
 	// printf("%s\n", str_pile);
 	return (str_pile);
-} */
+}
 
 char	*reduce_white_spaces(char *s)
 {
