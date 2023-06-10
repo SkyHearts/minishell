@@ -31,12 +31,10 @@ ${NAME}:	${PRINT_DIR}/${PRINT_LIB} ${LIBFT_DIR}/${LIBFT_LIB} ${SHELL_OBJS}
 clean:
 	@echo "cleaning files"
 	@make clean -C ${LIBFT_DIR}
-	@make clean -C ${PRINT_DIR}
 	@rm -rf ${SHELL_OBJS}
 
 fclean: clean
 	@make fclean -C ${LIBFT_DIR}
-	@make fclean -C ${PRINT_DIR}
 
 re: clean all
 
