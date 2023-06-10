@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:45:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/06 13:05:45 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/10 18:31:55 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	**copy_2d(char **src, char *s)
 	char	**tmp_table;
 
 	i = 0;
+	tmp_table = NULL;
 	while (src[i] != NULL)
 	{
 		tmp_table[i] = ft_strdup(src[i]);

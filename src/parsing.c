@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/06 15:45:06 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/10 18:30:51 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	init_cmdgroupsv2(char **splitted, t_cmd **cmdgroups)
 	while (i < (pipes + 2))
 	{
 		(*cmdgroups)[i].args = NULL;
-		(*cmdgroups)[i].rdr = NULL;
+		(*cmdgroups)[i].rdr = -1;
 		(*cmdgroups)[i].rdr_filename = NULL;
 	}
 	input_commands(splitted, cmdgroups);
@@ -135,12 +135,19 @@ void	init_cmdgroupsv2(char **splitted, t_cmd **cmdgroups)
 void	parse_cmds(char *input, t_cmd *cmdgroups)
 {
 	char	**splitted;
+	(void)cmdgroups;
 	
 
 	printf("Input before split: %s$\n", input);
 	splitted = ft_split_quoted(input, ' ');
+	// syntax_error(splitted);
 	int	k = -1;
 	while (splitted[++k])
 		printf("splitted %d: %s$\n", k, splitted[k]);
-	init_cmdgroupsv2(splitted, &cmdgroups);
+	// init_cmdgroupsv2(splitted, &cmdgroups);
 }
+
+
+// char *cmds[0]= {"echo","world"};
+// char *cmds[1]= {"wc","-l"};
+// char *cmds[3]= {cat};

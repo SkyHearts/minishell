@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/06 10:48:25 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/10 18:28:49 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@ int	main(int argc, char **argv, char **env)
 
 	env_table.env = dup_env(env);
 	env_table.path = extract_path(env_table.env);
-	print_darray(env_table.env);
-	print_darray(env_table.path);
+	cmdgroups = NULL;
+	(void)argc;
+	(void)argv;
+	// print_darray(env_table.env);
+	// print_darray(env_table.path);
 	while (1)
 	{
 		input = readline("minishell> ");
@@ -49,11 +52,11 @@ int	main(int argc, char **argv, char **env)
 			add_history(input);
 			printf("Input: %s\n", input);
 			// print_darray(env);
-			printf("Input if using ft_strtrim: %s$\n", ft_strtrim(input, " "));
 			input = reduce_white_spaces(input);
 			input = expand_operators(input);
 			printf("Input After Expand: %s$\n", input);
 			parse_cmds(input, cmdgroups);
+			// exec_cmds();
 		}
 	}
 }

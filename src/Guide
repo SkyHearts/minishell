@@ -2,7 +2,10 @@ Current compiller
 gcc tokenize.c expander.c env.c parsing.c minishell.c ft_split_quote.c utils.c ../utils/libft/libft.a -fsanitize=address -g3 -lreadline && ./a.out
 
 Example
-echo "hello world" >> text | wc -l | cat  -> [cmdgroup[0], cmdgroup[1], cmdgroup[3]]
+echo "hello world" >> text | wc -l | cat -> [cmdgroup[0], cmdgroup[1], cmdgroup[3]]
+
+>> APPEND
+<< heredoc
 
 struct cmdgroup
 args
@@ -23,7 +26,6 @@ echo"test" | wc -l				argc = 4	echo"test",|,wc,-l
 cmdgroup[0].args = (char **)[echo, "hello' world"]
 cmdgroup[0].rdr = APPEND;
 cmdgroup[0].rdr_filename = "text";
-cmdgroup[0].pipes = "|"; yes or no?
 
 // Item 1
 cmdgroup[1].args = (char **)[wc, -l]

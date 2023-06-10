@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:52:31 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/05 18:46:04 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/10 18:29:25 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	**ft_split_quoted(char *input, char delim)
 	splitted = split_allocation(arg_count_quoted(input, delim));
 	if (!splitted)
 		return (NULL);
-	while (i <= ft_strlen(input))
+	while (i <= (int)ft_strlen(input))
 	{
 		if (if_quotes(input[i]) && input[i + 1])
 			process_quotes(input, &i);
