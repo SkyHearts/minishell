@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/10 18:30:51 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/13 11:48:22 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,62 +89,67 @@ char	*insert_line(char *input)
 	*cmdgroups = (t_cmd *)malloc (sizeof(t_cmd) * (pipes + 2));
 	(*cmdgroups)[pipes + 1].args = NULL;
 } */
-void	input_commands(char **splitted, t_cmd **cmdgroups)
+
+/* Rdr not taken into account yet */
+void	input_commands(char **splitted, t_cmd *cmdgroups)
 {
 	int	i;
 	int	j;
 	
-	i = 0;
+	i = -1;
 	j = 0;
-	while (splitted[i])
+	while (splitted[++i])
 	{
-		if (is_rdr(splitted[i]))
+		if (!is_rdr(splitted[i]) && !is_pipes(splitted[i]))
 		{
-			(*cmdgroups)[j].rdr = is_rdr(splitted[i++]);
-			if (is_pipes(splitted[i]))
-				exit_error();
-			(*cmdgroups)[j].rdr_filename = ft_strdup(splitted[i]);
-			if (!is_pipes(splitted[i]))
-			{
-				j++;
-				continue;
-			}
+			// printf("current splited[%d]: %s\n",i, splitted[i]);
+			(cmdgroups)[j].args = ft_append_2d((cmdgroups)[j].args, splitted[i]);
 		}
-		(*cmdgroups)[j].args = ft_append_2d((*cmdgroups)[i].args, splitted[i]);
+		else if (is_pipes(splitted[i]))
+			j++;
 	}
+	// int m = -1;
+	// while (++m < j + 1)
+	// {
+	// 	int k = -1;
+	// 	while ((cmdgroups)[m].args[++k])
+	// 		printf("cmdgroups[%d][%d]: %s\n", m, k, (cmdgroups)[m].args[k]);
+	// }
 }
 
-void	init_cmdgroupsv2(char **splitted, t_cmd **cmdgroups)
+void	init_cmdgroupsv2(char **splitted, t_env *env_table)
 {
 	int		i;
-	int		pipes;
+	t_cmd	*cmdgroups;
 
-	i = 0;
-	pipes = has_pipes(splitted);
-	printf("Number of pipes: %d\n", pipes);
-	*cmdgroups = (t_cmd *)malloc (sizeof(t_cmd) * (pipes + 2));
-	while (i < (pipes + 2))
+	i = -1;
+	env_table->nos_pipe = has_pipes(splitted);
+	printf("Number of pipes: %d\n", env_table->nos_pipe);
+	env_table->cmdgroups = (t_cmd *)malloc (sizeof(t_cmd) * (env_table->nos_pipe + 1));
+	cmdgroups = env_table->cmdgroups;
+	while (++i < (env_table->nos_pipe) + 1)
 	{
-		(*cmdgroups)[i].args = NULL;
-		(*cmdgroups)[i].rdr = -1;
-		(*cmdgroups)[i].rdr_filename = NULL;
+		(cmdgroups)[i].args = NULL;
+		(cmdgroups)[i].rdr = 0;
+		(cmdgroups)[i].rdr_filename = NULL;
 	}
 	input_commands(splitted, cmdgroups);
 }
 
-void	parse_cmds(char *input, t_cmd *cmdgroups)
+int	parse_cmds(char *input, t_env *env_table)
 {
 	char	**splitted;
-	(void)cmdgroups;
-	
 
 	printf("Input before split: %s$\n", input);
+	if (!ft_strcmp(input, ""))
+		return (1);
 	splitted = ft_split_quoted(input, ' ');
 	// syntax_error(splitted);
 	int	k = -1;
 	while (splitted[++k])
 		printf("splitted %d: %s$\n", k, splitted[k]);
-	// init_cmdgroupsv2(splitted, &cmdgroups);
+	init_cmdgroupsv2(splitted, env_table);
+	return (0);
 }
 
 

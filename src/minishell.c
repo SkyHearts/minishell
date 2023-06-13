@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/13 11:59:00 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/13 12:17:29 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,45 +25,65 @@ void	print_darray(char **array)
 	printf("----------------------------\n");
 }
 
+// /* To read, reduce and expand input before parsing */
+char *read_input(void)
+{
+	char *input;
+
+	input = readline("minishell> ");
+	if (input == NULL)
+		exit_error();
+	while (check_quotes(input))
+			input = insert_line(input);
+	add_history(input);
+	// printf("Input: %s\n", input);
+	input = reduce_white_spaces(input);
+	input = expand_operators(input);
+	// printf("Input After Expand: %s$\n", input);
+	return (input);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_env		env_table;
 	t_cmd		*cmdgroups;
 	t_pipex		pipex;
 	char		*input;
+	int 		ret;
 
 	env_table.env = dup_env(env);
 	env_table.path = extract_path(env_table.env);
-	cmdgroups = NULL;
 	(void)argc;
 	(void)argv;
 	// print_darray(env_table.env);
 	// print_darray(env_table.path);
 	while (1)
 	{
-		input = readline("minishell> ");
-		if (input == NULL)
-			exit_error();
-		else if (!ft_strncmp(input, "exit", 5))
+		input = read_input();
+		if (!ft_strncmp(input, "exit", 5))
 			exit(0);
-		else
+		ret = parse_cmds(input, &env_table);
+		ft_pipex(char *input, t_pipex *pipex)
+		// exec_cmds();
+		if (ret == 1)
 		{
-			while (check_quotes(input))
-				input = insert_line(input);
-			add_history(input);
-			printf("Input: %s\n", input);
-			// print_darray(env);
-			input = reduce_white_spaces(input);
-			input = expand_operators(input);
-			printf("Input After Expand: %s$\n", input);
-			parse_cmds(input, cmdgroups);
-			// exec_cmds();
-			void ft_pipex(char *input, t_pipex *pipex)
+			// free(input);
+			continue;
 		}
+		printf("=========CMDGROUPS=============\n");
+		int m = -1;
+		while (++m < env_table.nos_pipe)
+		{
+			int k = -1;
+			while (env_table.cmdgroups[m].args[++k])
+				printf("cmdgroups[%d][%d]: %s\n", m, k, env_table.cmdgroups[m].args[k]);
+		}
+		printf("===============================\n");
+
 	}
 }
 
-			// input = reduce_double_operators(input);
+	// input = reduce_double_operators(input);
 	// char s[] = "lets do this! as sad ";
 	// char d[] = " ";
 

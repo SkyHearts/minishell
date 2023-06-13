@@ -42,6 +42,11 @@ cmdgroup[3].args = (char **)[NULL]
 cmdgroup[3].rdr = NULL;
 cmdgroup[3].rdr_filename = NULL;
 
+main.c
+ret = 0  // Success, continue with program
+ret = 1 // Empty input so continue loop to obtain new input
+ret = 2 // Syntax error, return error msg and continue loop to obtain new input
+ret = 3 // Command error, return error msg and continue loop to obtain new input
 
 OR
 

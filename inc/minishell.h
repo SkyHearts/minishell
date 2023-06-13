@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/13 11:59:05 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/13 12:19:27 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,28 @@
 // 	struct s_parse	*next;
 // }				t_parse;
 
+typedef enum s_rdrtype
+{
+	IN = 1,
+	OUT = 2,
+	HEREDOC = 3,
+	APPEND = 4,
+}	t_rdrtype;
+
+typedef struct s_rdrinfo
+{
+	pid_t		rdr_pid;
+	char		*rdr_str;
+	t_rdrtype	rdr_type;
+}				t_rdrinfo;
+
 /* Parse Info */
 typedef struct s_cmd
 {
 	char			**args;
 	int				rdr;
 	char			*rdr_filename;
+	t_rdrinfo		*rdr_info;
 }				t_cmd;
 
 /* Env Info */
@@ -66,6 +82,8 @@ typedef struct s_env
 {
 	char	**env;
 	char	**path;
+	int		nos_pipe;
+	t_cmd	*cmdgroups;
 }				t_env;
 
 // Pipex
@@ -108,7 +126,7 @@ void	exit_error(void);
 /* split */
 char	**ft_split_quoted(char *input, char delim);
 
-void parse_cmds(char *input, t_cmd *cmdgroups);
+int		parse_cmds(char *input, t_env *env_table);
 void	print_darray(char **array);
 
 // pipex
