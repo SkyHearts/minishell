@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/10 18:28:49 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/13 11:59:00 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_env		env_table;
 	t_cmd		*cmdgroups;
+	t_pipex		pipex;
 	char		*input;
 
 	env_table.env = dup_env(env);
@@ -57,6 +58,7 @@ int	main(int argc, char **argv, char **env)
 			printf("Input After Expand: %s$\n", input);
 			parse_cmds(input, cmdgroups);
 			// exec_cmds();
+			void ft_pipex(char *input, t_pipex *pipex)
 		}
 	}
 }

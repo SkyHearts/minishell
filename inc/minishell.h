@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/06 15:38:01 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/13 11:59:05 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,17 @@ typedef struct s_env
 	char	**path;
 }				t_env;
 
+// Pipex
+typedef struct s_pipex
+{
+	pid_t 		pid;
+	int			pipes[2];
+	char		*paths;
+	char		**cmd_path;
+	char		*cmd;
+	char		**cmd_args;
+}	t_pipex;
+
 /* env function */
 char	**dup_env(char **env);
 char	**extract_path(char **env_table);
@@ -100,5 +111,9 @@ char	**ft_split_quoted(char *input, char delim);
 void parse_cmds(char *input, t_cmd *cmdgroups);
 void	print_darray(char **array);
 
+// pipex
+void ft_pipex(char *input, t_pipex *pipex);
+void parent();
+void child();
 
 #endif
