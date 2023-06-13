@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/13 11:19:31 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/13 21:37:03 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 
 typedef enum s_rdrtype
 {
+	EMPTY = 0,
 	IN = 1,
 	OUT = 2,
 	HEREDOC = 3,
@@ -72,8 +73,7 @@ typedef struct s_rdrinfo
 typedef struct s_cmd
 {
 	char			**args;
-	int				rdr;
-	char			*rdr_filename;
+	int				rdr_count;
 	t_rdrinfo		*rdr_info;
 }				t_cmd;
 

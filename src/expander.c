@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:07:18 by jyim              #+#    #+#             */
-/*   Updated: 2023/05/06 15:30:51 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/13 19:11:43 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,11 @@ char	*reduce_space(char *str, size_t len, size_t pos)
 
 char	*expand_str(char *s, int i)
 {
+	
+	if (s[i + 1] != ' ' && !ft_str_cmp_str(s[i + 1], OPERATORS))
+		s = add_space(s, ft_strlen(s), i + 1);
 	if (i > 0)
 	{
-		if (s[i + 1] != ' ' && !ft_str_cmp_str(s[i + 1], OPERATORS))
-			s = add_space(s, ft_strlen(s), i + 1);
 		if (s[i - 1] != ' ' && !ft_str_cmp_str(s[i - 1], OPERATORS))
 			s = add_space(s, ft_strlen(s), i);
 	}

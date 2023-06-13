@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:45:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/13 10:48:44 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/13 16:48:33 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ int	is_pipes(char *splitted)
 
 int	is_rdr(char *splitted)
 {
-	if (!ft_strcmp(splitted,"<<"))
-		return (1);
-	if (!ft_strcmp(splitted,">>"))
-		return (2);
 	if (!ft_strcmp(splitted,"<"))
-		return (3);
+		return (1);
 	if (!ft_strcmp(splitted,">"))
+		return (2);
+	if (!ft_strcmp(splitted,"<<"))
+		return (3);
+	if (!ft_strcmp(splitted,">>"))
 		return (4);
 	return (0);
 }
