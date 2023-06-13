@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:45:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/13 10:48:44 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/13 19:38:41 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	error(char *err)
+{
+	perror(err);
+	exit(1);
+}
 
 int	has_pipes(char **splitted)
 {

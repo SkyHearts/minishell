@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 10:09:36 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/10 18:37:54 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/13 21:27:45 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void			exec_others(t_cmd **cmdgroups, t_env env_table)
+void			exec_others(t_pipe **cmdgroups, t_env env_table)
 {
 	int		status;
 	char	*path;

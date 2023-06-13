@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/13 12:19:27 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/13 21:55:31 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include "../utils/libft/libft.h"
 # include <stdlib.h>
 # include <string.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 
 /* Operators/Commands */
 # define OPERATORS		"|><&()"
@@ -45,6 +47,10 @@
 
 # define EMPTY_STRING	""
 
+// Pipe
+# define PIPE_IN 0
+# define PIPE_OUT 1
+
 // /* Parse Info */
 // typedef struct s_parse
 // {
@@ -52,6 +58,12 @@
 // 	int				type;
 // 	struct s_parse	*next;
 // }				t_parse;
+
+
+
+	pid_t 		pid;
+	
+
 
 typedef enum s_rdrtype
 {
@@ -69,13 +81,14 @@ typedef struct s_rdrinfo
 }				t_rdrinfo;
 
 /* Parse Info */
-typedef struct s_cmd
+typedef struct s_pipe
 {
+	char			*cmd;
 	char			**args;
 	int				rdr;
 	char			*rdr_filename;
 	t_rdrinfo		*rdr_info;
-}				t_cmd;
+}				t_pipe;
 
 /* Env Info */
 typedef struct s_env
@@ -83,19 +96,9 @@ typedef struct s_env
 	char	**env;
 	char	**path;
 	int		nos_pipe;
-	t_cmd	*cmdgroups;
+	t_pipe	*cmdgroups;
+	t_pipe	*pipe;
 }				t_env;
-
-// Pipex
-typedef struct s_pipex
-{
-	pid_t 		pid;
-	int			pipes[2];
-	char		*paths;
-	char		**cmd_path;
-	char		*cmd;
-	char		**cmd_args;
-}	t_pipex;
 
 /* env function */
 char	**dup_env(char **env);
@@ -108,10 +111,11 @@ char	*reduce_double_operators(char *s);
 int		ft_is_double_operator(char *s, int i);
 
 /* Utils */
-int	has_pipes(char **splitted);
-char **ft_append_2d(char **args, char *str);
-int	is_rdr(char *splitted);
-int	is_pipes(char *splitted);
+int		has_pipes(char **splitted);
+char	**ft_append_2d(char **args, char *str);
+int		is_rdr(char *splitted);
+int		is_pipes(char *splitted);
+void	error(char *err);
 
 /* Parsing */
 /* quotes */
@@ -129,9 +133,9 @@ char	**ft_split_quoted(char *input, char delim);
 int		parse_cmds(char *input, t_env *env_table);
 void	print_darray(char **array);
 
-// pipex
-void ft_pipex(char *input, t_pipex *pipex);
-void parent();
-void child();
+// pipe
+void	ft_pipe(t_env *env_table, char **env);
+
+# define ERR_CMD "Command not found"
 
 #endif

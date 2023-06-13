@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/13 11:48:22 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/13 21:27:45 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*insert_line(char *input)
 	return (new_input);
 }
 
-/* void	init_cmdgroupsv1(char *input, t_cmd **cmdgroups)
+/* void	init_pipegroupsv1(char *input, t_pipe **cmdgroups)
 {
 	int		i;
 	int		pipes;
@@ -86,12 +86,12 @@ char	*insert_line(char *input)
 			pipes++;
 	}
 	printf("Number of pipes: %d\n", pipes);
-	*cmdgroups = (t_cmd *)malloc (sizeof(t_cmd) * (pipes + 2));
+	*cmdgroups = (t_pipe *)malloc (sizeof(t_pipe) * (pipes + 2));
 	(*cmdgroups)[pipes + 1].args = NULL;
 } */
 
 /* Rdr not taken into account yet */
-void	input_commands(char **splitted, t_cmd *cmdgroups)
+void	input_commands(char **splitted, t_pipe *cmdgroups)
 {
 	int	i;
 	int	j;
@@ -117,15 +117,15 @@ void	input_commands(char **splitted, t_cmd *cmdgroups)
 	// }
 }
 
-void	init_cmdgroupsv2(char **splitted, t_env *env_table)
+void	init_pipegroupsv2(char **splitted, t_env *env_table)
 {
 	int		i;
-	t_cmd	*cmdgroups;
+	t_pipe	*cmdgroups;
 
 	i = -1;
 	env_table->nos_pipe = has_pipes(splitted);
-	printf("Number of pipes: %d\n", env_table->nos_pipe);
-	env_table->cmdgroups = (t_cmd *)malloc (sizeof(t_cmd) * (env_table->nos_pipe + 1));
+	// printf("Number of pipes: %d\n", env_table->nos_pipe);
+	env_table->cmdgroups = (t_pipe *)malloc (sizeof(t_pipe) * (env_table->nos_pipe + 1));
 	cmdgroups = env_table->cmdgroups;
 	while (++i < (env_table->nos_pipe) + 1)
 	{
@@ -145,13 +145,12 @@ int	parse_cmds(char *input, t_env *env_table)
 		return (1);
 	splitted = ft_split_quoted(input, ' ');
 	// syntax_error(splitted);
-	int	k = -1;
-	while (splitted[++k])
-		printf("splitted %d: %s$\n", k, splitted[k]);
-	init_cmdgroupsv2(splitted, env_table);
+	// int	k = -1;
+	// while (splitted[++k])
+	// 	printf("splitted %d: %s$\n", k, splitted[k]);
+	init_pipegroupsv2(splitted, env_table);
 	return (0);
 }
-
 
 // char *cmds[0]= {"echo","world"};
 // char *cmds[1]= {"wc","-l"};
