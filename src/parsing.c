@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/13 21:27:45 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/14 19:57:57 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	parse_cmds(char *input, t_env *env_table)
 {
 	char	**splitted;
 
-	printf("Input before split: %s$\n", input);
+	// printf("Input before split: %s$\n", input);
 	if (!ft_strcmp(input, ""))
 		return (1);
 	splitted = ft_split_quoted(input, ' ');

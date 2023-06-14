@@ -50,7 +50,7 @@ void	call_cmd(t_env *env_table, t_pipe pipe, char **envp, int index)
 	}
 }
 
-int	check_command(t_env *env_table, char *cmd, int m)
+int	check_command(t_env *env_table, int m)
 {
 	// char *function[] = { "echo", "cd", "pwd", "export" "unset" "env" "exit"};
 	// int i = -1;
@@ -61,7 +61,7 @@ int	check_command(t_env *env_table, char *cmd, int m)
 	// 		exit(env_table->func[i](env_table));
 	// }
 
-	if (ft_strcmp(cmd, "echo") == 0)
+	if (ft_strcmp(*env_table->cmdgroups[m].args, "echo") == 0)
 	{
 		ft_echo(env_table->cmdgroups[m].args);
 		return 1;
@@ -69,34 +69,36 @@ int	check_command(t_env *env_table, char *cmd, int m)
 	return 0;
 }
 
-void	parent(t_env *env_table, t_pipe pipe, char *cmd, int m, char **envp, int files[2])
+void	parent(t_env *env_table, t_pipe pipe, int m, char **envp, int files[2])
 {
+	printf("pass1");
 	dup2(files[PIPE_OUT], 1);
 	close(files[PIPE_IN]);
 	dup2(files[PIPE_IN], 0);
-	if (check_command(env_table, cmd, m) == 0)
+	if (check_command(env_table, m) == 0)
 		call_cmd(env_table, pipe, envp, 0);
 }
 
-void	child(t_env *env_table, t_pipe pipe, char *cmd, int m, char **envp, int files[2])
+void	child(t_env *env_table, t_pipe pipe, int m, char **envp, int files[2])
 {
+	printf("pass2");
 	dup2(files[PIPE_IN], 0);
 	close(files[PIPE_OUT]);
 	dup2(files[PIPE_OUT], 1);
-	if (check_command(env_table, cmd, m) == 0)
+	if (check_command(env_table, m) == 0)
 		call_cmd(env_table, pipe, envp, 1);
 }
 
-void	one_pipe(t_env *env_table, char *cmd, int m, char **envp)
+void	one_pipe(t_env *env_table, int m, char **envp)
 {
 	pid_t	pid;
 	int files[2];
 
 	pid = fork();
 	if (pid == 0)
-		child(env_table, env_table->pipe[0], cmd, m, envp, files);
+		child(env_table, env_table->pipe[0], m, envp, files);
 	else
-		parent(env_table, env_table->pipe[0], cmd, m, envp, files);
+		parent(env_table, env_table->pipe[0], m, envp, files);
 }
 
 void	ft_pipe(t_env *env_table, char **envp)
@@ -104,12 +106,9 @@ void	ft_pipe(t_env *env_table, char **envp)
 	int m = -1;
 	while (++m < env_table->nos_pipe)
 	{
-		int k = -1;
-		while (env_table->cmdgroups[m].args[++k])
-			one_pipe(env_table, env_table->cmdgroups[m].args[k], m, envp);
+		// if (env_table->nos_pipe >= 2)
+			// 	multi_pipe(env_table, envp);
+		// else
+			one_pipe(env_table, m, envp);
 	}
-	// if (env_table->nos_pipe >= 2)
-	// 	multi_pipe(env_table, envp);
-	// else
-		// one_pipe(env_table, envp);
 }

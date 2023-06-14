@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:52:31 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/10 18:29:25 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/14 19:57:41 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	arg_count_quoted(char *input, char c)
 			&& char_separator(input[i], c) == 0)
 			argc++;
 	}
-	printf("argc = %d\n", argc);
+	// printf("argc = %d\n", argc);
 	return (argc);
 }
 
