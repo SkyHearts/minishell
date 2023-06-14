@@ -6,22 +6,22 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/14 17:27:30 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/14 19:29:08 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void init_func(t_env *env_table)
-{
-	env_table->func[E_ECHO] = ft_echo;
-	// env_table->func[E_CD] = func_cd;
-	// env_table->func[E_PWD] = func_pwd;
-	// env_table->func[E_EXPORT] = func_export;
-	// env_table->func[E_UNSET] = func_unset;
-	// env_table->func[E_ENV] = func_env;
-	// env_table->func[E_EXIT] = func_exit;
-}
+// void init_func(t_env *env_table)
+// {
+// 	env_table->func[E_ECHO] = ft_echo;
+// 	// env_table->func[E_CD] = func_cd;
+// 	// env_table->func[E_PWD] = func_pwd;
+// 	// env_table->func[E_EXPORT] = func_export;
+// 	// env_table->func[E_UNSET] = func_unset;
+// 	// env_table->func[E_ENV] = func_env;
+// 	// env_table->func[E_EXIT] = func_exit;
+// }
 
 void	print_darray(char **array)
 {
@@ -64,9 +64,9 @@ int	main(int argc, char **argv, char **env)
 	env_table.path = extract_path(env_table.env);
 	(void)argc;
 	(void)argv;
-	init_func(&env_table);
+	// init_func(&env_table);
 	// print_darray(env_table.env);
-	print_darray(env_table.path);
+	// print_darray(env_table.path);
 	while (1)
 	{
 		input = read_input();
@@ -88,8 +88,7 @@ int	main(int argc, char **argv, char **env)
 		// 		printf("cmdgroups[%d][%d]: %s\n", m, k, env_table.cmdgroups[m].args[k]);
 		// }
 		// printf("===============================\n");
-		// ft_pipe(&env_table, env);
-		ft_pipe(&env_table);
+		ft_pipe(&env_table, env);
 	}
 }
 

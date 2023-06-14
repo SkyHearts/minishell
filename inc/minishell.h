@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/14 17:16:19 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/14 19:27:07 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@
 // 	struct s_parse	*next;
 // }				t_parse;
 
-typedef int	(*t_function)(struct s_env *env_table);
+// typedef int	(*t_function)(struct s_env *env_table);
 
 typedef enum s_rdrtype
 {
@@ -69,16 +69,16 @@ typedef enum s_rdrtype
 	APPEND = 4,
 }	t_rdrtype;
 
-typedef enum e_func
-{
-	E_ECHO = 0,
-	E_CD = 1,
-	E_PWD = 2,
-	E_EXPORT = 3,
-	E_UNSET = 4,
-	E_ENV = 5,
-	E_EXIT = 6,
-}	t_func;
+// typedef enum e_func
+// {
+// 	E_ECHO = 0,
+// 	E_CD = 1,
+// 	E_PWD = 2,
+// 	E_EXPORT = 3,
+// 	E_UNSET = 4,
+// 	E_ENV = 5,
+// 	E_EXIT = 6,
+// }	t_func;
 
 typedef struct s_rdrinfo
 {
@@ -105,7 +105,7 @@ typedef struct s_env
 	int			nos_pipe;
 	t_pipe		*cmdgroups;
 	t_pipe		*pipe;
-	t_function	func[7];
+	// t_function	func[7];
 }				t_env;
 
 /* env function */
@@ -145,8 +145,7 @@ void	print_darray(char **array);
 void	ft_echo(char **str);
 
 // pipe
-// void	ft_pipe(t_env *env_table, char **env);
-void	ft_pipe(t_env *env_table);
+void	ft_pipe(t_env *env_table, char **env);
 
 # define ERR_CMD "Command not found"
 
