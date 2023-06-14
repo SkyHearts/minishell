@@ -80,10 +80,33 @@ void	one_pipe(t_env *env_table, char **envp)
 	}
 }
 
-void	ft_pipe(t_env *env_table, char **envp)
+void	check_command(t_env *env_table, char *cmd, int m)
 {
+	char *function[] = { "echo", "cd", "pwd", "export" "unset" "env" "exit"};
+	int i = -1;
+
+	while (function[++i] != NULL)
+	{
+		if (cmd == function[i])
+			exit(env_table->func[i](env_table));
+	}
+
+	// if (ft_strcmp(cmd, "echo") == 0)
+	// 	ft_echo(env_table->cmdgroups[m].args);
+}
+// void	ft_pipe(t_env *env_table, char **envp)
+void	ft_pipe(t_env *env_table)
+{
+	int m = -1;
+	while (++m < env_table->nos_pipe)
+	{
+		int k = -1;
+		while (env_table->cmdgroups[m].args[++k])
+			check_command(env_table, env_table->cmdgroups[m].args[k], m);
+
+	}
 	// if (env_table->nos_pipe >= 2)
 	// 	multi_pipe(env_table, envp);
 	// else
-		one_pipe(env_table, envp);
+		// one_pipe(env_table, envp);
 }

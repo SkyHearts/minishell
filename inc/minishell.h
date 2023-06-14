@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/13 21:55:31 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/14 17:16:19 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,7 @@
 // 	struct s_parse	*next;
 // }				t_parse;
 
-
-
-	pid_t 		pid;
-	
-
+typedef int	(*t_function)(struct s_env *env_table);
 
 typedef enum s_rdrtype
 {
@@ -72,6 +68,17 @@ typedef enum s_rdrtype
 	HEREDOC = 3,
 	APPEND = 4,
 }	t_rdrtype;
+
+typedef enum e_func
+{
+	E_ECHO = 0,
+	E_CD = 1,
+	E_PWD = 2,
+	E_EXPORT = 3,
+	E_UNSET = 4,
+	E_ENV = 5,
+	E_EXIT = 6,
+}	t_func;
 
 typedef struct s_rdrinfo
 {
@@ -93,11 +100,12 @@ typedef struct s_pipe
 /* Env Info */
 typedef struct s_env
 {
-	char	**env;
-	char	**path;
-	int		nos_pipe;
-	t_pipe	*cmdgroups;
-	t_pipe	*pipe;
+	char		**env;
+	char		**path;
+	int			nos_pipe;
+	t_pipe		*cmdgroups;
+	t_pipe		*pipe;
+	t_function	func[7];
 }				t_env;
 
 /* env function */
@@ -133,8 +141,12 @@ char	**ft_split_quoted(char *input, char delim);
 int		parse_cmds(char *input, t_env *env_table);
 void	print_darray(char **array);
 
+// builtins
+void	ft_echo(char **str);
+
 // pipe
-void	ft_pipe(t_env *env_table, char **env);
+// void	ft_pipe(t_env *env_table, char **env);
+void	ft_pipe(t_env *env_table);
 
 # define ERR_CMD "Command not found"
 

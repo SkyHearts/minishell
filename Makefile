@@ -14,6 +14,10 @@ SHELL_SRCS	=	minishell.c utils.c env.c expander.c ft_split_quote.c init.c parsin
 SHELL_SRCS_DIR	= src/
 SHELL_OBJS = $(addprefix $(SHELL_SRCS_DIR), $(SHELL_SRCS:.c=.o))
 
+BUILTINS_SRC = echo.c
+BUILTINS_DIR = src/builtins/
+BUILTINS_OBJS = $(addprefix $(BUILTINS_DIR), $(BUILTINS_SRC:.c=.o))
+
 all: ${NAME}
 
 ${LIBFT_DIR}/${LIBFT_LIB}:
@@ -24,9 +28,9 @@ ${LIBFT_DIR}/${LIBFT_LIB}:
 #	@echo "Compilling printf"
 #	@make -C ${PRINT_DIR}
 
-${NAME}:	${PRINT_DIR}/${PRINT_LIB} ${LIBFT_DIR}/${LIBFT_LIB} ${SHELL_OBJS} 
+${NAME}:	${PRINT_DIR}/${PRINT_LIB} ${LIBFT_DIR}/${LIBFT_LIB} ${SHELL_OBJS} ${BUILTINS_OBJS}
 	@echo "Compiling minishell"
-	${CC} ${CFLAGS} ${SHELL_OBJS} -o ${NAME} -L${LIBFT_DIR} -lft -lreadline 
+	${CC} ${CFLAGS} ${SHELL_OBJS} ${BUILTINS_OBJS} -o ${NAME} -L${LIBFT_DIR} -lft -lreadline 
 
 clean:
 	@echo "cleaning files"

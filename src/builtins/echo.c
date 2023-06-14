@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 13:50:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/13 22:47:08 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/14 17:15:13 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_start(char **str, int start)
 {
-	int	i;
+	// int	i;
 
 	while (str[start])
 	{
@@ -50,4 +50,5 @@ void	ft_echo(char **str)
 	}
 	else
 		print_start(str, 2);
+	// printf("%s\n", str[1]);
 }
