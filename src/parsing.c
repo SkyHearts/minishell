@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/13 22:28:15 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/14 16:01:47 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,14 @@ int	check_quotes(char *input)
 		{
 			boolean = 1;
 			quote_type = input[i];
-			while (input[++i])
-			{
-				if (input[i] == quote_type)
-				{
-					boolean = 0;
-					break ;
-				}
-			}
+		while (input[++i] && input[i] != quote_type)
+			continue ;
+		if (!input[i])
+			return (boolean);
+		boolean = 0;
 		}
 	}
 	return (boolean);
-}
-
-char	*insert_line(char *input)
-{
-	char	*nextline;
-	char	*tmp_input;
-	char	*new_input;
-
-	tmp_input = input;
-	nextline = readline(">");
-	new_input = ft_strjoin(input, "\n");
-	new_input = ft_strjoin(new_input, nextline);
-	free(tmp_input);
-	printf("New Input: %s\n", new_input);
-	return (new_input);
 }
 
 /* void	init_cmdgroupsv1(char *input, t_cmd **cmdgroups)
@@ -158,7 +140,7 @@ void	input_commands(char **splitted, t_cmd *cmdgroups)
 			(cmdgroups)[j].args = ft_append_2d
 				((cmdgroups)[j].args, splitted[i]);
 		}
-		else if (is_pipes(splitted[i]))
+		else if (is_pipes(splitted[i]) && splitted[i])
 			j++;
 	}
 	if (!(cmdgroups)[j].args)
@@ -189,18 +171,44 @@ void	init_cmdgroupsv2(char **splitted, t_env *env_table)
 	input_rdr(splitted, cmdgroups);
 }
 
+int	syntax_checking(char **splitted)
+{
+	int	i;
+
+	i = -1;
+	while (splitted[++i])
+	{
+		if(is_operator(splitted[i]) && !splitted[i + 1])
+		{
+			if (is_pipes(splitted[i]))
+				printf("syntax error near unexpected token '%s'\n", splitted[i]);
+			else
+				printf("syntax error near unexpected token 'newline'\n");
+			return (1);
+		}
+		if(is_operator(splitted[i]) && is_operator(splitted[i + 1]))
+		{
+			if (is_operator(splitted[i + 1]) == 3)
+				printf("syntax error near unexpected token 'newline'\n");
+			else
+				printf("syntax error near unexpected token '%s'\n", splitted[i + 1]);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int	parse_cmds(char *input, t_env *env_table)
 {
 	char	**splitted;
 
 	printf("Input before split: %s$\n", input);
-	if (!ft_strcmp(input, ""))
-		return (1);
 	splitted = ft_split_quoted(input, ' ');
-	// syntax_error(splitted);
 	// int	k = -1;
 	// while (splitted[++k])
 	// 	printf("splitted %d: %s$\n", k, splitted[k]);
+	if (!ft_strcmp(input, "") || syntax_checking(splitted))
+		return (1);
 	init_cmdgroupsv2(splitted, env_table);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/13 21:49:00 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/14 16:02:04 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@ void	print_darray(char **array)
 		i++;
 	}
 	printf("----------------------------\n");
+}
+
+char	*insert_line(char *input)
+{
+	char	*nextline;
+	char	*tmp_input;
+	char	*new_input;
+
+	tmp_input = input;
+	nextline = readline(">");
+	new_input = ft_strjoin(input, "\n");
+	new_input = ft_strjoin(new_input, nextline);
+	free(tmp_input);
+	printf("New Input: %s\n", new_input);
+	return (new_input);
 }
 
 // /* To read, reduce and expand input before parsing */
@@ -62,24 +77,24 @@ int	main(int argc, char **argv, char **env)
 		if (!ft_strncmp(input, "exit", 5))
 			exit(0);
 		ret = parse_cmds(input, &env_table);
-		// exec_cmds();
 		if (ret == 1)
 		{
-			// free(input);
+			free(input);
 			continue;
 		}
+		// exec_cmds();
 		printf("=========CMDGROUPS=============\n");
 		int m = -1;
 		while (++m < env_table.nos_pipe)
 		{
 			int k = -1;
 			while (env_table.cmdgroups[m].args[++k])
-				printf("cmdgroups[%d][%d]: %s\n", m, k, env_table.cmdgroups[m].args[k]);
+				printf("cmdgroups[%d][%d]: %s$\n", m, k, env_table.cmdgroups[m].args[k]);
 			k = -1;
 			while (env_table.cmdgroups[m].rdr_info[++k].rdr_str)
 			{
-				printf("cmdgroups[%d][%d]rdrstr: %s\n", m, k, env_table.cmdgroups[m].rdr_info[k].rdr_str);
-				printf("cmdgroups[%d][%d]rdrtype: %d\n", m, k, env_table.cmdgroups[m].rdr_info[k].rdr_type);
+				printf("cmdgroups[%d][%d]rdrstr: %s$\n", m, k, env_table.cmdgroups[m].rdr_info[k].rdr_str);
+				printf("cmdgroups[%d][%d]rdrtype: %d$\n", m, k, env_table.cmdgroups[m].rdr_info[k].rdr_type);
 			}
 			// while (env_table.cmdgroups[m].rdr_info[k])
 				
