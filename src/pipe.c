@@ -60,12 +60,20 @@ int	check_command(t_env *env_table, int m)
 	// 	if (cmd == function[i])
 	// 		exit(env_table->func[i](env_table));
 	// }
-
-	if (ft_strcmp(*env_table->cmdgroups[m].args, "echo") == 0)
+	int i = -1;
+	while (++i < 7)
 	{
-		ft_echo(env_table->cmdgroups[m].args);
-		return 1;
+		if (ft_strcmp(env_table->cmdgroups[m].args[0], env_table->functions[i]) == 0)
+		{
+			env_table->func[i](env_table, env_table->cmdgroups[m].args);
+			return 1;
+		}
 	}
+	// if (ft_strcmp(*env_table->cmdgroups[m].args, "echo") == 0)
+	// {
+	// 	ft_echo(env_table->cmdgroups[m].args);
+	// 	return 1;
+	// }
 	return 0;
 }
 
@@ -92,6 +100,7 @@ void	child(t_env *env_table, t_pipe pipe, int m, char **envp, int files[2])
 void	one_pipe(t_env *env_table, int m, char **envp)
 {
 	pid_t	pid;
+	int		status;
 	int files[2];
 
 	pid = fork();
@@ -99,6 +108,7 @@ void	one_pipe(t_env *env_table, int m, char **envp)
 		child(env_table, env_table->pipe[0], m, envp, files);
 	else
 		parent(env_table, env_table->pipe[0], m, envp, files);
+	waitpid(pid, &status, 0);
 }
 
 void	ft_pipe(t_env *env_table, char **envp)

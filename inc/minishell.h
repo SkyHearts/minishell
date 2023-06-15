@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/14 19:27:07 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/15 12:25:38 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@
 // 	struct s_parse	*next;
 // }				t_parse;
 
-// typedef int	(*t_function)(struct s_env *env_table);
+struct		s_env;
+typedef void	(*t_function)(struct s_env *env_table, char **argv);
 
 typedef enum s_rdrtype
 {
@@ -69,16 +70,16 @@ typedef enum s_rdrtype
 	APPEND = 4,
 }	t_rdrtype;
 
-// typedef enum e_func
-// {
-// 	E_ECHO = 0,
-// 	E_CD = 1,
-// 	E_PWD = 2,
-// 	E_EXPORT = 3,
-// 	E_UNSET = 4,
-// 	E_ENV = 5,
-// 	E_EXIT = 6,
-// }	t_func;
+typedef enum e_func
+{
+	E_ECHO = 0,
+	E_CD = 1,
+	E_PWD = 2,
+	E_EXPORT = 3,
+	E_UNSET = 4,
+	E_ENV = 5,
+	E_EXIT = 6,
+}	t_func;
 
 typedef struct s_rdrinfo
 {
@@ -103,9 +104,10 @@ typedef struct s_env
 	char		**env;
 	char		**path;
 	int			nos_pipe;
+	char		**functions;
 	t_pipe		*cmdgroups;
 	t_pipe		*pipe;
-	// t_function	func[7];
+	t_function	func[7];
 }				t_env;
 
 /* env function */
@@ -142,7 +144,8 @@ int		parse_cmds(char *input, t_env *env_table);
 void	print_darray(char **array);
 
 // builtins
-void	ft_echo(char **str);
+void	ft_echo(t_env *env_table, char **str);
+void	ft_exit(t_env *env_table, char **str);
 
 // pipe
 void	ft_pipe(t_env *env_table, char **env);

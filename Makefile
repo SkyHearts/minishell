@@ -36,6 +36,7 @@ clean:
 	@echo "cleaning files"
 	@make clean -C ${LIBFT_DIR}
 	@rm -rf ${SHELL_OBJS}
+	@rm -rf ${BUILTINS_OBJS}
 
 fclean: clean
 	@make fclean -C ${LIBFT_DIR}
