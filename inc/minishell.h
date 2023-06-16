@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/15 12:25:38 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/16 16:44:26 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct s_env
 char	**dup_env(char **env);
 char	**extract_path(char **env_table);
 void	show_env(char **env_table);
+void	print_darray(char **array);
 
 /* Input Manipulations */
 char	*expand_operators(char *s);

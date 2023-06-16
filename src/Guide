@@ -26,6 +26,8 @@ echo"test" | wc -l				argc = 4	echo"test",|,wc,-l
 
 // Item 0
 cmdgroup[0].args = (char **)[echo, "hello' world"]
+cmdgroup[0].args[0] = echo
+cmdgroup[0].args[1] = hello' world
 cmdgroup[0].rdr = APPEND;
 cmdgroup[0].rdr_filename = "text";
 
