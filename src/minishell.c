@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/14 16:02:04 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/16 17:39:17 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,23 +83,23 @@ int	main(int argc, char **argv, char **env)
 			continue;
 		}
 		// exec_cmds();
-		printf("=========CMDGROUPS=============\n");
-		int m = -1;
-		while (++m < env_table.nos_pipe)
-		{
-			int k = -1;
-			while (env_table.cmdgroups[m].args[++k])
-				printf("cmdgroups[%d][%d]: %s$\n", m, k, env_table.cmdgroups[m].args[k]);
-			k = -1;
-			while (env_table.cmdgroups[m].rdr_info[++k].rdr_str)
-			{
-				printf("cmdgroups[%d][%d]rdrstr: %s$\n", m, k, env_table.cmdgroups[m].rdr_info[k].rdr_str);
-				printf("cmdgroups[%d][%d]rdrtype: %d$\n", m, k, env_table.cmdgroups[m].rdr_info[k].rdr_type);
-			}
-			// while (env_table.cmdgroups[m].rdr_info[k])
+		// printf("=========CMDGROUPS=============\n");
+		// int m = -1;
+		// while (++m < env_table.nos_pipe)
+		// {
+		// 	int k = -1;
+		// 	while (env_table.cmdgroups[m].args[++k])
+		// 		printf("cmdgroups[%d][%d]: %s$\n", m, k, env_table.cmdgroups[m].args[k]);
+		// 	k = -1;
+		// 	while (env_table.cmdgroups[m].rdr_info[++k].rdr_str)
+		// 	{
+		// 		printf("cmdgroups[%d][%d]rdrstr: %s$\n", m, k, env_table.cmdgroups[m].rdr_info[k].rdr_str);
+		// 		printf("cmdgroups[%d][%d]rdrtype: %d$\n", m, k, env_table.cmdgroups[m].rdr_info[k].rdr_type);
+		// 	}
+		// 	// while (env_table.cmdgroups[m].rdr_info[k])
 				
-		}
-		printf("===============================\n");
+		// }
+		// printf("===============================\n");
 
 	}
 }
