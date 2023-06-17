@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/17 12:21:04 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/17 12:30:05 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,13 @@ int	syntax_checking(char **splitted)
 	i = -1;
 	while (splitted[++i])
 	{
+		if(is_operator(splitted[i]))
+		{
+			if (!ft_strncmp(splitted[i],">>>",3))
+				return (printf("syntax error near unexpected token >>>\n"), 1);
+			if (!ft_strncmp(splitted[i],"<<<",3))
+				return (printf("syntax error near unexpected token <<<\n"), 1);
+		}
 		if(is_operator(splitted[i]) && !splitted[i + 1])
 		{
 			if (is_pipes(splitted[i]))

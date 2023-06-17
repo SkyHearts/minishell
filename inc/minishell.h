@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/17 12:20:03 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/17 12:31:03 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <errno.h>
 
 /* Operators/Commands */
 # define OPERATORS		"|><"
@@ -131,6 +132,16 @@ int		check_quotes(char *input);
 /* spaces */
 char	*reduce_white_spaces(char *s);
 void	exit_error(void);
+
+// builtins
+void	ft_echo(t_env *env_table, char **str);
+void	ft_exit(t_env *env_table, char **str);
+void	ft_cd(t_env *env_table, char **str);
+void	ft_env(t_env *env_table, char **str);
+void	ft_pwd(t_env *env_table, char **str);
+void	ft_export(t_env *env_table, char **argv);
+void	ft_unset(t_env *env_table, char **argv);
+
 
 /* split */
 char	**ft_split_quoted(char *input, char delim);
