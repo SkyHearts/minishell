@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 13:50:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/05/11 14:15:38 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/16 17:59:27 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,17 @@ void	print_start(char **str, int start)
 	while (str[start])
 	{
 		printf("%s", str[start]);
+		if (str[start + 1])
+			printf(" ");
 		start++;
 	}
 }
 
-void	ft_echo(char **str)
+void	ft_echo(t_env *env_table, char **str)
 {
 	int	i;
 	int	n_option;
+	(void)env_table;
 
 	i = 0;
 	n_option = 0;
