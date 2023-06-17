@@ -3,6 +3,8 @@ gcc tokenize.c expander.c env.c parsing.c minishell.c ft_split_quote.c utils.c .
 
 Example
 echo "hello world" >> text | wc -l | cat -> [cmdgroup[0], cmdgroup[1], cmdgroup[3]]
+echo "hello world" | wc 
+echo "hello world" | wc -l | cat
 
 >> APPEND
 << heredoc
@@ -10,7 +12,7 @@ echo "hello world" >> text | wc -l | cat -> [cmdgroup[0], cmdgroup[1], cmdgroup[
 struct cmdgroup
 args
 rdr
-t_cmdgroup
+t_pipegroup
 
 Test Command
 echo asef | areg | esrg\0		argc = 6	echo,asef,|,areg,|,esrg
@@ -24,6 +26,8 @@ echo"test" | wc -l				argc = 4	echo"test",|,wc,-l
 
 // Item 0
 cmdgroup[0].args = (char **)[echo, "hello' world"]
+cmdgroup[0].args[0] = echo
+cmdgroup[0].args[1] = hello' world
 cmdgroup[0].rdr = APPEND;
 cmdgroup[0].rdr_filename = "text";
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/14 16:01:47 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/17 12:30:05 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	check_quotes(char *input)
 			pipes++;
 	}
 	printf("Number of pipes: %d\n", pipes);
-	*cmdgroups = (t_cmd *)malloc (sizeof(t_cmd) * (pipes + 2));
+	*cmdgroups = (t_pipe *)malloc (sizeof(t_pipe) * (pipes + 2));
 	(*cmdgroups)[pipes + 1].args = NULL;
 } */
 
@@ -93,7 +93,7 @@ void	rdr_to_cmdgroups(t_rdrinfo *rdr_info, char **s, int *start, int end)
 	rdr_info[i].rdr_type = EMPTY;
 }
 
-void	input_rdr(char **splitted, t_cmd *cmdgroups)
+void	input_rdr(char **splitted, t_pipe *cmdgroups)
 {
 	int			i;
 	int			j;
@@ -122,7 +122,7 @@ void	input_rdr(char **splitted, t_cmd *cmdgroups)
 }
 
 /* Parse all input into cmdgroups */
-void	input_commands(char **splitted, t_cmd *cmdgroups)
+void	input_commands(char **splitted, t_pipe *cmdgroups)
 {
 	int	i;
 	int	j;
@@ -150,16 +150,15 @@ void	input_commands(char **splitted, t_cmd *cmdgroups)
 	}
 }
 
-void	init_cmdgroupsv2(char **splitted, t_env *env_table)
+void	init_pipegroupsv2(char **splitted, t_env *env_table)
 {
 	int		i;
-	t_cmd	*cmdgroups;
+	t_pipe	*cmdgroups;
 
 	i = -1;
 	env_table->nos_pipe = has_pipes(splitted);
-	printf("Number of pipes: %d\n", env_table->nos_pipe);
-	env_table->cmdgroups = (t_cmd *)malloc (sizeof(t_cmd)
-			* (env_table->nos_pipe + 1));
+	// printf("Number of pipes: %d\n", env_table->nos_pipe);
+	env_table->cmdgroups = (t_pipe *)malloc (sizeof(t_pipe) * (env_table->nos_pipe + 1));
 	cmdgroups = env_table->cmdgroups;
 	while (++i < (env_table->nos_pipe) + 1)
 	{
@@ -178,6 +177,13 @@ int	syntax_checking(char **splitted)
 	i = -1;
 	while (splitted[++i])
 	{
+		if(is_operator(splitted[i]))
+		{
+			if (!ft_strncmp(splitted[i],">>>",3))
+				return (printf("syntax error near unexpected token >>>\n"), 1);
+			if (!ft_strncmp(splitted[i],"<<<",3))
+				return (printf("syntax error near unexpected token <<<\n"), 1);
+		}
 		if(is_operator(splitted[i]) && !splitted[i + 1])
 		{
 			if (is_pipes(splitted[i]))
@@ -202,13 +208,18 @@ int	parse_cmds(char *input, t_env *env_table)
 {
 	char	**splitted;
 
-	printf("Input before split: %s$\n", input);
+	// printf("Input before split: %s$\n", input);
+	if (!ft_strcmp(input, ""))
+		return (1);
 	splitted = ft_split_quoted(input, ' ');
+	// syntax_error(splitted);
 	// int	k = -1;
 	// while (splitted[++k])
 	// 	printf("splitted %d: %s$\n", k, splitted[k]);
-	if (!ft_strcmp(input, "") || syntax_checking(splitted))
-		return (1);
-	init_cmdgroupsv2(splitted, env_table);
+	init_pipegroupsv2(splitted, env_table);
 	return (0);
 }
+
+// char *cmds[0]= {"echo","world"};
+// char *cmds[1]= {"wc","-l"};
+// char *cmds[3]= {cat};

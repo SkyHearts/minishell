@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/15 13:26:55 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/17 12:31:03 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include "../utils/libft/libft.h"
 # include <stdlib.h>
 # include <string.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <errno.h>
 
 /* Operators/Commands */
 # define OPERATORS		"|><"
@@ -79,12 +82,13 @@ typedef struct s_rdrinfo
 }				t_rdrinfo;
 
 /* Parse Info */
-typedef struct s_cmd
+typedef struct s_pipe
 {
+	char			*cmd;
 	char			**args;
 	int				rdr_count;
 	t_rdrinfo		*rdr_info;
-}				t_cmd;
+}				t_pipe;
 
 /* Env Info */
 typedef struct s_env
@@ -93,8 +97,8 @@ typedef struct s_env
 	char		**path;
 	int			nos_pipe;
 	char		**functions;
-	t_cmd		*cmdgroups;
-	// t_pipe		*pipe;
+	t_pipe		*cmdgroups;
+	t_pipe		*pipe;
 	t_function	func[7];
 }				t_env;
 
@@ -102,6 +106,7 @@ typedef struct s_env
 char	**dup_env(char **env);
 char	**extract_path(char **env_table);
 void	show_env(char **env_table);
+void	print_darray(char **array);
 
 /* Input Manipulations */
 char	*expand_operators(char *s);
@@ -116,6 +121,7 @@ int	is_pipes(char *splitted);
 int	if_quotes(char input);
 int	ft_char_cmp_str(char s, char *op_list);
 int	is_operator(char *str);
+void	error(char *err);
 
 /* Parsing */
 /* quotes */
@@ -127,11 +133,28 @@ int		check_quotes(char *input);
 char	*reduce_white_spaces(char *s);
 void	exit_error(void);
 
+// builtins
+void	ft_echo(t_env *env_table, char **str);
+void	ft_exit(t_env *env_table, char **str);
+void	ft_cd(t_env *env_table, char **str);
+void	ft_env(t_env *env_table, char **str);
+void	ft_pwd(t_env *env_table, char **str);
+void	ft_export(t_env *env_table, char **argv);
+void	ft_unset(t_env *env_table, char **argv);
+
+
 /* split */
 char	**ft_split_quoted(char *input, char delim);
 
 int		parse_cmds(char *input, t_env *env_table);
 void	print_darray(char **array);
+
+// builtins
+void	ft_echo(t_env *env_table, char **str);
+void	ft_exit(t_env *env_table, char **str);
+
+// pipe
+void	ft_pipe(t_env *env_table, char **env);
 
 # define ERR_CMD "Command not found"
 
