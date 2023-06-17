@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/14 16:01:47 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/17 11:14:33 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,13 @@ int	syntax_checking(char **splitted)
 	i = -1;
 	while (splitted[++i])
 	{
+		if(is_operator(splitted[i]))
+		{
+			if (!ft_strncmp(splitted[i],">>>",3))
+				return (printf("syntax error near unexpected token >>>\n"), 1);
+			if (!ft_strncmp(splitted[i],"<<<",3))
+				return (printf("syntax error near unexpected token <<<\n"), 1);
+		}
 		if(is_operator(splitted[i]) && !splitted[i + 1])
 		{
 			if (is_pipes(splitted[i]))
