@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/16 16:44:26 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/17 12:20:03 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include <sys/wait.h>
 
 /* Operators/Commands */
-# define OPERATORS		"|><&()"
+# define OPERATORS		"|><"
 # define PIPE			'|'
 # define REDIRECT_LEFT	'<'
 # define REDIRECT_RIGHT	'>'
@@ -44,26 +44,18 @@
 /* Quotes */
 # define SINGLE_QUOTE '\''
 # define DOUBLE_QUOTE '"'
-
 # define EMPTY_STRING	""
 
 // Pipe
 # define PIPE_IN 0
 # define PIPE_OUT 1
 
-// /* Parse Info */
-// typedef struct s_parse
-// {
-// 	char			**cmd;
-// 	int				type;
-// 	struct s_parse	*next;
-// }				t_parse;
-
 struct		s_env;
 typedef void	(*t_function)(struct s_env *env_table, char **argv);
 
 typedef enum s_rdrtype
 {
+	EMPTY = 0,
 	IN = 1,
 	OUT = 2,
 	HEREDOC = 3,
@@ -93,8 +85,7 @@ typedef struct s_pipe
 {
 	char			*cmd;
 	char			**args;
-	int				rdr;
-	char			*rdr_filename;
+	int				rdr_count;
 	t_rdrinfo		*rdr_info;
 }				t_pipe;
 
@@ -122,10 +113,13 @@ char	*reduce_double_operators(char *s);
 int		ft_is_double_operator(char *s, int i);
 
 /* Utils */
-int		has_pipes(char **splitted);
-char	**ft_append_2d(char **args, char *str);
-int		is_rdr(char *splitted);
-int		is_pipes(char *splitted);
+int	has_pipes(char **splitted);
+char **ft_append_2d(char **args, char *str);
+int	is_rdr(char *splitted);
+int	is_pipes(char *splitted);
+int	if_quotes(char input);
+int	ft_char_cmp_str(char s, char *op_list);
+int	is_operator(char *str);
 void	error(char *err);
 
 /* Parsing */

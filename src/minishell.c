@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/16 16:55:27 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/17 12:17:11 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,21 @@ void	print_darray(char **array)
 		i++;
 	}
 	printf("----------------------------\n");
+}
+
+char	*insert_line(char *input)
+{
+	char	*nextline;
+	char	*tmp_input;
+	char	*new_input;
+
+	tmp_input = input;
+	nextline = readline(">");
+	new_input = ft_strjoin(input, "\n");
+	new_input = ft_strjoin(new_input, nextline);
+	free(tmp_input);
+	printf("New Input: %s\n", new_input);
+	return (new_input);
 }
 
 // /* To read, reduce and expand input before parsing */
@@ -74,10 +89,9 @@ int	main(int argc, char **argv, char **env)
 		if (!ft_strncmp(input, "exit", 5))
 			exit(0);
 		ret = parse_cmds(input, &env_table);
-		// exec_cmds();
 		if (ret == 1)
 		{
-			// free(input);
+			free(input);
 			continue;
 		}
 		// printf("=========CMDGROUPS=============\n");

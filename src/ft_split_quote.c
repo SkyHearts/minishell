@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:52:31 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/14 19:57:41 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/17 12:17:24 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	**ft_split_quoted(char *input, char delim)
 	j = 0;
 	k = 0;
 	splitted = split_allocation(arg_count_quoted(input, delim));
-	if (!splitted)
+	if (!splitted || !ft_strcmp(input, ""))
 		return (NULL);
 	while (i <= (int)ft_strlen(input))
 	{

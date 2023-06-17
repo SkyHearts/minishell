@@ -6,13 +6,13 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:07:18 by jyim              #+#    #+#             */
-/*   Updated: 2023/05/06 15:30:51 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/14 15:54:04 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	ft_str_cmp_str(char s, char *op_list)
+int	ft_char_cmp_str(char s, char *op_list)
 {
 	int i;
 
@@ -76,11 +76,18 @@ char	*reduce_space(char *str, size_t len, size_t pos)
 
 char	*expand_str(char *s, int i)
 {
+	
+	if (s[i + 1] != ' ' && !ft_char_cmp_str(s[i + 1], OPERATORS)
+			&& !if_quotes(s[i + 1]) && s[i + 1])
+		s = add_space(s, ft_strlen(s), i + 1);
 	if (i > 0)
 	{
-		if (s[i + 1] != ' ' && !ft_str_cmp_str(s[i + 1], OPERATORS))
-			s = add_space(s, ft_strlen(s), i + 1);
-		if (s[i - 1] != ' ' && !ft_str_cmp_str(s[i - 1], OPERATORS))
+		if (if_quotes(s[i - 1]) && s[i] == '|')
+			s = add_space(s, ft_strlen(s), i);
+		else if (if_quotes(s[i - 1]) && ft_char_cmp_str(s[i - 1], "\"'"))
+			s = add_space(s, ft_strlen(s), i);
+		else if (s[i - 1] != ' ' && !ft_char_cmp_str(s[i - 1], OPERATORS)
+				&& !if_quotes(s[i - 1]))
 			s = add_space(s, ft_strlen(s), i);
 	}
 	return (s);
@@ -89,11 +96,19 @@ char	*expand_str(char *s, int i)
 char	*expand_operators(char *s)
 {
 	int		i;
+	char	quote_type;
 
 	i = 0;
+	quote_type = -1;
 	while (s[i])
 	{
-		if (s[i] == PIPE)
+		if (if_quotes(s[i]))
+		{
+			quote_type = s[i++];
+			while (s[i] && s[i] != quote_type)
+				i++;
+		}
+		else if (s[i] == PIPE)
 			s = expand_str(s, i);
 		else if (s[i] == REDIRECT_LEFT)
 			s = expand_str(s, i);
