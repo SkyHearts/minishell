@@ -62,16 +62,16 @@ void	call_cmd(t_env *env_table, t_pipe pipe, char **envp)
 
 	i = -1;
 	pipe.cmd = find_cmd(env_table->path, *pipe.args);
-	printf("%s %s\n", pipe.cmd, *pipe.args);
+	// printf("%s %s\n", pipe.cmd, *pipe.args);
 	if (!pipe.cmd)
 	{
 		free(pipe.cmd);
 		error(FAIL_PIPE);
 		exit(1);
 	}
-	printf("here \n");
+	// printf("here \n");
 	execve(pipe.cmd, pipe.args, envp);
-	printf("pass execve\n");
+	// printf("pass execve\n");
 	free(pipe.cmd);
 }
 
@@ -82,12 +82,13 @@ int	check_command(t_env *env_table, int m)
 	{
 		if (ft_strcmp(env_table->cmdgroups[m].args[0], env_table->functions[i]) == 0)
 		{
-			printf("pass\n");
+			// printf("pass\n");
 			env_table->func[i](env_table, env_table->cmdgroups[m].args);
-			return 1;
+			exit(0);
+			// return (1);
 		}
 	}
-	return 0;
+	return (0);
 }
 
 void	last_child(t_env *env_table, t_pipe pipe, int m, char **envp, int files[2][2])
