@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/17 12:31:03 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/20 20:51:17 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,5 +157,8 @@ void	ft_exit(t_env *env_table, char **str);
 void	ft_pipe(t_env *env_table, char **env);
 
 # define ERR_CMD "Command not found"
+# define FAIL_DUP "Dup fail"
+# define FAIL_PIPE "Pipe failed"
+# define FAIL_WAITPID "Failed waitpid"
 
 #endif

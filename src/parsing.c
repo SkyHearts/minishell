@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/17 12:30:05 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/17 17:17:03 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	input_rdr(char **splitted, t_pipe *cmdgroups)
 	j = 0;
 	num_rdr = 0;
 	start = 0;
-	printf("AT INPUT_RDR\n");
+	// printf("AT INPUT_RDR\n");
 	while (splitted[++i])
 	{
 		if (is_pipes(splitted[i]) || splitted[i + 1] == NULL)
@@ -129,14 +129,14 @@ void	input_commands(char **splitted, t_pipe *cmdgroups)
 
 	i = -1;
 	j = 0;
-	printf("AT INPUT_COMMANDS\n");
+	// printf("AT INPUT_COMMANDS\n");
 	while (splitted[++i])
 	{	
 		if (is_rdr(splitted[i]))
 			i++;
 		else if (!is_rdr(splitted[i]) && !is_pipes(splitted[i]))
 		{
-			printf("current splited[%d]: %s\n",i, splitted[i]);
+			// printf("current splited[%d]: %s\n",i, splitted[i]);
 			(cmdgroups)[j].args = ft_append_2d
 				((cmdgroups)[j].args, splitted[i]);
 		}
