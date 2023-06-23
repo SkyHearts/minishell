@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/20 20:51:17 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/23 10:11:35 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,9 @@ int	is_pipes(char *splitted);
 int	if_quotes(char input);
 int	ft_char_cmp_str(char s, char *op_list);
 int	is_operator(char *str);
+int	ft_isalpha_equal(int c);
 void	error(char *err);
+void	free_doublearray(char **array);
 
 /* Parsing */
 /* quotes */
@@ -151,6 +153,11 @@ void	print_darray(char **array);
 
 // builtins
 void	ft_echo(t_env *env_table, char **str);
+void	ft_cd(t_env *env_table, char **str);
+void	ft_pwd(t_env *env_table, char **str);
+void	ft_export(t_env *env_table, char **str);
+void	ft_unset(t_env *env_table, char **str);
+void	ft_env(t_env *env_table, char **str);
 void	ft_exit(t_env *env_table, char **str);
 
 // pipe
