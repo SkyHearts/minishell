@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 13:50:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/17 12:30:20 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/22 17:15:08 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,4 @@ void	ft_echo(t_env *env_table, char **str)
 	}
 	else
 		print_start(str, 2);
-}
-
-void	ft_exit(t_env *env_table, char **str)
-{
-	(void)env_table;
-	(void)str;
-	exit(0);
 }
