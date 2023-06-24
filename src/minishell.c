@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/24 13:56:54 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/24 17:39:42 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void init_func(t_env *env_table)
 	env_table->func[E_UNSET] = ft_unset;
 	env_table->func[E_ENV] = ft_env;
 	env_table->func[E_EXIT] = ft_exit;
-	env_table->functions = ft_split("echo cd pwd export unset env", ' ');
+	env_table->functions = ft_split("echo cd pwd export unset env exit", ' ');
 	env_table->errnumber = 0;
 }
 
@@ -102,12 +102,12 @@ int	main(int argc, char **argv, char **env)
 		{
 			int k = -1;
 			while (env_table.cmdgroups[m].args[++k])
-				printf("cmdgroups[%d][%d]: %s$\n", m, k, env_table.cmdgroups[m].args[k]);
+				printf("cmdgroups[%d][%d]: [%s]$\n", m, k, env_table.cmdgroups[m].args[k]);
 			k = -1;
 			while (env_table.cmdgroups[m].rdr_info[++k].rdr_str)
 			{
-				printf("cmdgroups[%d][%d]rdrstr: %s$\n", m, k, env_table.cmdgroups[m].rdr_info[k].rdr_str);
-				printf("cmdgroups[%d][%d]rdrtype: %d$\n", m, k, env_table.cmdgroups[m].rdr_info[k].rdr_type);
+				printf("cmdgroups[%d][%d]rdrstr: [%s]$\n", m, k, env_table.cmdgroups[m].rdr_info[k].rdr_str);
+				printf("cmdgroups[%d][%d]rdrtype: [%d]$\n", m, k, env_table.cmdgroups[m].rdr_info[k].rdr_type);
 			}
 			// while (env_table.cmdgroups[m].rdr_info[k])
 				

@@ -6,9 +6,11 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 09:26:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/24 13:51:53 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/24 14:01:59 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../inc/minishell.h"
 
 // void	replace_substring(char *tmp_env, char **str, int *j)
 // {	

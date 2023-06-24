@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/24 13:57:20 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/24 15:21:09 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,10 @@ int	if_quotes(char input);
 int	ft_char_cmp_str(char s, char *op_list);
 int	is_operator(char *str);
 int	ft_isalpha_equal(int c);
+int	ft_isalnum_q(int c);
 void	error(char *err);
 void	free_doublearray(char **array);
+char	*ft_strcat(char *s1, const char *s2);
 
 /* Parsing */
 /* quotes */

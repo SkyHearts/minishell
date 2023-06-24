@@ -73,6 +73,7 @@ void	call_cmd(t_env *env_table, t_pipe pipe, char **envp)
 	execve(pipe.cmd, pipe.args, envp);
 	// printf("pass execve\n");
 	free(pipe.cmd);
+	exit(0);
 }
 
 int	check_command(t_env *env_table, int m)

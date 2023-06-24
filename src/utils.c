@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:45:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/24 13:56:00 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/24 15:20:32 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,18 @@ int	ft_isalpha_equal(int c)
 	if ((c >= 65 && c <= 90) || c == '=')
 		return (c);
 	else if ((c >= 97 && c <= 122) || c == '=')
+		return (c);
+	else
+		return (0);
+}
+
+int	ft_isalnum_q(int c)
+{
+	if ((c >= 65 && c <= 90) || c == '?')
+		return (c);
+	else if (c >= 97 && c <= 122)
+		return (c);
+	else if (c >= '0' && c <= '9')
 		return (c);
 	else
 		return (0);
@@ -173,4 +185,21 @@ char	**ft_append_2d(char **args, char *str)
 		i++;
 	temp_args = copy_and_free_doublearray(args, str, i);
 	return (temp_args);
+}
+
+char	*ft_strcat(char *s1, const char *s2)
+{
+	char *dest;
+	
+	dest = s1;
+	while (*s1)
+		s1++;
+	while (*s2)
+	{
+		*s1 = *s2;
+		s1++;
+		s2++;
+	}
+	*s1 = '\0';
+	return (dest);
 }
