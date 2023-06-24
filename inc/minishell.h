@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/17 12:31:03 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/19 15:04:16 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_env
 	char		**path;
 	int			nos_pipe;
 	char		**functions;
+	int			errnumber	;
 	t_pipe		*cmdgroups;
 	t_pipe		*pipe;
 	t_function	func[7];

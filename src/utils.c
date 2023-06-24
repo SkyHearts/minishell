@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:45:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/17 12:25:14 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/20 17:35:51 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ char	**ft_append_2d(char **args, char *str)
 	char	**temp_args;
 
 	i = 0;
-	printf("Appending spllited: %s$\n", str);
+	// printf("Appending spllited: [%s]\n", str);
 	if (args == NULL)
 	{
 		temp_args = (char **)malloc (sizeof(char *) * 2);

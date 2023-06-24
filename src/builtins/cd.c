@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:52:52 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/17 11:57:30 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/19 14:58:35 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ void	ft_cd(t_env *env_table, char **str)
 
 	cwd = getcwd(NULL, 0);
 	home = gethome(env_table->env);
-	if (str[1] == NULL)
+	if (str[1] == NULL || str[1] == "~")
 		chdir(home);
 	else if (str[1][0] != '/')
 	{

@@ -52,6 +52,11 @@ ret = 1 // Empty input so continue loop to obtain new input
 ret = 2 // Syntax error, return error msg and continue loop to obtain new input
 ret = 3 // Command error, return error msg and continue loop to obtain new input
 
+Handle Dollar sign
+"ASD $USER"\0 [12] = "ASD jyim"\0 [11]
+"$USER $USER"\0 [14] = "jyim $USER"\0 [13] -> "jyim jyim"\0 [12]
+"$SAD" [7] = "" [3]
+-$SAD- [7] = -- [3]
 OR
 
 					pipe
