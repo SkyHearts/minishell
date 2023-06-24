@@ -31,6 +31,17 @@ cmdgroup[0].args[1] = hello' world
 cmdgroup[0].rdr = APPEND;
 cmdgroup[0].rdr_filename = "text";
 
+<<eof >text5
+cmdgroups[0].rdr_info[0].rdr = HEREDOC
+cmdgroup[0].rdr_info[0].rdr_filename = eof
+cmdgroups[0].rdr_info[1].rdr = OUT
+cmdgroup[0].rdr_info[1].rdr_filename = text5
+
+<	IN = 1,
+>	OUT = 2,
+<<	HEREDOC = 3,
+>>	APPEND = 4,
+
 // Item 1
 cmdgroup[1].args = (char **)[wc, -l]
 cmdgroup[1].rdr = NULL;

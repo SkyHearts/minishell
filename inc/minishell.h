@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/19 15:04:16 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/24 13:57:20 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,9 @@ int	is_pipes(char *splitted);
 int	if_quotes(char input);
 int	ft_char_cmp_str(char s, char *op_list);
 int	is_operator(char *str);
+int	ft_isalpha_equal(int c);
 void	error(char *err);
+void	free_doublearray(char **array);
 
 /* Parsing */
 /* quotes */
@@ -152,11 +154,19 @@ void	print_darray(char **array);
 
 // builtins
 void	ft_echo(t_env *env_table, char **str);
+void	ft_cd(t_env *env_table, char **str);
+void	ft_pwd(t_env *env_table, char **str);
+void	ft_export(t_env *env_table, char **str);
+void	ft_unset(t_env *env_table, char **str);
+void	ft_env(t_env *env_table, char **str);
 void	ft_exit(t_env *env_table, char **str);
 
 // pipe
 void	ft_pipe(t_env *env_table, char **env);
 
 # define ERR_CMD "Command not found"
+# define FAIL_DUP "Dup fail"
+# define FAIL_PIPE "Pipe failed"
+# define FAIL_WAITPID "Failed waitpid"
 
 #endif

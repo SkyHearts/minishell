@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/21 10:02:09 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/24 13:56:54 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void init_func(t_env *env_table)
 {
 	env_table->func[E_ECHO] = ft_echo;
-	// env_table->func[E_CD] = func_cd;
-	// env_table->func[E_PWD] = func_pwd;
-	// env_table->func[E_EXPORT] = func_export;
-	// env_table->func[E_UNSET] = func_unset;
-	// env_table->func[E_ENV] = func_env;
+	env_table->func[E_CD] = ft_cd;
+	env_table->func[E_PWD] = ft_pwd;
+	env_table->func[E_EXPORT] = ft_export;
+	env_table->func[E_UNSET] = ft_unset;
+	env_table->func[E_ENV] = ft_env;
 	env_table->func[E_EXIT] = ft_exit;
 	env_table->functions = ft_split("echo cd pwd export unset env", ' ');
 	env_table->errnumber = 0;
@@ -87,9 +87,9 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = read_input();
-		if (!ft_strncmp(input, "exit", 5))
-			exit(0);
 		ret = parse_cmds(input, &env_table);
+		// if (!ft_strncmp(input, "exit", 5))
+		// 	exit(0);
 		if (ret == 1)
 		{
 			free(input);

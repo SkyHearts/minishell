@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:45:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/20 17:35:51 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/24 13:56:00 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@ void	error(char *err)
 {
 	perror(err);
 	exit(1);
+}
+
+int	ft_isalpha_equal(int c)
+{
+	if ((c >= 65 && c <= 90) || c == '=')
+		return (c);
+	else if ((c >= 97 && c <= 122) || c == '=')
+		return (c);
+	else
+		return (0);
 }
 
 int	has_pipes(char **splitted)
@@ -151,7 +161,7 @@ char	**ft_append_2d(char **args, char *str)
 	char	**temp_args;
 
 	i = 0;
-	// printf("Appending spllited: [%s]\n", str);
+	// printf("Appending spllited: %s$\n", str);
 	if (args == NULL)
 	{
 		temp_args = (char **)malloc (sizeof(char *) * 2);
