@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 11:54:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/23 11:56:44 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/27 11:03:37 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,26 @@
 void	delete_env_var(t_env *env_table, char *argv)
 {
 	char	**tmp_table;
+	int		size;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	while (env_table->env[i] != NULL)
-		i++;
-	tmp_table = (char **) malloc(sizeof(char *) * (i));
+	size = 0;
+	while (env_table->env[size] != NULL)
+		size++;
+	tmp_table = (char **) malloc(sizeof(char *) * (size));
 	i = 0;
-	while (env_table->env[j] != NULL)
+	while (env_table->env[j] != NULL && j < size)
 	{
-		tmp_table[i] = ft_strdup(env_table->env[j]);
-		i++;
-		j++;
-		if (!ft_strncmp(env_table->env[j], argv, ft_strlen(argv)))
+		if (ft_strncmp(env_table->env[j], argv, ft_strlen(argv)))
+		{
+			tmp_table[i] = ft_strdup(env_table->env[j]);
+			i++;
+			j++;
+		}
+		else
 			j++;
 	}
 	tmp_table[i] = NULL;
@@ -47,9 +52,13 @@ void	update_env_unset(t_env *env_table, char *argv)
 	j = -1;
 	var_found = 0;
 	while (env_table->env[++i] != NULL)
+	{
 		if (!ft_strncmp(env_table->env[i], argv, ft_strlen(argv)))
+		{
 			var_found = 1;
-	printf("var_found : [%d]\n", var_found);
+			break ;
+		}
+	}
 	if (var_found == 1)
 		delete_env_var(env_table, argv);
 }
