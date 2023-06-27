@@ -12,6 +12,12 @@
 
 #include "../inc/minishell.h"
 
+void	reset_signal(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
 void	ft_dup(int m, int fd1, int fd2)
 {
 	int ret;
@@ -24,17 +30,23 @@ void	ft_dup(int m, int fd1, int fd2)
 
 void	wait_pid(t_env *env_table, int *pid)
 {
-	int		status;
+	int	status;
 	int i;
 
 	i = -1;
 
 	while (++i < env_table->nos_pipe)
 	{
-		// printf("nos pipe [%d]\n", env_table->nos_pipe);
-		// printf("enter waitpid [%d]\n", i);
-		waitpid(pid[i], &status, 0);
-		// printf("pass wait\n");
+		if (waitpid(pid[i], &status, 0) > 0)
+		{
+			if (WIFEXITED(status))
+				env_table->errnumber = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				if (WTERMSIG(status) == 2)
+					env_table->errnumber = 130;
+		}
+		else
+			printf("waitpid error");
 	}
 }
 
@@ -44,10 +56,16 @@ char	*find_cmd(char **path, char *cmd)
 	char	*dir_cmd;
 	int		i;
 	i = -1;
+	if (!path)
+		return (NULL);
 	while (path[++i])
 	{
-		directory = ft_strjoin(path[i], "/");
+		if (cmd[0] != '.')
+			directory = ft_strjoin(path[i], "/");
+		else
+			directory = ft_strdup("");
 		dir_cmd = ft_strjoin(directory, cmd);
+		// printf("dir_cmd[%s]\n", dir_cmd);
 		free(directory);
 		if (access(dir_cmd, X_OK) == 0)
 			return (dir_cmd);
@@ -61,17 +79,17 @@ void	call_cmd(t_env *env_table, t_pipe pipe, char **envp)
 	int i;
 
 	i = -1;
+	reset_signal();
 	pipe.cmd = find_cmd(env_table->path, *pipe.args);
-	// printf("%s %s\n", pipe.cmd, *pipe.args);
+	// printf("pipe.cmd[%s] pipe.args[%s]\n", pipe.cmd, *pipe.args);
 	if (!pipe.cmd)
 	{
 		free(pipe.cmd);
-		error(FAIL_PIPE);
-		exit(1);
+		// error(FAIL_PIPE);
+		printf("%s: %s\n", pipe.args[0], "No such file or directory");
+		exit(127);
 	}
-	// printf("here \n");
 	execve(pipe.cmd, pipe.args, envp);
-	// printf("pass execve\n");
 	free(pipe.cmd);
 	exit(0);
 }
@@ -83,10 +101,8 @@ int	check_command(t_env *env_table, int m)
 	{
 		if (ft_strcmp(env_table->cmdgroups[m].args[0], env_table->functions[i]) == 0)
 		{
-			// printf("pass\n");
 			env_table->func[i](env_table, env_table->cmdgroups[m].args);
 			exit(0);
-			// return (1);
 		}
 	}
 	return (0);
@@ -232,11 +248,14 @@ void	ft_pipe(t_env *env_table, char **envp)
 	int ret;
 
 	ret = -1;
+	signal(SIGINT, sig_handler_nl);
+	env_table->path = extract_path(env_table, env_table->env);
+	// print_darray(env_table->path);
 	pid = ft_calloc(env_table->nos_pipe, sizeof(int));
 	if (env_table->nos_pipe > 1)
 		multi_pipe(env_table, envp, pid);
 	else
-		ret = one_child(env_table, envp, pid);
+		ret = one_child(env_table, env_table->env, pid);
 	if (ret == -1)
 		wait_pid(env_table, pid);
 	free(pid);

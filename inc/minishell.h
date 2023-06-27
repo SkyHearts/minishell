@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/24 15:21:09 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/27 11:03:32 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct s_env
 
 /* env function */
 char	**dup_env(char **env);
-char	**extract_path(char **env_table);
+char	**extract_path(t_env *env, char **env_table);
 void	show_env(char **env_table);
 void	print_darray(char **array);
 
@@ -113,6 +113,11 @@ void	print_darray(char **array);
 char	*expand_operators(char *s);
 char	*reduce_double_operators(char *s);
 int		ft_is_double_operator(char *s, int i);
+
+/* Signal */
+void	init_signal(void);
+void	sig_handler(int signum);
+void	sig_handler_nl(int signum);
 
 /* Utils */
 int	has_pipes(char **splitted);

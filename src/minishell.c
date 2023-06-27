@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/24 17:39:42 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/27 09:00:04 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void init_func(t_env *env_table)
 {
+	env_table->path = NULL;
 	env_table->func[E_ECHO] = ft_echo;
 	env_table->func[E_CD] = ft_cd;
 	env_table->func[E_PWD] = ft_pwd;
@@ -58,12 +59,14 @@ char *read_input(void)
 {
 	char *input;
 
+	init_signal();
 	input = readline("minishell> ");
 	if (input == NULL)
 		exit_error();
 	while (check_quotes(input))
 			input = insert_line(input);
-	add_history(input);
+	if (ft_strcmp(input, ""))
+		add_history(input);
 	// printf("Input: %s\n", input);
 	input = reduce_white_spaces(input);
 	input = expand_operators(input);
@@ -77,11 +80,11 @@ int	main(int argc, char **argv, char **env)
 	char		*input;
 	int 		ret;
 
+	init_func(&env_table);
 	env_table.env = dup_env(env);
-	env_table.path = extract_path(env_table.env);
+	env_table.path = extract_path(&env_table, env_table.env);
 	(void)argc;
 	(void)argv;
-	init_func(&env_table);
 	// print_darray(env_table.env);
 	// print_darray(env_table.path);
 	while (1)

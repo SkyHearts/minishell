@@ -1,19 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 12:55:55 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/27 09:06:48 by jyim             ###   ########.fr       */
+/*   Created: 2023/06/26 14:40:52 by jyim              #+#    #+#             */
+/*   Updated: 2023/06/27 08:52:59 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	init_shell(t_env *env_table, char **env)
+void	sig_handler_nl(int signum)
 {
-	env_table->env = dup_env(env);
-	env_table->path = extract_path(env_table, env);
+	if (signum != SIGINT)
+		return ;
+	write(1, "\n", 1);
+}
+
+
+void	sig_handler(int signum)
+{
+	if (signum != SIGINT)
+		return ;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
+
+void	init_signal(void)
+{
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
