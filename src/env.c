@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:37:53 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/22 17:11:43 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/27 10:49:12 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,24 @@ char	**dup_env(char **env)
 	return (tmp_table);
 }
 
-char	**extract_path(char **env_table)
+char	**extract_path(t_env *env, char **env_table)
 {
 	int		i;
 	char	**path_split;
 
 	i = 0;
+	if (env->path)
+		free(env->path);
 	while(env_table[i])
 	{
 		if (!ft_strncmp(env_table[i], "PATH=", 5))
+		{
 			path_split = ft_split(env_table[i] + 5, ':');
+			return (path_split);
+		}
 		i++;
 	}
-	return (path_split);
+	return (NULL);
 }
 
 void	show_env(char **env_table)
