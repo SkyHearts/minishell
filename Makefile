@@ -2,7 +2,8 @@ NAME	= minishell
 CC		= gcc
 
 CFLAGS	= -Wall -Wextra -Werror $(INCLUDES) -fsanitize=address -g3 
-INCLUDES = -I inc -I ${LIBFT_DIR}
+INCLUDES = -I inc -I ${LIBFT_DIR} -I/usr/local/opt/readline/include
+READLINE	= -lreadline -L/usr/local/opt/readline/lib 
 
 LIBFT_DIR		= utils/libft
 LIBFT_LIB		= libft.a
@@ -10,7 +11,8 @@ LIBFT_LIB		= libft.a
 #PRINT_DIR		= inc/ft_printf
 #PRINT_LIB		= libftprintf.a
 
-SHELL_SRCS	=	minishell.c utils.c env.c expander.c ft_split_quote.c init.c parsing.c tokenize.c pipe.c 
+SHELL_SRCS	=	minishell.c utils.c env.c expander.c ft_split_quote.c init.c parsing.c tokenize.c pipe.c \
+				signal.c
 SHELL_SRCS_DIR	= src/
 SHELL_OBJS = $(addprefix $(SHELL_SRCS_DIR), $(SHELL_SRCS:.c=.o))
 
@@ -30,7 +32,7 @@ ${LIBFT_DIR}/${LIBFT_LIB}:
 
 ${NAME}:	${PRINT_DIR}/${PRINT_LIB} ${LIBFT_DIR}/${LIBFT_LIB} ${SHELL_OBJS} ${BUILTINS_OBJS}
 	@echo "Compiling minishell"
-	${CC} ${CFLAGS} ${SHELL_OBJS} ${BUILTINS_OBJS} -o ${NAME} -L${LIBFT_DIR} -lft -lreadline 
+	${CC} ${CFLAGS} ${SHELL_OBJS} ${BUILTINS_OBJS} -o ${NAME} ${READLINE} -L${LIBFT_DIR} -lft 
 
 clean:
 	@echo "cleaning files"

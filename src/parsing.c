@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/24 17:38:59 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/26 15:20:02 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,9 +293,9 @@ int	parse_cmds(char *input, t_env *env_table)
 	printf("Input before split: %s$\n", input);
 	splitted = ft_split_quoted(input, ' ');
 	printf("Input after split: %s$\n", input);
-	handle_dollarsign(splitted, env_table);
 	if (!ft_strcmp(input, "") || syntax_checking(splitted))
 		return (1);
+	handle_dollarsign(splitted, env_table);
 	// int	k = -1;
 	// while (splitted[++k])
 	// 	printf("splitted %d: [%s]\n", k, splitted[k]);
