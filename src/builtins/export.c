@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 11:55:08 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/23 11:36:46 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/29 14:58:29 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	update_env_cont(t_env *env_table, char *new_env, int j)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (env_table->env[++i] != NULL)
@@ -68,14 +68,14 @@ void	update_env_export(t_env *env_table, char *new_env)
 		new_env_var(env_table, new_env);
 }
 
-void	ft_export(t_env *env_table, char **argv)
+/* check if any arguments have '=' and only run if variable is correct */
+int	ft_export(t_env *env_table, char **argv)
 {
 	int		i;
 	int		j;
 	char	*env_cont;
-	
+
 	j = 0;
-	/* check if any arguments have '=' and only run if variable is correct */
 	while (argv[j])
 	{
 		if (ft_strchr(argv[j], '='))
@@ -86,12 +86,13 @@ void	ft_export(t_env *env_table, char **argv)
 				if (!ft_isalnum(argv[j][i]) && !ft_isalpha(argv[j][0]))
 				{
 					printf("env: %s: Invalid argument\n", argv[j]);
-					return ;
+					return (1);
 				}
 			}
-			env_cont = ft_substr(argv[j] , 0, ft_strlen(argv[j]));
+			env_cont = ft_substr(argv[j], 0, ft_strlen(argv[j]));
 			update_env_export(env_table, env_cont);
 		}
 		j++;
 	}
+	return (0);
 }

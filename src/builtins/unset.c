@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 11:54:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/27 11:03:37 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/29 14:55:13 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	delete_env_var(t_env *env_table, char *argv)
 	int		i;
 	int		j;
 
-	i = 0;
 	j = 0;
 	size = 0;
 	while (env_table->env[size] != NULL)
@@ -63,7 +62,7 @@ void	update_env_unset(t_env *env_table, char *argv)
 		delete_env_var(env_table, argv);
 }
 
-void	ft_unset(t_env *env_table, char **argv)
+int	ft_unset(t_env *env_table, char **argv)
 {
 	int		i;
 	int		j;
@@ -74,17 +73,19 @@ void	ft_unset(t_env *env_table, char **argv)
 		if (!ft_isalpha(argv[j][0]))
 		{
 			printf("unset: `%s': not a valid identifier argument\n", argv[j]);
-			return ;
+			return (1);
 		}
 		i = 0;
 		while (argv[j][++i])
 		{
 			if (!ft_isalnum(argv[j][i]))
 			{
-				printf("unset: `%s': not a valid identifier argument\n", argv[j]);
-				return ;
+				printf("unset: `%s': not a valid identifier argument\n",
+					argv[j]);
+				return (1);
 			}
 		}
 		update_env_unset(env_table, argv[j]);
 	}
+	return (0);
 }

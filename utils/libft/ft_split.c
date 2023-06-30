@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:59:39 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/27 09:22:49 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/28 15:36:53 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,10 @@ char	**ft_split(const char *str, char c)
 	if (pstr == NULL)
 		return (0);
 	words = count_words(pstr, c);
-	res = (char **)malloc(sizeof(char *) * (words + 2));
+	res = (char **)malloc(sizeof(char *) * (words + 1));
 	if (!res)
 		return (0);
 	res[words] = 0;
-	res[words + 1] = 0;
 	write_split(res, pstr, c);
-	res[words] = ft_strdup("");
 	return (res);
 }

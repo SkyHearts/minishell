@@ -96,7 +96,10 @@ void	call_cmd(t_env *env_table, t_pipe pipe, char **envp)
 
 int	check_command(t_env *env_table, int m)
 {
-	int i = -1;
+	int	i = -1;
+
+	if (env_table->cmdgroups[m].args == NULL)
+		exit(0);
 	while (++i < 7)
 	{
 		if (ft_strcmp(env_table->cmdgroups[m].args[0], env_table->functions[i]) == 0)
@@ -200,15 +203,15 @@ void	multi_pipe(t_env *env_table, char **envp, int *pid)
 
 int	run_one_command(t_env *env_table, int i)
 {
-	env_table->func[i](env_table, env_table->cmdgroups[0].args);
-	return (0);
+	return (env_table->func[i](env_table, env_table->cmdgroups[0].args));
 }
 
 int	run_builtins(t_env *env_table, int m)
 {
-	int i;
+	int	i;
 
 	i = -1;
+	printf("args [%s]\n", env_table->cmdgroups[m].args[0]);
 	if (!ft_strcmp(env_table->cmdgroups[m].args[0], "cd"))
 		i = 1;
 	else if (!ft_strcmp(env_table->cmdgroups[m].args[0], "export"))
@@ -219,7 +222,7 @@ int	run_builtins(t_env *env_table, int m)
 		i = 6;
 	if (i != -1)
 	{
-		return (run_one_command(env_table, i));//in out operations
+		return (run_one_command(env_table, i));
 	}
 	return (i);
 }
@@ -228,11 +231,11 @@ int one_child(t_env *env_table, char **envp, int *pid)
 {
 	int ret;
 
-	ret = -1;
+	ret = 0;
 	if (env_table->cmdgroups[0].args != NULL)
 		ret = run_builtins(env_table, 0);
 	if (ret != -1)
-		return (1);
+		return (ret);
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{
@@ -242,15 +245,14 @@ int one_child(t_env *env_table, char **envp, int *pid)
 	return (ret);
 }
 
-void	ft_pipe(t_env *env_table, char **envp)
+int	ft_pipe(t_env *env_table, char **envp)
 {
 	pid_t	*pid;
-	int ret;
+	int		ret;
 
 	ret = -1;
 	signal(SIGINT, sig_handler_nl);
 	env_table->path = extract_path(env_table, env_table->env);
-	// print_darray(env_table->path);
 	pid = ft_calloc(env_table->nos_pipe, sizeof(int));
 	if (env_table->nos_pipe > 1)
 		multi_pipe(env_table, envp, pid);
@@ -259,4 +261,5 @@ void	ft_pipe(t_env *env_table, char **envp)
 	if (ret == -1)
 		wait_pid(env_table, pid);
 	free(pid);
+	return (ret);
 }

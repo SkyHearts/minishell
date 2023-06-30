@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 14:40:52 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/27 08:52:59 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/29 14:45:23 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	sig_handler_nl(int signum)
 		return ;
 	write(1, "\n", 1);
 }
-
 
 void	sig_handler(int signum)
 {

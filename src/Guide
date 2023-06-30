@@ -30,6 +30,9 @@ cmdgroup[0].args[0] = echo
 cmdgroup[0].args[1] = hello' world
 cmdgroup[0].rdr = APPEND;
 cmdgroup[0].rdr_filename = "text";
+hdoc[0][0] = hdoc_str;
+hdoc[0][1] = hdoc_str;
+hdoc[0][2] = NULL
 
 <<eof >text5
 cmdgroups[0].rdr_info[0].rdr = HEREDOC
@@ -46,6 +49,8 @@ cmdgroup[0].rdr_info[1].rdr_filename = text5
 cmdgroup[1].args = (char **)[wc, -l]
 cmdgroup[1].rdr = NULL;
 cmdgroup[1].rdr_filename = NULL;
+hdoc[1][0] = hdoc_str;
+hdoc[1][1] = NULL;
 
 // Item 2
 cmdgroup[2].args = (char **)[cat]
@@ -106,3 +111,10 @@ echo "adfgaerg'
 
 line = "adfgaerg'\naerhergh" '\narwegseraebr'\0
 line = adfgaerg'\naerhergh \narwegseraebr\0
+
+syntax_error
+
+splitted[i]
+if redirects[i] && word[i + 1]
+	ok
+if 

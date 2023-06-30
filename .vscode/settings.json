@@ -16,6 +16,7 @@
 		"minishell.h": "c",
 		"__bit_reference": "c",
 		"ios": "c",
-		"algorithm": "c"
+		"algorithm": "c",
+		"chrono": "c"
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/27 11:03:32 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/30 09:10:12 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # define PIPE_OUT 1
 
 struct		s_env;
-typedef void	(*t_function)(struct s_env *env_table, char **argv);
+typedef int	(*t_function)(struct s_env *env_table, char **argv);
 
 typedef enum s_rdrtype
 {
@@ -97,7 +97,9 @@ typedef struct s_env
 	char		**path;
 	int			nos_pipe;
 	char		**functions;
-	int			errnumber	;
+	int			errnumber;
+	char		**rl_buffer;
+	char		**heredoc_cmd;
 	t_pipe		*cmdgroups;
 	t_pipe		*pipe;
 	t_function	func[7];
@@ -106,13 +108,23 @@ typedef struct s_env
 /* env function */
 char	**dup_env(char **env);
 char	**extract_path(t_env *env, char **env_table);
-void	show_env(char **env_table);
 void	print_darray(char **array);
 
 /* Input Manipulations */
 char	*expand_operators(char *s);
-char	*reduce_double_operators(char *s);
-int		ft_is_double_operator(char *s, int i);
+void	store_rl_buffer(char *input, t_env *env_table);
+
+/* Parsing */
+/* quotes split */
+char	*insert_line(char *input, t_env *env_table);
+int		if_quotes(char input);
+int		check_quotes(char *input);
+char	**ft_split_quoted(char *input, char delim);
+int		parse_cmds(char *input, t_env *env_table);
+void	print_darray(char **array);
+char	*reduce_white_spaces(char *s, int need_free);
+void	exit_error(void);
+int		syntax_checking(char **splitted);
 
 /* Signal */
 void	init_signal(void);
@@ -120,56 +132,48 @@ void	sig_handler(int signum);
 void	sig_handler_nl(int signum);
 
 /* Utils */
-int	has_pipes(char **splitted);
-char **ft_append_2d(char **args, char *str);
-int	is_rdr(char *splitted);
-int	is_pipes(char *splitted);
-int	if_quotes(char input);
-int	ft_char_cmp_str(char s, char *op_list);
-int	is_operator(char *str);
-int	ft_isalpha_equal(int c);
-int	ft_isalnum_q(int c);
+int		has_pipes(char **splitted);
+int		is_rdr(char *splitted);
+int		is_pipes(char *splitted);
+int		if_quotes(char input);
+int		ft_char_cmp_str(char s, char *op_list);
+int		is_operator(char *str);
+int		ft_isalpha_equal(int c);
+int		ft_isalnum_q(int c);
+char	*ft_strcat(char *s1, const char *s2);
+char	*ft_strjoin_f(char *s1, char *s2);
 void	error(char *err);
 void	free_doublearray(char **array);
-char	*ft_strcat(char *s1, const char *s2);
+char	*ft_strdup_quote(const char *src);
+char	**ft_append_2d(char **args, char *str);
+char	**ft_append_2d_nf(char **args, char *str);
+size_t	ft_strlen_n(const char *s);
 
-/* Parsing */
-/* quotes */
-char	*insert_line(char *input);
-int		if_quotes(char input);
-int		check_quotes(char *input);
+/* Handle Dollar sign */
+char	*find_env_cont(char *splitted, int start, t_env *env_table, char **str);
+char	*find_env_var(char *s, int start);
+char	*replace_sign(char *splitted, int start, t_env *env_table);
+void	handle_dollarsign(char **splitted, t_env *env_table, int hdoc);
 
-/* spaces */
-char	*reduce_white_spaces(char *s);
-void	exit_error(void);
-
-// builtins
-void	ft_echo(t_env *env_table, char **str);
-void	ft_exit(t_env *env_table, char **str);
-void	ft_cd(t_env *env_table, char **str);
-void	ft_env(t_env *env_table, char **str);
-void	ft_pwd(t_env *env_table, char **str);
-void	ft_export(t_env *env_table, char **argv);
-void	ft_unset(t_env *env_table, char **argv);
-
-
-/* split */
-char	**ft_split_quoted(char *input, char delim);
-
-int		parse_cmds(char *input, t_env *env_table);
-void	print_darray(char **array);
+/* Handle heredoc */
+char	**handle_heredoc(t_env *env_table);
 
 // builtins
-void	ft_echo(t_env *env_table, char **str);
-void	ft_cd(t_env *env_table, char **str);
-void	ft_pwd(t_env *env_table, char **str);
-void	ft_export(t_env *env_table, char **str);
-void	ft_unset(t_env *env_table, char **str);
-void	ft_env(t_env *env_table, char **str);
-void	ft_exit(t_env *env_table, char **str);
+int		ft_echo(t_env *env_table, char **str);
+int		ft_cd(t_env *env_table, char **str);
+int		ft_pwd(t_env *env_table, char **str);
+int		ft_export(t_env *env_table, char **str);
+int		ft_unset(t_env *env_table, char **str);
+int		ft_env(t_env *env_table, char **str);
+int		ft_exit(t_env *env_table, char **str);
 
 // pipe
-void	ft_pipe(t_env *env_table, char **env);
+int		ft_pipe(t_env *env_table, char **env);
+void	free_all(t_env *env_table);
+
+/* Free */
+void	free_all(t_env *env_table);
+void	free_var(t_env *env_table);
 
 # define ERR_CMD "Command not found"
 # define FAIL_DUP "Dup fail"
