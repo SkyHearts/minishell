@@ -34,11 +34,15 @@ hdoc[0][0] = hdoc_str;
 hdoc[0][1] = hdoc_str;
 hdoc[0][2] = NULL
 
-<<eof >text5
+<<eof >text5 | >file
 cmdgroups[0].rdr_info[0].rdr = HEREDOC
 cmdgroup[0].rdr_info[0].rdr_filename = eof
 cmdgroups[0].rdr_info[1].rdr = OUT
 cmdgroup[0].rdr_info[1].rdr_filename = text5
+cmdgroups[1].rdr_info[0].rdr = OUT
+cmdgroup[1].rdr_info[0].rdr_filename = file
+
+<ASD | >ZXC
 
 <	IN = 1,
 >	OUT = 2,

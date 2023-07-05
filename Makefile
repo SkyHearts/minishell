@@ -1,8 +1,8 @@
 NAME	= minishell
 CC		= gcc
-FSAN	= -fsanitize=address -g3 
-CFLAGS	= -Wall -Wextra -Werror $(INCLUDES) 
-INCLUDES = -I inc -I ${LIBFT_DIR} -I/usr/local/opt/readline/include $(FSAN) 
+FSAN	= -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror $(INCLUDES) -g3
+INCLUDES = -I inc -I ${LIBFT_DIR} -I/usr/local/opt/readline/include
 READLINE	= -lreadline -L/usr/local/opt/readline/lib 
 #valgrind --leak-check=full --show-leak-kinds=all ./minishell
 LIBFT_DIR		= utils/libft

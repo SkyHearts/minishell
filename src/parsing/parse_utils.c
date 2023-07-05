@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 13:50:41 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/30 15:14:50 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/05 19:00:57 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	pipe_operators(char **split)
 			{
 				if (split[i + 2] == NULL || is_operator(split[i + 2]))
 					printf("syntax error near unexpected token '%s'\n", split[i]);
-				return (258);
+				return (printf("syntax error near unexpected token '%s'\n", split[i]), 258);
 			}
 		}
 		i++;
@@ -74,19 +74,19 @@ int	pipe_operators(char **split)
 	return (0);
 }
 
-int	rdr_operators(char *s, char *s_plus_1, char *s_plus_2)
-{
-	if (is_operator(s_plus_1) == 3)
-		printf("syntax error near unexpected token 'newline'\n");
-	else if (is_pipes(s) && is_operator(s_plus_1))
-	{
-		if (!is_operator(s_plus_2))
-			return (0);
-		printf("syntax error near unexpected token here2'%s'\n",
-			s);
-	}
-	return (258);
-}
+//int	rdr_operators(char *s, char *s_plus_1, char *s_plus_2)
+//{
+//	if (is_operator(s_plus_1) == 3)
+//		printf("syntax error near unexpected token 'newline'\n");
+//	else if (is_pipes(s) && is_operator(s_plus_1))
+//	{
+//		if (!is_operator(s_plus_2))
+//			return (0);
+//		printf("syntax error near unexpected token here2'%s'\n",
+//			s);
+//	}
+//	return (258);
+//}
 
 int	syntax_checking(char **split)
 {

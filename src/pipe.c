@@ -21,7 +21,8 @@ void	reset_signal(void)
 void	ft_dup(int m, int fd1, int fd2)
 {
 	int ret;
-	printf("[%d]\n", m);
+	(void)m;
+	//printf("[%d]\n", m);
 	ret = dup2(fd1, fd2);
 
 	if (ret == -1)

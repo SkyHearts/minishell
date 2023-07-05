@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 13:37:41 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/30 08:57:39 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/05 17:24:10 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,24 @@ void	free_var(t_env *env_table)
 	while (i < env_table->nos_pipe)
 	{
 		if (env_table->cmdgroups[i].args != NULL)
-		{
 			free_doublearray(env_table->cmdgroups[i].args);
-			while (j < env_table->cmdgroups[i].rdr_count)
-			{
-				free(env_table->cmdgroups[i].rdr_info[j].rdr_str);
-				j++;
-			}
-			free(env_table->cmdgroups[i].rdr_info);
+		j = 0;
+		while (j < env_table->cmdgroups[i].rdr_count)
+		{
+			free(env_table->cmdgroups[i].rdr_info[j].rdr_str);
+			j++;
 		}
+		if (env_table->cmdgroups[i].rdr_info != NULL)
+			free(env_table->cmdgroups[i].rdr_info);
 		i++;
 	}
 	free(env_table->cmdgroups);
-	// free_hdoc(env_table);
-	free_doublearray(env_table->heredoc_cmd);
+	//free_doublearray(env_table->heredoc_cmd);
+	if (env_table->heredoc_cmd != NULL)
+	{
+		free_doublearray(env_table->heredoc_cmd);
+		env_table->heredoc_cmd = NULL;
+	}
 }
 
 void	free_all(t_env *env_table)
@@ -59,24 +63,28 @@ void	free_all(t_env *env_table)
 	int	j;
 
 	i = 0;
-	j = 0;
 	free_doublearray(env_table->env);
 	free_doublearray(env_table->path);
 	free_doublearray(env_table->functions);
 	while (i < env_table->nos_pipe)
 	{
-		free_doublearray(env_table->cmdgroups[i].args);
+		if (env_table->cmdgroups[i].args != NULL)
+			free_doublearray(env_table->cmdgroups[i].args);
+		j = 0;
 		while (j < env_table->cmdgroups[i].rdr_count)
 		{
 			free(env_table->cmdgroups[i].rdr_info[j].rdr_str);
 			j++;
 		}
-		free(env_table->cmdgroups[i].rdr_info);
+		if (env_table->cmdgroups[i].rdr_info != NULL)
+			free(env_table->cmdgroups[i].rdr_info);
 		i++;
 	}
 	free(env_table->cmdgroups);
 	free_doublearray(env_table->rl_buffer);
-	free_doublearray(env_table->heredoc_cmd);
-	// free_hdoc(env_table);
+	//free_doublearray(env_table->heredoc_cmd);
+	if (env_table->heredoc_cmd != NULL)
+		free_doublearray(env_table->heredoc_cmd);
+	//free_hdoc(env_table);
 	rl_clear_history();
 }

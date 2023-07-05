@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:31:30 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/30 09:11:10 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/05 18:55:28 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*ft_strjoin_f(char *s1, char *s2)
 		return (ft_strdup(""));
 	join_len = ft_strlen_n(s1) + ft_strlen_n(s2);
 	strjoin = malloc(sizeof(char) * (join_len) + 1);
+	//printf("joined length [%zu]\n", join_len);
 	if (!strjoin)
 		return (NULL);
 	i = 0;
@@ -85,7 +86,7 @@ char	*ft_strjoin_f(char *s1, char *s2)
 	while (s2[j] != '\0')
 		strjoin[i++] = s2[j++];
 	strjoin[i] = '\0';
-	if (!s1)
+	if (s1 != NULL)
 		free(s1);
 	return (strjoin);
 }

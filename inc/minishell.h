@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/30 09:10:12 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/05 15:41:50 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <string.h>
-# include "tokenize.h"
 # include "../utils/libft/libft.h"
 # include <stdlib.h>
 # include <string.h>
@@ -90,6 +89,7 @@ typedef struct s_pipe
 	t_rdrinfo		*rdr_info;
 }				t_pipe;
 
+/*<file1  cat | wc -l >file2*/
 /* Env Info */
 typedef struct s_env
 {
@@ -174,6 +174,9 @@ void	free_all(t_env *env_table);
 /* Free */
 void	free_all(t_env *env_table);
 void	free_var(t_env *env_table);
+
+/* Readline Buffer Collector */
+void	store_rl_buffer(char *input, t_env *env_table);
 
 # define ERR_CMD "Command not found"
 # define FAIL_DUP "Dup fail"

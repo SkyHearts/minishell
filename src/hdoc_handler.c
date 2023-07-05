@@ -6,13 +6,13 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 17:36:18 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/30 13:21:08 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/05 16:13:27 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*read_hdoc(char *eof)
+char	*read_hdoc(char *eof, t_env *env_table)
 {
 	char	*input;
 	char	*tmp1;
@@ -23,13 +23,15 @@ char	*read_hdoc(char *eof)
 		return (NULL);
 	while (1)
 	{
-		input = readline(">");
+		input = readline("HEREDOC>");
 		if (!input)
 			return (NULL);
+		store_rl_buffer(input, env_table);
 		if (!ft_strcmp(eof, input))
 			break ;
 		tmp1 = ft_strjoin(input, "\n");
 		rstr = ft_strjoin_f(rstr, tmp1);
+		free(tmp1);
 	}
 	return (rstr);
 }
@@ -38,6 +40,7 @@ char	*input_hdoc(t_env *env_table, int i)
 {
 	int		j;
 	char	*hdoc_str;
+	char	*eof;
 
 	hdoc_str = NULL;
 	j = -1;
@@ -47,7 +50,8 @@ char	*input_hdoc(t_env *env_table, int i)
 		{
 			if (hdoc_str != NULL)
 				free(hdoc_str);
-			hdoc_str = read_hdoc(env_table->cmdgroups[i].rdr_info[j].rdr_str);
+			eof = env_table->cmdgroups[i].rdr_info[j].rdr_str;
+			hdoc_str = read_hdoc(eof, env_table);
 		}
 	}
 	if (hdoc_str == NULL)
@@ -65,12 +69,13 @@ char	**handle_heredoc(t_env *env_table)
 
 	i = -1;
 	hdoc = malloc (sizeof(char *) * (env_table->nos_pipe + 1));
+	if (!hdoc)
+		return (NULL);
 	while (++i < env_table->nos_pipe)
-	{
 		hdoc[i] = input_hdoc(env_table, i);
-	}
 	hdoc[i] = NULL;
 	handle_dollarsign(hdoc, env_table, 1);
+	//if (!hdoc)
 	return (hdoc);
 }
 

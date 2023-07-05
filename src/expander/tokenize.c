@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 09:01:37 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/29 13:13:05 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/05 19:01:13 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,52 +75,57 @@ char	*ft_strtok(char *str, const char *delim)
 	return (token);
 }
 
-char	*argv_to_str(char **argv)
-{
-	int		i;
-	char	*str_pile;
-	char	*token_buff;
+//char	*argv_to_str(char **argv)
+//{
+//	int		i;
+//	char	*str_pile;
+//	char	*token_buff;
 
-	i = 1;
-	str_pile = ft_strdup("");
-	while (argv[i])
-	{
-		token_buff = ft_strtok(argv[i], " ");
-		if (ft_strcmp(str_pile, ""))
-			str_pile = ft_strjoin(str_pile, " ");
-		while (token_buff != NULL)
-		{
-			str_pile = ft_strjoin(str_pile, token_buff);
-			token_buff = ft_strtok(NULL, " ");
-			if (token_buff != NULL)
-				str_pile = ft_strjoin(str_pile, " ");
-		}
-		i++;
-	}
-	return (str_pile);
-}
+//	i = 1;
+//	str_pile = ft_strdup("");
+//	while (argv[i])
+//	{
+//		token_buff = ft_strtok(argv[i], " ");
+//		if (ft_strcmp(str_pile, ""))
+//			str_pile = ft_strjoin(str_pile, " ");
+//		while (token_buff != NULL)
+//		{
+//			str_pile = ft_strjoin(str_pile, token_buff);
+//			token_buff = ft_strtok(NULL, " ");
+//			if (token_buff != NULL)
+//				str_pile = ft_strjoin(str_pile, " ");
+//		}
+//		i++;
+//	}
+//	return (str_pile);
+//}
 
+// word1 word2
 char	*reduce_white_spaces(char *s, int need_free)
 {
 	int		i;
 	char	*str_pile;
 	char	*token_buff;
 
-	i = 1;
+	i = 0;
 	str_pile = ft_strdup("");
 	if (s != NULL)
 	{
 		token_buff = ft_strtok(s, " ");
-		if (ft_strcmp(str_pile, ""))
-			str_pile = ft_strjoin_f(str_pile, " ");
+		//if (ft_strcmp(str_pile, ""))
+		//{
+		//	str_pile = ft_strjoin_f(str_pile, " ");
+		//}
 		while (token_buff != NULL)
 		{
+			//printf("Here[%d]\n", i++);
+			//printf("token[%s]\n", token_buff);
 			str_pile = ft_strjoin_f(str_pile, token_buff);
+			//printf("str_pile[%s]\n", str_pile);
 			token_buff = ft_strtok(NULL, " ");
 			if (token_buff != NULL)
 				str_pile = ft_strjoin_f(str_pile, " ");
 		}
-		i++;
 	}
 	if (need_free)
 		free(s);

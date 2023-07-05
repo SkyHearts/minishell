@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/30 15:18:20 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/05 18:53:10 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_func(t_env *env_table, int *ret, char **env)
 	env_table->functions = ft_split("echo cd pwd export unset env exit", ' ');
 	env_table->errnumber = 0;
 	env_table->rl_buffer = NULL;
+	env_table->heredoc_cmd = NULL;
 	env_table->env = dup_env(env);
 }
 
@@ -57,8 +58,9 @@ char	*read_input(t_env *env_table)
 			input = insert_line(input, env_table);
 			need_free = 1;
 	}
-	if (ft_strcmp(input, ""))
-		add_history(input);
+	if (!ft_strcmp(input, ""))
+		return (input);
+	add_history(input);
 	input = reduce_white_spaces(input, need_free);
 	input = expand_operators(input);
 	return (input);
@@ -80,34 +82,19 @@ int	main(int argc, char **argv, char **env)
 	init_func(&env_table, &ret, env);
 	while (1)
 	{
+		printf("ret at main : [%d]\n", ret);
 		input = read_input(&env_table);
-		if (!ft_strcmp(input, "") || parse_cmds(input, &env_table))
-		{
-			free(input);
+		if (!ft_strcmp(input, ""))
 			continue ;
-		}
- 		ret = ft_pipe(&env_table, env_table.env);
+		if (parse_cmds(input, &env_table))
+		{
+			free_var(&env_table);
+			continue ;
+		}	
+		ret = ft_pipe(&env_table, env_table.env);
+		free(input);
 		if (ret > 0)
 			env_table.errnumber = ret;
-		free(input);
-		printf("=========CMDGROUPS=============\n");
-		int m = -1;
-		while (++m < env_table.nos_pipe)
-		{
-			int k = -1;
-			while (env_table.cmdgroups[m].args && env_table.cmdgroups[m].args[++k])
-				printf("cmdgroups[%d][%d]: [%s]$\n", m,
-					k, env_table.cmdgroups[m].args[k]);
-			k = -1;
-			while (env_table.cmdgroups[m].rdr_info && env_table.cmdgroups[m].rdr_info[++k].rdr_str)
-			{
-				printf("cmdgroups[%d][%d]rdrstr: [%s]$\n", m,
-					k, env_table.cmdgroups[m].rdr_info[k].rdr_str);
-				printf("cmdgroups[%d][%d]rdrtype: [%d]$\n", m,
-					k, env_table.cmdgroups[m].rdr_info[k].rdr_type);
-			}
-		printf("===============================\n");
-		}
 		if (ret == -2)
 			break ;
 		free_var(&env_table);
@@ -116,4 +103,23 @@ int	main(int argc, char **argv, char **env)
 	return (0);
 }
 
-	// system("leaks -q minishell");
+	//system("leaks -q minishell");
+		//printf("=========CMDGROUPS=============\n");
+		//int m = -1;
+		//while (++m < env_table.nos_pipe)
+		//{
+		//	int k = -1;
+		//	while (env_table.cmdgroups[m].args && env_table.cmdgroups[m].args[++k])
+		//		printf("cmdgroups[%d][%d]: [%s]$\n", m,
+		//			k, env_table.cmdgroups[m].args[k]);
+		//	k = -1;
+		//	while (env_table.cmdgroups[m].rdr_info && env_table.cmdgroups[m].rdr_info[++k].rdr_str)
+		//	{
+		//		printf("cmdgroups[%d][%d]rdrstr: [%s]$\n", m,
+		//			k, env_table.cmdgroups[m].rdr_info[k].rdr_str);
+		//		printf("cmdgroups[%d][%d]rdrtype: [%d]$\n", m,
+		//			k, env_table.cmdgroups[m].rdr_info[k].rdr_type);
+		//	}
+		//}
+		//printf("===============================\n");
+
