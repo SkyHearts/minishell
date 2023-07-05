@@ -6,6 +6,8 @@ echo "hello world" >> text | wc -l | cat -> [cmdgroup[0], cmdgroup[1], cmdgroup[
 echo "hello world" | wc 
 echo "hello world" | wc -l | cat
 
+< in
+> out
 >> APPEND
 << heredoc
 
