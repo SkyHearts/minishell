@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 11:33:58 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/06 12:25:08 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ typedef struct s_env
 	char		**functions;
 	int			errnumber;
 	char		**rl_buffer;
-	char		**heredoc_cmd;
+	char		**hdoc;
 	t_pipe		*cmdgroups;
 	t_pipe		*pipe;
 	t_function	func[7];
@@ -168,9 +168,6 @@ int		ft_unset(t_env *env_table, char **str);
 int		ft_env(t_env *env_table, char **str);
 int		ft_exit(t_env *env_table, char **str);
 
-// pipe
-int		ft_pipe(t_env *env_table, char **env);
-void	free_all(t_env *env_table);
 
 /* Free */
 void	free_all(t_env *env_table);
@@ -178,10 +175,16 @@ void	free_var(t_env *env_table);
 
 /* Readline Buffer Collector */
 void	store_rl_buffer(char *input, t_env *env_table);
+int		ft_pipe(t_env *env_table, char **env);
+void	ft_dup(int m, int fd1, int fd2); 
+void	multi_pipe(t_env *env_table, char **envp, int *pid);
+int		check_command(t_env *env_table, int m);
+void	call_cmd(t_env *env_table, t_pipe pipe, char **envp);
 
 # define ERR_CMD "Command not found"
 # define FAIL_DUP "Dup fail"
 # define FAIL_PIPE "Pipe failed"
 # define FAIL_WAITPID "Failed waitpid"
+# define ERR_FILE "No such file in directory"
 
 #endif

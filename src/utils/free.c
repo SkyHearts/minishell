@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 13:37:41 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 11:49:47 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/06 12:26:30 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	free_var(t_env *env_table)
 	}
 	free(env_table->cmdgroups);
 	//free_doublearray(env_table->heredoc_cmd);
-	if (env_table->heredoc_cmd != NULL)
+	if (env_table->hdoc != NULL)
 	{
-		free_doublearray(env_table->heredoc_cmd);
-		env_table->heredoc_cmd = NULL;
+		free_doublearray(env_table->hdoc);
+		env_table->hdoc = NULL;
 	}
 }
 
@@ -83,8 +83,8 @@ void	free_all(t_env *env_table)
 	free(env_table->cmdgroups);
 	//free_doublearray(env_table->rl_buffer);
 	//free_doublearray(env_table->heredoc_cmd);
-	if (env_table->heredoc_cmd != NULL)
-		free_doublearray(env_table->heredoc_cmd);
+	if (env_table->hdoc != NULL)
+		free_doublearray(env_table->hdoc);
 	//free_hdoc(env_table);
 	rl_clear_history();
 }

@@ -18,17 +18,6 @@ void	reset_signal(void)
 	signal(SIGQUIT, SIG_DFL);
 }
 
-void	ft_dup(int m, int fd1, int fd2)
-{
-	int ret;
-	(void)m;
-	//printf("[%d]\n", m);
-	ret = dup2(fd1, fd2);
-
-	if (ret == -1)
-		error(FAIL_DUP);
-}
-
 void	wait_pid(t_env *env_table, int *pid)
 {
 	int	status;
@@ -51,155 +40,49 @@ void	wait_pid(t_env *env_table, int *pid)
 	}
 }
 
-char	*find_cmd(char **path, char *cmd)
+void openfile(int index, int rdrfiles[2], char **hdoc, t_rdrinfo rdrinfo)
 {
-	char	*directory;
-	char	*dir_cmd;
-	int		i;
-	i = -1;
-	if (!path)
-		return (NULL);
-	while (path[++i])
+	(void) hdoc;
+	(void)	index;
+	if (rdrinfo.rdr_type == IN || rdrinfo.rdr_type == HEREDOC)
 	{
-		if (cmd[0] != '.')
-			directory = ft_strjoin(path[i], "/");
-		else
-			directory = ft_strdup("");
-		dir_cmd = ft_strjoin(directory, cmd);
-		// printf("dir_cmd[%s]\n", dir_cmd);
-		free(directory);
-		if (access(dir_cmd, X_OK) == 0)
-			return (dir_cmd);
-		free(dir_cmd);
+		if (rdrfiles[0] != -1)
+			close(rdrfiles[0]);
+		if (rdrinfo.rdr_type == IN)
+			rdrfiles[0] = open(rdrinfo.rdr_str, O_RDONLY);
+		// else if (rdrinfo.rdr_type == HEREDOC)
+		// 	rdrfiles[0] = 
+		if (rdrfiles[0] < 0)
+			error(ERR_FILE);
 	}
-	return (NULL);
-}
-
-void	call_cmd(t_env *env_table, t_pipe pipe, char **envp)
-{
-	int i;
-
-	i = -1;
-	reset_signal();
-	pipe.cmd = find_cmd(env_table->path, *pipe.args);
-	// printf("pipe.cmd[%s] pipe.args[%s]\n", pipe.cmd, *pipe.args);
-	if (!pipe.cmd)
+	else if (rdrinfo.rdr_type == OUT || rdrinfo.rdr_type == APPEND)
 	{
-		free(pipe.cmd);
-		// error(FAIL_PIPE);
-		printf("%s: %s\n", pipe.args[0], "No such file or directory");
-		exit(127);
-	}
-	execve(pipe.cmd, pipe.args, envp);
-	free(pipe.cmd);
-	exit(0);
-}
-
-int	check_command(t_env *env_table, int m)
-{
-	int	i = -1;
-
-	if (env_table->cmdgroups[m].args == NULL)
-		exit(0);
-	while (++i < 7)
-	{
-		if (ft_strcmp(env_table->cmdgroups[m].args[0], env_table->functions[i]) == 0)
-		{
-			env_table->func[i](env_table, env_table->cmdgroups[m].args);
-			exit(0);
-		}
-	}
-	return (0);
-}
-
-void	last_child(t_env *env_table, t_pipe pipe, int m, char **envp, int files[2][2])
-{
-	ft_dup(m, files[1][0], STDIN_FILENO);
-	close(files[0][0]);
-	close(files[0][1]);
-	if (check_command(env_table, m) == 0)
-		call_cmd(env_table, pipe, envp);
-}
-
-void	middle_child(t_env *env_table, t_pipe pipe, int m, char **envp, int files[2][2])
-{
-	ft_dup(m, files[0][1], STDOUT_FILENO);
-	ft_dup(m ,files[1][0], STDIN_FILENO);
-	close(files[0][0]);
-	close(files[0][1]);
-	if (check_command(env_table, m) == 0)
-		call_cmd(env_table, pipe, envp);
-}
-
-void	first_child(t_env *env_table, t_pipe pipe, int m, char **envp, int files[2][2])
-{
-	ft_dup(m, files[0][1], STDOUT_FILENO);
-	close(files[0][0]);
-	close(files[0][1]);
-	if (check_command(env_table, m) == 0)
-		call_cmd(env_table, pipe, envp);
-}
-
-void	parent(int num_pipe, int m, int files[2][2])
-{
-	if (m != 0)
-	{
-		// middle, last
-		close(files[1][0]);
-	}
-	if (m != num_pipe - 1)
-	{
-		// first cmd, middle cmd
-		files[1][0] = files[0][0];
-	}
-	// all
-	close(files[0][1]);
-	if (m == num_pipe - 1)
-	{
-		// last
-		close(files[0][0]);
+		if (rdrfiles[1] != -1)
+			close (rdrfiles[1]);
+		if (rdrinfo.rdr_type == OUT)
+			rdrfiles[1] = open(rdrinfo.rdr_str, O_TRUNC | O_CREAT | O_RDWR, S_IRWXU | S_IRGRP | S_IROTH);
+		else if (rdrinfo.rdr_type == APPEND)
+			rdrfiles[1] = open(rdrinfo.rdr_str, O_APPEND | O_CREAT | O_RDWR, S_IRWXU | S_IRGRP | S_IROTH);
+		if (rdrfiles[1] < 0)
+			error(ERR_FILE);
 	}
 }
 
-void	multi_pipe(t_env *env_table, char **envp, int *pid)
+void check_rdr(int index, char **hdoc, t_pipe pipe, int rdrfiles[2])
 {
-	int		files[2][2];
-	int		m;
- 
-	m = -1;
-	while (++m < env_table->nos_pipe)
-	{
-		// pipe(files[0]);
-		if (m < env_table->nos_pipe && pipe(files[0]) == -1)
-		{
-			printf("Bad pipe [%d]", m);
-			exit(1);
-		}
-		pid[m] = fork();
-		if (pid[m] == 0)
-		{
-			if (m == 0)
-			{
-				// printf("first_child %d\n", m);
-				first_child(env_table, env_table->cmdgroups[m], m, envp, files);
-			}
-			else if (m == env_table->nos_pipe - 1)
-			{
-				// printf("last_child %d\n", m);
-				last_child(env_table, env_table->cmdgroups[m], m, envp, files);
-			}
-			else
-			{
-				// printf("middle_child %d\n", m);
-				middle_child(env_table, env_table->cmdgroups[m], m, envp, files);
-			}
-		}
-		else
-		{
-			// printf("parent close fd %d\n", m);
-			parent(env_table->nos_pipe, m, files);
-		}
-	}
+	int count;
+
+	rdrfiles[0] = -1;
+	rdrfiles[1] = -1;
+	count = -1;
+	while (count++ < pipe.rdr_count)
+		openfile(index, rdrfiles, hdoc, pipe.rdr_info[count]);
+	if (rdrfiles[0] != -1)
+		ft_dup(index, rdrfiles[0], STDIN_FILENO);
+	if (rdrfiles[1] != -1)
+		ft_dup(index, rdrfiles[1], STDOUT_FILENO);
+	close(rdrfiles[0]);
+	close(rdrfiles[1]);
 }
 
 int	run_one_command(t_env *env_table, int i)
@@ -231,15 +114,18 @@ int	run_builtins(t_env *env_table, int m)
 int one_child(t_env *env_table, char **envp, int *pid)
 {
 	int ret;
-
+	int rdrfiles[2];
 	ret = 0;
 	if (env_table->cmdgroups[0].args != NULL)
 		ret = run_builtins(env_table, 0);
 	if (ret != -1)
 		return (ret);
+
+
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{
+		check_rdr(0, env_table->hdoc, env_table->cmdgroups[0], rdrfiles);
 		if (check_command(env_table, 0) == 0)
 			call_cmd(env_table, env_table->cmdgroups[0], envp);
 	}

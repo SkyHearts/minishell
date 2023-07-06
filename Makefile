@@ -11,7 +11,7 @@ LIBFT_LIB		= libft.a
 PRINT_DIR		= utils/ft_printf
 PRINT_LIB		= libftprintf.a
 
-SHELL_SRCS	=	minishell.c pipe.c signal.c hdoc_handler.c
+SHELL_SRCS	=	minishell.c pipe.c multipipe.c pipe_utils.c signal.c hdoc_handler.c
 SHELL_SRCS_DIR	= src/
 SHELL_OBJS = $(addprefix $(SHELL_SRCS_DIR), $(SHELL_SRCS:.c=.o))
 

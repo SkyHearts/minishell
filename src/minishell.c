@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 11:48:59 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/06 12:26:43 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_func(t_env *env_table, int *ret, char **env)
 	env_table->functions = ft_split("echo cd pwd export unset env exit", ' ');
 	env_table->errnumber = 0;
 	env_table->rl_buffer = NULL;
-	env_table->heredoc_cmd = NULL;
+	env_table->hdoc = NULL;
 	env_table->env = dup_env(env);
 }
 
@@ -61,7 +61,6 @@ char	*read_input(t_env *env_table)
 	if (!ft_strcmp(input, ""))
 		return (input);
 	add_history(input);
-	//input = reduce_white_spaces(input, need_free);
 	reduce_white_spaces_3(input);
 	input = expand_operators(input);
 	return (input);
