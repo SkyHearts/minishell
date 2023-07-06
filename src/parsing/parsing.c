@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 12:26:54 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/06 13:04:57 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ void	rdr_to_cmdgroups(t_rdrinfo *rdr_info, char **s, int *start, int end)
 	i = 0;
 	while (s[(*start)] && (*start) < end)
 	{
-		printf("s[%d]: [%s]\n", *start, s[*start]);
+		//printf("s[%d]: [%s]\n", *start, s[*start]);
 		if (is_rdr(s[(*start)]))
 		{
-			printf("Copy rdr_type s[%d]: [%s]\n", *start, s[*start]);
+			//printf("Copy rdr_type s[%d]: [%s]\n", *start, s[*start]);
 			(rdr_info)[i].rdr_type = is_rdr(s[(*start)++]);
 			if (!is_operator(s[(*start)]))
 			{
 				(rdr_info)[i].rdr_str = ft_strdup(s[(*start)]);
-				printf("Copy rdr_str s[%d]: [%s]\n", *start, (rdr_info)[i].rdr_str);
+				//printf("Copy rdr_str s[%d]: [%s]\n", *start, (rdr_info)[i].rdr_str);
 			}
 			else
 				rdr_info[i].rdr_str = NULL;
@@ -146,7 +146,11 @@ int	parse_cmds(char *input, t_env *env_table)
 	ret = syntax_checking(splitted);
 	printf("ret: [%d]\n", ret);
 	if (ret > 0)
-		return (free_doublearray(splitted), env_table->errnumber = ret, ret);
+	{
+		free_doublearray(splitted);
+		free_var(env_table);
+		return (env_table->errnumber = ret, ret);
+	}
 	free_doublearray(splitted);
 	return (0);
 }

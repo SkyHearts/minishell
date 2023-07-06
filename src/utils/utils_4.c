@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:35:59 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 11:45:29 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/06 13:01:51 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	**ft_append_2d_nf(char **args, char *str)
 	}
 	while (args[i])
 		i++;
-	printf("append_nf size: %d\n", i);
+	//printf("append_nf size: %d\n", i);
 	temp_args = copy_doublearray(args, str, i);
 	return (temp_args);
 }

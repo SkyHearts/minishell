@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 12:26:43 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/06 13:04:20 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,10 @@ int	main(int argc, char **argv, char **env)
 	{
 		printf("ret at main : [%d]\n", ret);
 		input = read_input(&env_table);
-		if (!ft_strcmp(input, ""))
+		if (!ft_strcmp(input, "") || parse_cmds(input, &env_table))
 			continue ;
-		if (parse_cmds(input, &env_table))
-		{
-			free_var(&env_table);
-			continue ;
-		}	
+		//if (parse_cmds(input, &env_table))
+		//	continue ;
 		ret = ft_pipe(&env_table, env_table.env);
 		free(input);
 		if (ret > 0)

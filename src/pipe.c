@@ -40,18 +40,29 @@ void	wait_pid(t_env *env_table, int *pid)
 	}
 }
 
+int pipe_hdoc(int index, char **hdoc)
+{
+	int	fd[2];
+
+	if (pipe(fd) == -1)
+		exit(1);
+	write(fd[1], hdoc[index], ft_strlen(hdoc[index]));
+	close(fd[1]);
+	return (fd[0]);
+}
+
 void openfile(int index, int rdrfiles[2], char **hdoc, t_rdrinfo rdrinfo)
 {
-	(void) hdoc;
-	(void)	index;
+	//(void) hdoc;
+	//(void) index;
 	if (rdrinfo.rdr_type == IN || rdrinfo.rdr_type == HEREDOC)
 	{
 		if (rdrfiles[0] != -1)
 			close(rdrfiles[0]);
 		if (rdrinfo.rdr_type == IN)
 			rdrfiles[0] = open(rdrinfo.rdr_str, O_RDONLY);
-		// else if (rdrinfo.rdr_type == HEREDOC)
-		// 	rdrfiles[0] = 
+		 else if (rdrinfo.rdr_type == HEREDOC)
+		 	rdrfiles[0] = pipe_hdoc(index, hdoc);
 		if (rdrfiles[0] < 0)
 			error(ERR_FILE);
 	}
