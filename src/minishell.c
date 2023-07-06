@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/05 18:53:10 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/06 11:48:59 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ char	*read_input(t_env *env_table)
 	need_free = 0;
 	init_signal();
 	input = readline("minishell> ");
-	store_rl_buffer(input, env_table);
 	if (input == NULL)
 		exit_error();
+	store_rl_buffer(input, env_table);
 	while (check_quotes(input))
 	{
 			input = insert_line(input, env_table);
@@ -61,7 +61,8 @@ char	*read_input(t_env *env_table)
 	if (!ft_strcmp(input, ""))
 		return (input);
 	add_history(input);
-	input = reduce_white_spaces(input, need_free);
+	//input = reduce_white_spaces(input, need_free);
+	reduce_white_spaces_3(input);
 	input = expand_operators(input);
 	return (input);
 }
@@ -100,10 +101,10 @@ int	main(int argc, char **argv, char **env)
 		free_var(&env_table);
 	}
 	free_all(&env_table);
+	system("leaks -q minishell");
 	return (0);
 }
 
-	//system("leaks -q minishell");
 		//printf("=========CMDGROUPS=============\n");
 		//int m = -1;
 		//while (++m < env_table.nos_pipe)

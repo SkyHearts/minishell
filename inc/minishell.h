@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/05 15:41:50 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/06 11:33:58 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ int		check_quotes(char *input);
 char	**ft_split_quoted(char *input, char delim);
 int		parse_cmds(char *input, t_env *env_table);
 void	print_darray(char **array);
-char	*reduce_white_spaces(char *s, int need_free);
+//char	*reduce_white_spaces(char *s, int need_free);
+void 	reduce_white_spaces_3(char *s);
 void	exit_error(void);
 int		syntax_checking(char **splitted);
 

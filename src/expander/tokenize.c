@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 09:01:37 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/05 23:29:27 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/06 11:32:40 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,42 +133,42 @@
 // }
 
 /* Reduces white space by moving characther to the front */
-char	*reduce_white_spaces_2(char *s)
-{
-	int		i;
-	int		j;
-	int		size;
-	char	quote_type;
-	char	*str;
+//char	*reduce_white_spaces_2(char *s)
+//{
+//	int		i;
+//	int		j;
+//	int		size;
+//	char	quote_type;
+//	char	*str;
 
-	i = 0;
-	j = 0;
-	size = strlen(s);
-	str = malloc (sizeof(char) * (size + 1));
-	while (s[i])
-	{
-		if (s[i] == SINGLE_QUOTE || s[i] == DOUBLE_QUOTE)
-		{
-			quote_type = s[i];
-			str[j++] = s[i++];
-			// printf("quote:%c\n",s[i]);
-			while (s[i] && s[i] != quote_type)
-			{
-				// printf("quote:%c\n",s[i]);
-				str[j++] = s[i++];
-			}
-		}
-		if(s[i] == ' ')
-		{
-			while (s[i] && s[i] == ' ' && s[i + 1] != ' ')
-				i++;
-		}
-		// printf("out:%c\n",s[i]);
-		str[j++] = s[i++];
-	}
-	str[j] == '\0';
-	return (str);
-}
+//	i = 0;
+//	j = 0;
+//	size = strlen(s);
+//	str = malloc (sizeof(char) * (size + 1));
+//	while (s[i])
+//	{
+//		if (s[i] == SINGLE_QUOTE || s[i] == DOUBLE_QUOTE)
+//		{
+//			quote_type = s[i];
+//			str[j++] = s[i++];
+//			// printf("quote:%c\n",s[i]);
+//			while (s[i] && s[i] != quote_type)
+//			{
+//				// printf("quote:%c\n",s[i]);
+//				str[j++] = s[i++];
+//			}
+//		}
+//		if(s[i] == ' ')
+//		{
+//			while (s[i] && s[i] == ' ' && s[i + 1] != ' ')
+//				i++;
+//		}
+//		// printf("out:%c\n",s[i]);
+//		str[j++] = s[i++];
+//	}
+//	str[j] == '\0';
+//	return (str);
+//}
 
 
 void 	reduce_white_spaces_3(char *s)
@@ -185,10 +185,10 @@ void 	reduce_white_spaces_3(char *s)
 		{
 			quote_type = s[i];
 			s[j++] = s[i++];
-			printf("quote:%c\n",s[i]);
+			//printf("quote:%c\n",s[i]);
 			while (s[i] && s[i] != quote_type)
 			{
-				printf("quote:%c\n",s[i]);
+				//printf("quote:%c\n",s[i]);
 				s[j++] = s[i++];
 			}
 		}
@@ -199,18 +199,18 @@ void 	reduce_white_spaces_3(char *s)
 	s[j] = '\0';
 }
 
-#include <ctype.h>
-#include <stdio.h>
-// "echo world"
-int main(void)
-{
-	char str[] = "  \"hello   \'     world\"    my name 'is  \"    jj'                 \0";
+//#include <ctype.h>
+//#include <stdio.h>
+//// "echo world"
+//int main(void)
+//{
+//	char str[] = "  \"hello   \'     world\"    my name 'is  \"    jj'                 \0";
 	
-	// reduce_white_spaces_2(str);
-	printf("%s\n", reduce_white_spaces_2(str));
-	reduce_white_spaces_3(str);
-	printf("%s\n", str);
-}
+//	// reduce_white_spaces_2(str);
+//	printf("%s\n", reduce_white_spaces_2(str));
+//	reduce_white_spaces_3(str);
+//	printf("%s\n", str);
+//}
 
 // #include <ctype.h>
 // #include <stdio.h>

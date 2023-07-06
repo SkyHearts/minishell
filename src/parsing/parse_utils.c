@@ -46,6 +46,8 @@ int	unsigned_operators(char *split)
 	return (258);
 }
 
+// 0   1  2 3   4
+// < text | > text
 int	pipe_operators(char **split)
 {
 	int	i;

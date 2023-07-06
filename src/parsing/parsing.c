@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/05 19:00:13 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/06 11:51:07 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	parse_cmds(char *input, t_env *env_table)
 	int		ret;
 
 	splitted = ft_split_quoted(input, ' ');
-	// printf("Here1\n");
+	// printf("Here1\n")/;
 	handle_dollarsign(splitted, env_table, 0);
 	// printf("Here2\n");
 	init_pipegroupsv2(splitted, env_table);
