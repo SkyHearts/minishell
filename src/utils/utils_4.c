@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:35:59 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 09:54:41 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/07 12:58:35 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	**copy_doublearray(char **src, char *s, int size)
 		tmp_table[i] = src[i];
 		i++;
 	}
-	//free(src);
 	tmp_table[i] = s;
 	tmp_table[++i] = NULL;
 	return (tmp_table);
@@ -90,7 +89,6 @@ char	**ft_append_2d_nf(char **args, char *str)
 	}
 	while (args[i])
 		i++;
-	//printf("append_nf size: %d\n", i);
 	temp_args = copy_doublearray(args, str, i);
 	free(args);
 	return (temp_args);

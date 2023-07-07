@@ -106,7 +106,7 @@ int	run_builtins(t_env *env_table, int m)
 	int	i;
 
 	i = -1;
-	printf("args [%s]\n", env_table->cmdgroups[m].args[0]);
+	//printf("args [%s]\n", env_table->cmdgroups[m].args[0]);
 	if (!ft_strcmp(env_table->cmdgroups[m].args[0], "cd"))
 		i = 1;
 	else if (!ft_strcmp(env_table->cmdgroups[m].args[0], "export"))
@@ -131,8 +131,7 @@ int one_child(t_env *env_table, char **envp, int *pid)
 		ret = run_builtins(env_table, 0);
 	if (ret != -1)
 		return (ret);
-
-
+	//printf("here1\n");
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{

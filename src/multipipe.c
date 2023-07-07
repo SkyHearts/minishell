@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multipipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:46:50 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/05 16:10:39 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 14:48:46 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,37 @@
 
 void	last_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2][2])
 {
+	int rdrfiles[2];
+	
 	ft_dup(m, pipe_fd[1][0], STDIN_FILENO);
 	close(pipe_fd[0][0]);
 	close(pipe_fd[0][1]);
+	check_rdr(m, env_table->hdoc, env_table->cmdgroups[m], rdrfiles);
 	if (check_command(env_table, m) == 0)
 		call_cmd(env_table, pipe, envp);
 }
 
 void	middle_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2][2])
 {
+	int rdrfiles[2];
+	
 	ft_dup(m, pipe_fd[0][1], STDOUT_FILENO);
 	ft_dup(m ,pipe_fd[1][0], STDIN_FILENO);
 	close(pipe_fd[0][0]);
 	close(pipe_fd[0][1]);
+	check_rdr(m, env_table->hdoc, env_table->cmdgroups[m], rdrfiles);
 	if (check_command(env_table, m) == 0)
 		call_cmd(env_table, pipe, envp);
 }
 
 void	first_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2][2])
 {
+	int rdrfiles[2];
+
 	ft_dup(m, pipe_fd[0][1], STDOUT_FILENO);
 	close(pipe_fd[0][0]);
 	close(pipe_fd[0][1]);
+	check_rdr(m, env_table->hdoc, env_table->cmdgroups[m], rdrfiles);
 	if (check_command(env_table, m) == 0)
 		call_cmd(env_table, pipe, envp);
 }
@@ -70,6 +79,7 @@ void	multi_pipe(t_env *env_table, char **envp, int *pid)
 	while (++m < env_table->nos_pipe)
 	{
 		// pipe(pipe_fd[0]);
+		printf("here_mp\n");
 		if (m < env_table->nos_pipe && pipe(pipe_fd[0]) == -1)
 		{
 			printf("Bad pipe [%d]", m);
@@ -78,6 +88,7 @@ void	multi_pipe(t_env *env_table, char **envp, int *pid)
 		pid[m] = fork();
 		if (pid[m] == 0)
 		{
+			printf("here_pid[%d]\n", m);
 			if (m == 0)
 				first_child(env_table, env_table->cmdgroups[m], m, envp, pipe_fd);
 			else if (m == env_table->nos_pipe - 1)

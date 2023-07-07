@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:54:32 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/05 16:45:21 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 14:21:23 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	call_cmd(t_env *env_table, t_pipe pipe, char **envp)
 	// printf("%s %s\n", pipe.cmd, *pipe.args);
 	if (!pipe.cmd)
 	{
-		free(pipe.cmd);
-		error(FAIL_PIPE);
-		exit(1);
+		//free(pipe.cmd);
+		//error(FAIL_PIPE);
+		//exit(1);
 	}
 	execve(pipe.cmd, pipe.args, envp);
 	free(pipe.cmd);
@@ -61,7 +61,9 @@ void	call_cmd(t_env *env_table, t_pipe pipe, char **envp)
 int	check_command(t_env *env_table, int m)
 {
 	int i = -1;
-	while (++i < 5)
+	if (env_table->cmdgroups[m].args == NULL)
+		exit(0);
+	while (++i < 7)
 	{
 		if (ft_strcmp(env_table->cmdgroups[m].args[0], env_table->functions[i]) == 0)
 		{
