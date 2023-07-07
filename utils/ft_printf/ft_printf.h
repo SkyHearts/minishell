@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/17 11:55:52 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/29 14:52:56 by jyim             ###   ########.fr       */
+/*   Created: 2022/10/25 14:42:40 by ywong             #+#    #+#             */
+/*   Updated: 2022/11/21 15:30:49 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-int	ft_pwd(t_env *env_table, char **str)
-{
-	char	*cwd;
+# include <stdarg.h>
+# include <unistd.h>
 
-	(void)str;
-	(void)env_table;
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		return (errno);
-	printf("%s\n", cwd);
-	free(cwd);
-	return (0);
-}
+int	ft_printf(const char *str, ...);
+int	ft_putchar(int c);
+int	ft_putnbr_dec(int nb);
+int	ft_putnbr_hex(unsigned int nb, char c);
+int	ft_putnbr_uns_dec(unsigned int nb);
+int	ft_putptr(unsigned long nb);
+int	ft_putstr(char *s);
+
+#endif

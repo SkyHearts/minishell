@@ -6,40 +6,86 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 11:54:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/17 11:55:03 by jyim             ###   ########.fr       */
+/*   Updated: 2023/06/29 14:55:13 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_unset(t_env *env_table, char **argv)
+void	delete_env_var(t_env *env_table, char *argv)
+{
+	char	**tmp_table;
+	int		size;
+	int		i;
+	int		j;
+
+	j = 0;
+	size = 0;
+	while (env_table->env[size] != NULL)
+		size++;
+	tmp_table = (char **) malloc(sizeof(char *) * (size));
+	i = 0;
+	while (env_table->env[j] != NULL && j < size)
+	{
+		if (ft_strncmp(env_table->env[j], argv, ft_strlen(argv)))
+		{
+			tmp_table[i] = ft_strdup(env_table->env[j]);
+			i++;
+			j++;
+		}
+		else
+			j++;
+	}
+	tmp_table[i] = NULL;
+	free_doublearray(env_table->env);
+	env_table->env = tmp_table;
+}
+
+void	update_env_unset(t_env *env_table, char *argv)
 {
 	int		i;
 	int		j;
-	int		found;
-	char	**tmp_table;
+	int		var_found;
 
 	i = -1;
 	j = -1;
-	found = 0;
-	/* check if environment varaible exist */
-	while (env_table->env[++i] != NULL)
-		if (!ft_strncmp(env_table->env[i], argv[1], ft_strlen(argv[1]) + 1))
-			found = 1;
-	/* if environment variable exist don't exist, exit function */		
-	if (!found)
-		return ;
-	/* malloc 1 less memory from env_table */	
-	tmp_table = (char **) malloc(sizeof(char *) * (i));
-	i = -1;
-	/* copy all environment variable without argv */	
+	var_found = 0;
 	while (env_table->env[++i] != NULL)
 	{
-		if (!ft_strncmp(env_table->env[i], argv, ft_strlen(argv[1]) + 1))
-			i++;
-		tmp_table[++j] = ft_strdup(env_table->env[i]);
+		if (!ft_strncmp(env_table->env[i], argv, ft_strlen(argv)))
+		{
+			var_found = 1;
+			break ;
+		}
 	}
-	tmp_table[++j] = NULL;
-	free(env_table->env);
-	env_table->env = tmp_table;
+	if (var_found == 1)
+		delete_env_var(env_table, argv);
+}
+
+int	ft_unset(t_env *env_table, char **argv)
+{
+	int		i;
+	int		j;
+
+	j = -1;
+	while (argv[++j])
+	{
+		if (!ft_isalpha(argv[j][0]))
+		{
+			printf("unset: `%s': not a valid identifier argument\n", argv[j]);
+			return (1);
+		}
+		i = 0;
+		while (argv[j][++i])
+		{
+			if (!ft_isalnum(argv[j][i]))
+			{
+				printf("unset: `%s': not a valid identifier argument\n",
+					argv[j]);
+				return (1);
+			}
+		}
+		update_env_unset(env_table, argv[j]);
+	}
+	return (0);
 }

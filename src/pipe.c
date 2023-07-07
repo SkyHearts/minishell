@@ -12,29 +12,57 @@
 
 #include "../inc/minishell.h"
 
+void	reset_signal(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
 void	wait_pid(t_env *env_table, int *pid)
 {
-	int		status;
+	int	status;
 	int i;
 
 	i = -1;
 
 	while (++i < env_table->nos_pipe)
-		waitpid(pid[i], &status, 0);
+	{
+		if (waitpid(pid[i], &status, 0) > 0)
+		{
+			if (WIFEXITED(status))
+				env_table->errnumber = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				if (WTERMSIG(status) == 2)
+					env_table->errnumber = 130;
+		}
+		else
+			printf("waitpid error");
+	}
+}
+
+int pipe_hdoc(int index, char **hdoc)
+{
+	int	fd[2];
+
+	if (pipe(fd) == -1)
+		exit(1);
+	write(fd[1], hdoc[index], ft_strlen(hdoc[index]));
+	close(fd[1]);
+	return (fd[0]);
 }
 
 void openfile(int index, int rdrfiles[2], char **hdoc, t_rdrinfo rdrinfo)
 {
-	(void) hdoc;
-	(void)	index;
+	//(void) hdoc;
+	//(void) index;
 	if (rdrinfo.rdr_type == IN || rdrinfo.rdr_type == HEREDOC)
 	{
 		if (rdrfiles[0] != -1)
 			close(rdrfiles[0]);
 		if (rdrinfo.rdr_type == IN)
 			rdrfiles[0] = open(rdrinfo.rdr_str, O_RDONLY);
-		// else if (rdrinfo.rdr_type == HEREDOC)
-		// 	rdrfiles[0] = 
+		 else if (rdrinfo.rdr_type == HEREDOC)
+		 	rdrfiles[0] = pipe_hdoc(index, hdoc);
 		if (rdrfiles[0] < 0)
 			error(ERR_FILE);
 	}
@@ -69,9 +97,42 @@ void check_rdr(int index, char **hdoc, t_pipe pipe, int rdrfiles[2])
 	close(rdrfiles[1]);
 }
 
-void one_child(t_env *env_table, char **envp, int *pid)
+int	run_one_command(t_env *env_table, int i)
 {
+	return (env_table->func[i](env_table, env_table->cmdgroups[0].args));
+}
+
+int	run_builtins(t_env *env_table, int m)
+{
+	int	i;
+
+	i = -1;
+	printf("args [%s]\n", env_table->cmdgroups[m].args[0]);
+	if (!ft_strcmp(env_table->cmdgroups[m].args[0], "cd"))
+		i = 1;
+	else if (!ft_strcmp(env_table->cmdgroups[m].args[0], "export"))
+		i = 3;
+	else if (!ft_strcmp(env_table->cmdgroups[m].args[0], "unset"))
+		i = 4;
+	else if (!ft_strcmp(env_table->cmdgroups[m].args[0], "exit"))
+		i = 6;
+	if (i != -1)
+	{
+		return (run_one_command(env_table, i));
+	}
+	return (i);
+}
+
+int one_child(t_env *env_table, char **envp, int *pid)
+{
+	int ret;
 	int rdrfiles[2];
+	ret = 0;
+	if (env_table->cmdgroups[0].args != NULL)
+		ret = run_builtins(env_table, 0);
+	if (ret != -1)
+		return (ret);
+
 
 	pid[0] = fork();
 	if (pid[0] == 0)
@@ -80,18 +141,24 @@ void one_child(t_env *env_table, char **envp, int *pid)
 		if (check_command(env_table, 0) == 0)
 			call_cmd(env_table, env_table->cmdgroups[0], envp);
 	}
+	return (ret);
 }
 
-void	ft_pipe(t_env *env_table, char **envp)
+int	ft_pipe(t_env *env_table, char **envp)
 {
 	pid_t	*pid;
+	int		ret;
 
+	ret = -1;
+	signal(SIGINT, sig_handler_nl);
+	env_table->path = extract_path(env_table, env_table->env);
 	pid = ft_calloc(env_table->nos_pipe, sizeof(int));
 	if (env_table->nos_pipe > 1)
 		multi_pipe(env_table, envp, pid);
 	else
-		one_child(env_table, envp, pid);
-
-	wait_pid(env_table, pid);
+		ret = one_child(env_table, env_table->env, pid);
+	if (ret == -1)
+		wait_pid(env_table, pid);
 	free(pid);
+	return (ret);
 }

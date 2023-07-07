@@ -1,27 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_putnbr_uns_dec.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/17 11:55:52 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/29 14:52:56 by jyim             ###   ########.fr       */
+/*   Created: 2022/09/04 18:36:10 by jyim              #+#    #+#             */
+/*   Updated: 2022/11/20 16:21:52 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "ft_printf.h"
 
-int	ft_pwd(t_env *env_table, char **str)
+int	get_unslen(unsigned int nb)
 {
-	char	*cwd;
+	int	count;
 
-	(void)str;
-	(void)env_table;
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		return (errno);
-	printf("%s\n", cwd);
-	free(cwd);
-	return (0);
+	count = 0;
+	if (nb == 0)
+		return (1);
+	while (nb > 0)
+	{
+		nb /= 10;
+		count++;
+	}
+	return (count);
+}
+
+int	ft_putnbr_uns_dec(unsigned int nb)
+{
+	int	count;
+
+	count = get_unslen(nb);
+	if (nb > 9)
+	{
+		ft_putnbr_uns_dec(nb / 10);
+		ft_putnbr_uns_dec(nb % 10);
+	}
+	else
+		ft_putchar(nb + 48);
+	return (count);
 }

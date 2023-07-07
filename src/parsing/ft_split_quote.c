@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:52:31 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/17 12:17:24 by sulim            ###   ########.fr       */
+/*   Updated: 2023/06/29 14:58:09 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static int	char_separator(char str, char c)
 {
@@ -43,7 +43,6 @@ static int	arg_count_quoted(char *input, char c)
 			&& char_separator(input[i], c) == 0)
 			argc++;
 	}
-	// printf("argc = %d\n", argc);
 	return (argc);
 }
 

@@ -32,11 +32,31 @@ cmdgroup[0].args[0] = echo
 cmdgroup[0].args[1] = hello' world
 cmdgroup[0].rdr = APPEND;
 cmdgroup[0].rdr_filename = "text";
+hdoc[0][0] = hdoc_str;
+hdoc[0][1] = hdoc_str;
+hdoc[0][2] = NULL
+
+<<eof >text5 | >file
+cmdgroups[0].rdr_info[0].rdr = HEREDOC
+cmdgroup[0].rdr_info[0].rdr_filename = eof
+cmdgroups[0].rdr_info[1].rdr = OUT
+cmdgroup[0].rdr_info[1].rdr_filename = text5
+cmdgroups[1].rdr_info[0].rdr = OUT
+cmdgroup[1].rdr_info[0].rdr_filename = file
+
+<ASD | >ZXC
+
+<	IN = 1,
+>	OUT = 2,
+<<	HEREDOC = 3,
+>>	APPEND = 4,
 
 // Item 1
 cmdgroup[1].args = (char **)[wc, -l]
 cmdgroup[1].rdr = NULL;
 cmdgroup[1].rdr_filename = NULL;
+hdoc[1][0] = hdoc_str;
+hdoc[1][1] = NULL;
 
 // Item 2
 cmdgroup[2].args = (char **)[cat]
@@ -54,6 +74,11 @@ ret = 1 // Empty input so continue loop to obtain new input
 ret = 2 // Syntax error, return error msg and continue loop to obtain new input
 ret = 3 // Command error, return error msg and continue loop to obtain new input
 
+Handle Dollar sign
+"ASD $USER"\0 [12] = "ASD jyim"\0 [11]
+"$USER $USER"\0 [14] = "jyim $USER"\0 [13] -> "jyim jyim"\0 [12]
+"$SAD" [7] = "" [3]
+-$SAD- [7] = -- [3]
 OR
 
 					pipe
@@ -92,3 +117,10 @@ echo "adfgaerg'
 
 line = "adfgaerg'\naerhergh" '\narwegseraebr'\0
 line = adfgaerg'\naerhergh \narwegseraebr\0
+
+syntax_error
+
+splitted[i]
+if redirects[i] && word[i + 1]
+	ok
+if 
