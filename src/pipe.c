@@ -44,6 +44,7 @@ void openfile(int index, int rdrfiles[2], char **hdoc, t_rdrinfo rdrinfo)
 {
 	(void) hdoc;
 	(void)	index;
+
 	if (rdrinfo.rdr_type == IN || rdrinfo.rdr_type == HEREDOC)
 	{
 		if (rdrfiles[0] != -1)

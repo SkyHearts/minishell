@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:31:30 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/05 18:55:28 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/06 23:18:20 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ int	is_operator(char *str)
 	if (!ft_strcmp(str, ">") || !ft_strcmp(str, ">>"))
 		return (2);
 	if (!ft_strcmp(str, "|"))
+	{
+		printf("true pip3 \n");
 		return (3);
-	if (!ft_strncmp(str, ">>>", 3) || !ft_strncmp(str, "<<<", 3))
-		return (4);
+	}
+	// if (!ft_strcmp(str, ">>>") || !ft_strcmp(str, "<<<"))
+	// 	return (4);
 	return (0);
 }
 

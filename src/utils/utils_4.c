@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:35:59 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 11:45:29 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/06 16:35:38 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	**ft_append_2d_nf(char **args, char *str)
 	}
 	while (args[i])
 		i++;
-	printf("append_nf size: %d\n", i);
+	// printf("append_nf size: %d\n", i);
 	temp_args = copy_doublearray(args, str, i);
 	return (temp_args);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 12:26:43 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/07 10:16:55 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ char	*read_input(t_env *env_table)
 	add_history(input);
 	reduce_white_spaces_3(input);
 	input = expand_operators(input);
+	while (*input)
+	{
+		printf("what is input? %c \n", *input);
+		input++;
+	}
 	return (input);
 }
 
@@ -82,7 +87,7 @@ int	main(int argc, char **argv, char **env)
 	init_func(&env_table, &ret, env);
 	while (1)
 	{
-		printf("ret at main : [%d]\n", ret);
+		// printf("ret at main : [%d]\n", ret);
 		input = read_input(&env_table);
 		if (!ft_strcmp(input, ""))
 			continue ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 12:26:54 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/07 09:37:42 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 // 2nd iter : start = 2, end = 4
 // info[1].rdr_type = OUT
 // info[1].rdr_str = ZXC
-void	rdr_to_cmdgroups(t_rdrinfo *rdr_info, char **s, int *start, int end)
+int	rdr_to_cmdgroups(t_rdrinfo *rdr_info, char **s, int *start, int end)
 {
 	int	i;
 
 	i = 0;
 	while (s[(*start)] && (*start) < end)
 	{
-		printf("s[%d]: [%s]\n", *start, s[*start]);
+		// printf("s[%d]: [%s]\n", *start, s[*start]);
 		if (is_rdr(s[(*start)]))
 		{
 			printf("Copy rdr_type s[%d]: [%s]\n", *start, s[*start]);
@@ -43,10 +43,18 @@ void	rdr_to_cmdgroups(t_rdrinfo *rdr_info, char **s, int *start, int end)
 				rdr_info[i].rdr_str = NULL;
 			i++;
 		}
+		// else
+		// {
+		// 	printf("syntax error near unexpected token '%s'\n", s[*start]);
+		// 	return (258);
+		// 	break;
+		// 	exit(1);
+		// }
 		(*start)++;
 	}
 	//rdr_info[i].rdr_str = NULL;
 	//rdr_info[i].rdr_type = EMPTY;
+	return(0);
 }
 
 // 1  2  3 4  5
@@ -66,8 +74,8 @@ void	input_rdr(char **splitted, t_pipe *cmdgroups)
 	{
 		if (is_pipes(splitted[i]) || splitted[i + 1] == NULL)
 		{
-			printf("Insert cmdgroups[%d].rdr\n", j);
-			printf("Start :[%d]  End :[%d]\n", start, i);
+			// printf("Insert cmdgroups[%d].rdr\n", j);
+			// printf("Start :[%d]  End :[%d]\n", start, i);
 			info = (t_rdrinfo *)malloc (sizeof(t_rdrinfo)
 					* (cmdgroups[j].rdr_count + 1));
 			rdr_to_cmdgroups(info, splitted, &start, i);
@@ -76,7 +84,7 @@ void	input_rdr(char **splitted, t_pipe *cmdgroups)
 		}
 		else if (is_rdr(splitted[i]))
 			cmdgroups[j].rdr_count++;
-		printf("cmdgroups[%d].rdr_count : [%d]\n", j, cmdgroups[j].rdr_count);
+		// printf("cmdgroups[%d].rdr_count : [%d]\n", j, cmdgroups[j].rdr_count);
 	}
 }
 
@@ -116,7 +124,7 @@ void	init_pipegroupsv2(char **splitted, t_env *env_table)
 
 	i = -1;
 	env_table->nos_pipe = has_pipes(splitted);
-	printf("number of pipes : [%d]\n", env_table->nos_pipe + 1);
+	// printf("number of pipes : [%d]\n", env_table->nos_pipe + 1);
 	env_table->cmdgroups = (t_pipe *)malloc (sizeof(t_pipe)
 			* (env_table->nos_pipe + 1));
 	cmdgroups = env_table->cmdgroups;
@@ -133,6 +141,7 @@ void	init_pipegroupsv2(char **splitted, t_env *env_table)
 int	parse_cmds(char *input, t_env *env_table)
 {
 	char	**splitted;
+	// char	**split_err;
 	int		ret;
 
 	splitted = ft_split_quoted(input, ' ');
