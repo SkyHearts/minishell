@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:07:18 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 11:41:49 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:07:35 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*expand_operators(char *s)
 		}
 		else
 			output[j++] = s[i++];
+		cur_operator = 0;
 	}
 	if (output[j - 1] == ' ')
 		output[j - 1] = '\0';

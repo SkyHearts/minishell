@@ -85,7 +85,7 @@ void check_rdr(int index, char **hdoc, t_pipe pipe, int rdrfiles[2])
 	rdrfiles[1] = -1;
 	count = -1;
 
-	while (count++ < pipe.rdr_count)
+	while (++count < pipe.rdr_count)
 		openfile(index, rdrfiles, hdoc, pipe.rdr_info[count]);
 	if (rdrfiles[0] != -1)
 		ft_dup(index, rdrfiles[0], STDIN_FILENO);
@@ -127,17 +127,17 @@ int one_child(t_env *env_table, char **envp, int *pid)
 	int rdrfiles[2];
 	ret = 0;
 	if (env_table->cmdgroups[0].args != NULL)
+	{
 		ret = run_builtins(env_table, 0);
-	if (ret != -1)
-		return (ret);
-
-
+		if (ret != -1)
+			return (ret);
+	}
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{
 		check_rdr(0, env_table->hdoc, env_table->cmdgroups[0], rdrfiles);
 		if (check_command(env_table, 0) == 0)
-			call_cmd(env_table, env_table->cmdgroups[0], envp);
+			call_cmd(env_table, env_table->cmdgroups[0], envp, 0);
 	}
 	return (ret);
 }

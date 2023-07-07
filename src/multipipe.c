@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:46:50 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/07 14:23:07 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:42:22 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	last_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2
 	close(pipe_fd[0][1]);
 	check_rdr(m, env_table->hdoc, env_table->cmdgroups[m], rdrfiles);
 	if (check_command(env_table, m) == 0)
-		call_cmd(env_table, pipe, envp);
+		call_cmd(env_table, pipe, envp, m);
 }
 
 void	middle_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2][2])
@@ -34,7 +34,7 @@ void	middle_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd
 	close(pipe_fd[0][1]);
 	check_rdr(m, env_table->hdoc, env_table->cmdgroups[m], rdrfiles);
 	if (check_command(env_table, m) == 0)
-		call_cmd(env_table, pipe, envp);
+		call_cmd(env_table, pipe, envp, m);
 }
 
 void	first_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2][2])
@@ -46,7 +46,7 @@ void	first_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[
 	close(pipe_fd[0][1]);
 	check_rdr(m, env_table->hdoc, env_table->cmdgroups[m], rdrfiles);
 	if (check_command(env_table, m) == 0)
-		call_cmd(env_table, pipe, envp);
+		call_cmd(env_table, pipe, envp, m);
 }
 
 void	parent(int num_pipe, int m, int pipe_fd[2][2])

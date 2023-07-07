@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 14:54:39 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 17:35:32 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ int	rdr_to_cmdgroups(t_rdrinfo *rdr_info, char **s, int *start, int end)
 		// printf("s[%d]: [%s]\n", *start, s[*start]);
 		if (is_rdr(s[(*start)]))
 		{
-			printf("Copy rdr_type s[%d]: [%s]\n", *start, s[*start]);
+			// printf("Copy rdr_type s[%d]: [%s]\n", *start, s[*start]);
 			(rdr_info)[i].rdr_type = is_rdr(s[(*start)++]);
 			if (!is_operator(s[(*start)]))
 			{
 				(rdr_info)[i].rdr_str = ft_strdup(s[(*start)]);
-				printf("Copy rdr_str s[%d]: [%s]\n", *start, (rdr_info)[i].rdr_str);
+				// printf("Copy rdr_str s[%d]: [%s]\n", *start, (rdr_info)[i].rdr_str);
 			}
 			else
 				rdr_info[i].rdr_str = NULL;
@@ -117,6 +117,13 @@ void	input_commands(char **splitted, t_pipe *cmdgroups)
 // 1  2  3 4  5
 // < ASD | > ZXC
 // cmdgroups[3]
+//   1     2  3
+// echo hello |    -> pipe = 2 + 1
+// cmd[0].args = echo hello
+// cmd[0].rdr_info = NULL
+// cmd[0].rdr_count = 0
+// cmd[1].args = NULL
+// cmd[2].args = NULL
 void	init_pipegroupsv2(char **splitted, t_env *env_table)
 {
 	int		i;
@@ -124,6 +131,7 @@ void	init_pipegroupsv2(char **splitted, t_env *env_table)
 
 	i = -1;
 	env_table->nos_pipe = has_pipes(splitted);
+	// printf("pipe : %d\n", env_table->nos_pipe);
 	// printf("number of pipes : [%d]\n", env_table->nos_pipe + 1);
 	env_table->cmdgroups = (t_pipe *)malloc (sizeof(t_pipe)
 			* (env_table->nos_pipe + 1));
@@ -154,3 +162,4 @@ int	parse_cmds(char *input, t_env *env_table)
 	free_doublearray(splitted);
 	return (0);
 }
+     

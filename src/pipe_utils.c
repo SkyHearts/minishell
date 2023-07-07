@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:54:32 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/07 14:27:57 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:41:28 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ char	*find_cmd(char **path, char *cmd)
 	return (NULL);
 }
 
-void	call_cmd(t_env *env_table, t_pipe pipe, char **envp)
+void	call_cmd(t_env *env_table, t_pipe pipe, char **envp, int m)
 {
 	int i;
 
 	i = -1;
+	if (env_table->cmdgroups[m].args == NULL)
+		return ;
 	pipe.cmd = find_cmd(env_table->path, *pipe.args);
 	// printf("%s %s\n", pipe.cmd, *pipe.args);
 	if (!pipe.cmd)
@@ -61,7 +63,9 @@ void	call_cmd(t_env *env_table, t_pipe pipe, char **envp)
 int	check_command(t_env *env_table, int m)
 {
 	int i = -1;
-	while (++i < 5)
+	if (env_table->cmdgroups[m].args == NULL)
+		exit(0);
+	while (++i < 7)
 	{
 		if (ft_strcmp(env_table->cmdgroups[m].args[0], env_table->functions[i]) == 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 13:50:41 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 14:55:44 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 17:49:06 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,16 @@ int	pipe_operators(char **split)
 	int	i;
 
 	i = 0;
-	if (is_pipes(split[0]) && split[i + 1] == NULL)
-		return (printf("syntax error near unexpected token '%s'\n", split[0]), 258);
-	
+
 	while (split[i])
 	{	
-		// printf("ans: %s, %s\n", split[i], split[i+1]);
-		if (is_operator(split[i]) && is_pipes(split[i + 1]))
+		if (is_operator(split[i]) && split[i + 1] == NULL)
+		{
+			if (ft_strcmp(split[0], "echo"))
+				return (printf("syntax error near unexpected token 'newline'\n"), 258);
+		}
+		else if (is_operator(split[i]) && is_pipes(split[i + 1]))
 			return (printf("syntax error near unexpected token '%s'\n", split[i+1]), 258);
-		else if (is_rdr(split[i]) && split[i + 1] == NULL)
-			return (printf("syntax error near unexpected token 'newline'\n"), 258);
 		else if (is_rdr(split[i]) && is_rdr(split[i + 1]))
 			return (printf("syntax error near unexpected token '%s'\n", split[i + 1]), 258);
 		// else if (split[i + 2] == NULL || is_operator(split[i + 2]))
