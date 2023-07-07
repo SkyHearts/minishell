@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 17:35:32 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:05:06 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ void	input_rdr(char **splitted, t_pipe *cmdgroups)
 	{
 		if (is_pipes(splitted[i]) || splitted[i + 1] == NULL)
 		{
-			// printf("Insert cmdgroups[%d].rdr\n", j);
-			// printf("Start :[%d]  End :[%d]\n", start, i);
 			info = (t_rdrinfo *)malloc (sizeof(t_rdrinfo)
 					* (cmdgroups[j].rdr_count + 1));
 			rdr_to_cmdgroups(info, splitted, &start, i);
@@ -84,7 +82,6 @@ void	input_rdr(char **splitted, t_pipe *cmdgroups)
 		}
 		else if (is_rdr(splitted[i]))
 			cmdgroups[j].rdr_count++;
-		// printf("cmdgroups[%d].rdr_count : [%d]\n", j, cmdgroups[j].rdr_count);
 	}
 }
 
@@ -117,13 +114,6 @@ void	input_commands(char **splitted, t_pipe *cmdgroups)
 // 1  2  3 4  5
 // < ASD | > ZXC
 // cmdgroups[3]
-//   1     2  3
-// echo hello |    -> pipe = 2 + 1
-// cmd[0].args = echo hello
-// cmd[0].rdr_info = NULL
-// cmd[0].rdr_count = 0
-// cmd[1].args = NULL
-// cmd[2].args = NULL
 void	init_pipegroupsv2(char **splitted, t_env *env_table)
 {
 	int		i;
@@ -131,8 +121,6 @@ void	init_pipegroupsv2(char **splitted, t_env *env_table)
 
 	i = -1;
 	env_table->nos_pipe = has_pipes(splitted);
-	// printf("pipe : %d\n", env_table->nos_pipe);
-	// printf("number of pipes : [%d]\n", env_table->nos_pipe + 1);
 	env_table->cmdgroups = (t_pipe *)malloc (sizeof(t_pipe)
 			* (env_table->nos_pipe + 1));
 	cmdgroups = env_table->cmdgroups;
@@ -151,14 +139,18 @@ int	parse_cmds(char *input, t_env *env_table)
 	char	**splitted;
 	int		ret;
 
+	ret = 0;
 	splitted = ft_split_quoted(input, ' ');
 	handle_dollarsign(splitted, env_table, 0);
 	init_pipegroupsv2(splitted, env_table);
 	env_table->hdoc = handle_heredoc(env_table);
 	ret = syntax_checking(splitted);
-	// printf("ret: [%d]\n", ret);
 	if (ret > 0)
-		return (free_doublearray(splitted), env_table->errnumber = ret, ret);
+	{
+		free_doublearray(splitted);
+		free_var(env_table);
+		return (free(input), env_table->errnumber = ret, ret);
+	}
 	free_doublearray(splitted);
 	return (0);
 }

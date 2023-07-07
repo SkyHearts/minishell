@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:31:30 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 15:55:30 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:01:29 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,18 @@ int	is_rdr(char *splitted)
 	return (0);
 }
 
+int	is_op_then_cmp(char *splitted)
+{
+	if (splitted[0] == '|' || splitted[0] == '<' || splitted[0] == '>')
+	{
+		if (is_rdr(splitted) || is_pipes(splitted))
+			return (1);
+		else
+			return (0);
+	}
+	return (-1);
+}
+
 char	*ft_strcat(char *s1, const char *s2)
 {
 	char	*dest;
@@ -58,33 +70,4 @@ char	*ft_strcat(char *s1, const char *s2)
 	}
 	*s1 = '\0';
 	return (dest);
-}
-
-char	*ft_strjoin_f(char *s1, char *s2)
-{
-	size_t	join_len;
-	size_t	i;
-	size_t	j;
-	char	*strjoin;
-
-	if (s1 == NULL && s2 == NULL)
-		return (ft_strdup(""));
-	join_len = ft_strlen_n(s1) + ft_strlen_n(s2);
-	strjoin = malloc(sizeof(char) * (join_len) + 1);
-	//printf("joined length [%zu]\n", join_len);
-	if (!strjoin)
-		return (NULL);
-	i = 0;
-	while (s1 && s1[i] != '\0')
-	{
-		strjoin[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2[j] != '\0')
-		strjoin[i++] = s2[j++];
-	strjoin[i] = '\0';
-	if (s1 != NULL)
-		free(s1);
-	return (strjoin);
 }

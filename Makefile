@@ -1,15 +1,10 @@
 NAME	= minishell
 CC		= gcc
 FSAN	= -fsanitize=address
-CFLAGS	= -Wall -Wextra -Werror $(INCLUDES) -g3 $(FSAN)
-INCLUDES = -I inc -I ${LIBFT_DIR} -I/usr/local/opt/readline/include
+CFLAGS	= -Wall -Wextra -Werror $(INCLUDES) -g3
+INCLUDES = -I inc -I ${LIBFT_DIR} -I ${PRINT_DIR} -I/usr/local/opt/readline/include
 READLINE	= -lreadline -L/usr/local/opt/readline/lib 
 #valgrind --leak-check=full --show-leak-kinds=all ./minishell
-LIBFT_DIR		= utils/libft
-LIBFT_LIB		= libft.a
-
-PRINT_DIR		= utils/ft_printf
-PRINT_LIB		= libftprintf.a
 
 SHELL_SRCS	=	minishell.c pipe.c multipipe.c pipe_utils.c signal.c hdoc_handler.c
 SHELL_SRCS_DIR	= src/
@@ -27,23 +22,29 @@ PARSE_SRC = parsing.c ft_split_quote.c parse_utils.c
 PARSE_DIR = src/parsing/
 PARSE_OBJS = $(addprefix $(PARSE_DIR), $(PARSE_SRC:.c=.o))
 
-UTILS_SRC = env.c free.c utils.c utils_2.c utils_3.c utils_4.c
+UTILS_SRC = env.c free.c utils.c utils_2.c utils_3.c utils_4.c utils_5.c
 UTILS_DIR = src/utils/
 UTILS_OBJS = $(addprefix $(UTILS_DIR), $(UTILS_SRC:.c=.o))
 
-all: ${NAME}
+LIBFT_DIR		= utils/libft
+LIBFT_LIB		= libft.a
 
-${LIBFT_DIR}/${LIBFT_LIB}:
+PRINT_DIR		= utils/ft_printf
+PRINT_LIB		= libftprintf.a
+
+all: ${NAME} 
+
+${LIBFT_LIB}:
 	@echo "Compilling libft"
 	@make -C ${LIBFT_DIR}
 
-${PRINT_DIR}/${PRINT_LIB}:
+${PRINT_LIB}:
 	@echo "Compilling printf"
 	@make -C ${PRINT_DIR}
 
-${NAME}:	${PRINT_DIR}/${PRINT_LIB} ${LIBFT_DIR}/${LIBFT_LIB} ${SHELL_OBJS} ${BUILTINS_OBJS} ${EXPAND_OBJS} ${PARSE_OBJS} ${UTILS_OBJS}
+${NAME}:	${PRINT_LIB} ${LIBFT_LIB} ${SHELL_OBJS} ${BUILTINS_OBJS} ${EXPAND_OBJS} ${PARSE_OBJS} ${UTILS_OBJS}
 	@echo "Compiling minishell"
-	${CC} ${CFLAGS} ${SHELL_OBJS} ${BUILTINS_OBJS} ${EXPAND_OBJS} ${PARSE_OBJS} ${UTILS_OBJS} -o ${NAME} ${READLINE} -L${LIBFT_DIR} -lft 
+	${CC} ${CFLAGS} ${LIBFT_DIR}/${LIBFT_LIB} ${PRINT_DIR}/${PRINT_LIB} ${SHELL_OBJS} ${BUILTINS_OBJS} ${EXPAND_OBJS} ${PARSE_OBJS} ${UTILS_OBJS} -o ${NAME} ${READLINE}
 
 clean:
 	@echo "cleaning files"
@@ -57,6 +58,7 @@ clean:
 
 fclean: clean
 	@make fclean -C ${LIBFT_DIR}
+	@make fclean -C ${PRINT_DIR}
 
 re: clean all
 

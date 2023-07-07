@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:54:32 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/07 15:41:28 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:01:52 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void	call_cmd(t_env *env_table, t_pipe pipe, char **envp, int m)
 	// printf("%s %s\n", pipe.cmd, *pipe.args);
 	if (!pipe.cmd)
 	{
-		free(pipe.cmd);
-		error(FAIL_PIPE);
-		exit(1);
+		//free(pipe.cmd);
+		//error(FAIL_PIPE);
+		//exit(1);
 	}
 	execve(pipe.cmd, pipe.args, envp);
 	free(pipe.cmd);

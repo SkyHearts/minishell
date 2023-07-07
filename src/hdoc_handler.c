@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 17:36:18 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 10:24:35 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/07 14:38:35 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ char	*read_hdoc(char *eof, t_env *env_table)
 	char	*input;
 	char	*tmp1;
 	char	*rstr;
-	(void)env_table;
 
+	(void)env_table;
 	rstr = NULL;
 	if (eof == NULL)
 		return (NULL);
@@ -76,7 +76,6 @@ char	**handle_heredoc(t_env *env_table)
 		hdoc[i] = input_hdoc(env_table, i);
 	hdoc[i] = NULL;
 	handle_dollarsign(hdoc, env_table, 1);
-	//if (!hdoc)
 	return (hdoc);
 }
 

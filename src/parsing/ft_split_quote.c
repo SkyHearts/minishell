@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:52:31 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/29 14:58:09 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/07 12:55:21 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ char	**ft_split_quoted(char *input, char delim)
 		else
 			i++;
 	}
-	splitted[k] = NULL;
+	splitted[k] = 0;
 	return (splitted);
 }

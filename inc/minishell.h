@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 15:42:31 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:07:11 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <string.h>
 # include "../utils/libft/libft.h"
+# include "../utils/ft_printf/ft_printf.h"
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
@@ -122,7 +123,6 @@ int		check_quotes(char *input);
 char	**ft_split_quoted(char *input, char delim);
 int		parse_cmds(char *input, t_env *env_table);
 void	print_darray(char **array);
-//char	*reduce_white_spaces(char *s, int need_free);
 void 	reduce_white_spaces_3(char *s);
 void	exit_error(void);
 int		syntax_checking(char **splitted);
@@ -137,7 +137,7 @@ int		has_pipes(char **splitted);
 int		is_rdr(char *splitted);
 int		is_pipes(char *splitted);
 int		if_quotes(char input);
-int		ft_char_cmp_str(char s, char *op_list);
+int		cmp_s(char s, char *op_list);
 int		is_operator(char *str);
 int		ft_isalpha_equal(int c);
 int		ft_isalnum_q(int c);
@@ -149,6 +149,8 @@ char	*ft_strdup_quote(const char *src);
 char	**ft_append_2d(char **args, char *str);
 char	**ft_append_2d_nf(char **args, char *str);
 size_t	ft_strlen_n(const char *s);
+int		ft_isspace(int c);
+int		isempty(char *str);
 
 /* Handle Dollar sign */
 char	*find_env_cont(char *splitted, int start, t_env *env_table, char **str);
@@ -168,7 +170,6 @@ int		ft_unset(t_env *env_table, char **str);
 int		ft_env(t_env *env_table, char **str);
 int		ft_exit(t_env *env_table, char **str);
 
-
 /* Free */
 void	free_all(t_env *env_table);
 void	free_var(t_env *env_table);
@@ -178,6 +179,7 @@ void	store_rl_buffer(char *input, t_env *env_table);
 int		ft_pipe(t_env *env_table, char **env);
 void	ft_dup(int m, int fd1, int fd2); 
 void	multi_pipe(t_env *env_table, char **envp, int *pid);
+void	check_rdr(int index, char **hdoc, t_pipe pipe, int rdrfiles[2]);
 int		check_command(t_env *env_table, int m);
 void	call_cmd(t_env *env_table, t_pipe pipe, char **envp, int m);
 void	check_rdr(int index, char **hdoc, t_pipe pipe, int rdrfiles[2]);

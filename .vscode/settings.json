@@ -17,6 +17,9 @@
 		"__bit_reference": "c",
 		"ios": "c",
 		"algorithm": "c",
-		"chrono": "c"
+		"chrono": "c",
+		"ctype.h": "c",
+		"ft_printf.h": "c",
+		"errno.h": "c"
 	}
 }

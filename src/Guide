@@ -124,3 +124,7 @@ splitted[i]
 if redirects[i] && word[i + 1]
 	ok
 if 
+
+
+ echo world|||||>>>
+ echo world ||||| >>>

@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 15:33:24 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:06:09 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char	*insert_line(char *input, t_env *env_table)
 	char	*nextline;
 	char	*new_input;
 	char	*rstr;
-	(void)env_table;
 
+	(void)env_table;
 	rstr = NULL;
 	nextline = readline(">");
 	if (!nextline)
@@ -49,29 +49,58 @@ char	*insert_line(char *input, t_env *env_table)
 	return (rstr);
 }
 
+//123456789101112 13 14
+//echo hell o _ | _   /0
+//char	*handle_last_pipe(char *input)
+//{
+//	int		i;
+//	char	*next;
+//	char	*rstr;
+
+//	i = ft_strlen(input);
+//	i -= 1;
+//	next = NULL;
+//	while (input[i] == ' ' || input[i] == '\t')
+//		i--;
+//	if (input[i] == '|')
+//	{
+//		while (isempty(next))
+//		{
+//			next = readline(">");
+//			rstr = ft_strjoin_f(input, " ");
+//			rstr = ft_strjoin_f(rstr, next);
+//			free(next);
+//		}
+//		rstr = ft_strjoin_f(input, " ");
+//		rstr = ft_strjoin_f(rstr, next);
+//		return (free(next), rstr);
+//	}
+//	return (input);
+//}
+
 char	*read_input(t_env *env_table)
 {
 	char	*input;
 
 	init_signal();
 	input = readline("minishell> ");
-	//store_rl_buffer(input, env_table);
 	if (input == NULL)
 		exit_error();
 	while (check_quotes(input))
 			input = insert_line(input, env_table);
 	if (!ft_strcmp(input, ""))
 		return (input);
+	//input = handle_last_pipe(input);
 	add_history(input);
 	input = expand_operators(input);
 	reduce_white_spaces_3(input);
 	return (input);
 }
 
-void	store_rl_buffer(char *input, t_env *env_table)
-{
-	env_table->rl_buffer = ft_append_2d_nf(env_table->rl_buffer, input);
-}
+//void	store_rl_buffer(char *input, t_env *env_table)
+//{
+//	env_table->rl_buffer = ft_append_2d_nf(env_table->rl_buffer, input);
+//}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -84,13 +113,10 @@ int	main(int argc, char **argv, char **env)
 	init_func(&env_table, &ret, env);
 	while (1)
 	{
-		// printf("ret at main : [%d]\n", ret);
 		input = read_input(&env_table);
-		// printf("Input before parse: %s$\n", input);
+		printf("Input before parse: [%s]\n", input);
 		if (!ft_strcmp(input, "") || parse_cmds(input, &env_table))
 			continue ;
-		//if (parse_cmds(input, &env_table))
-		//	continue ;
 		ret = ft_pipe(&env_table, env_table.env);
 		free(input);
 		if (ret > 0)
@@ -100,7 +126,7 @@ int	main(int argc, char **argv, char **env)
 		free_var(&env_table);
 	}
 	free_all(&env_table);
-	//system("leaks -q minishell");
+	system("leaks -q minishell");
 	return (0);
 }
 
@@ -109,11 +135,13 @@ int	main(int argc, char **argv, char **env)
 		//while (++m < env_table.nos_pipe)
 		//{
 		//	int k = -1;
-		//	while (env_table.cmdgroups[m].args && env_table.cmdgroups[m].args[++k])
+			//while (env_table.cmdgroups[m].args
+			//		&& env_table.cmdgroups[m].args[++k])
 		//		printf("cmdgroups[%d][%d]: [%s]$\n", m,
 		//			k, env_table.cmdgroups[m].args[k]);
 		//	k = -1;
-		//	while (env_table.cmdgroups[m].rdr_info && env_table.cmdgroups[m].rdr_info[++k].rdr_str)
+			//while (env_table.cmdgroups[m].rdr_info
+			//		&& env_table.cmdgroups[m].rdr_info[++k].rdr_str)
 		//	{
 		//		printf("cmdgroups[%d][%d]rdrstr: [%s]$\n", m,
 		//			k, env_table.cmdgroups[m].rdr_info[k].rdr_str);
@@ -122,4 +150,5 @@ int	main(int argc, char **argv, char **env)
 		//	}
 		//}
 		//printf("===============================\n");
-
+		////if (parse_cmds(input, &env_table))
+		////	continue ;
