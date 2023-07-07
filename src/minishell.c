@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 10:35:33 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 12:05:53 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,8 @@ char	*read_input(t_env *env_table)
 	if (!ft_strcmp(input, ""))
 		return (input);
 	add_history(input);
-	reduce_white_spaces_3(input);
 	input = expand_operators(input);
-	while (*input)
-	{
-		printf("what is input? %c \n", *input);
-		input++;
-	}
+	reduce_white_spaces_3(input);
 	return (input);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:31:30 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 23:18:20 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 11:31:26 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,7 @@ int	is_operator(char *str)
 	if (!ft_strcmp(str, ">") || !ft_strcmp(str, ">>"))
 		return (2);
 	if (!ft_strcmp(str, "|"))
-	{
-		printf("true pip3 \n");
 		return (3);
-	}
-	// if (!ft_strcmp(str, ">>>") || !ft_strcmp(str, "<<<"))
-	// 	return (4);
 	return (0);
 }
 

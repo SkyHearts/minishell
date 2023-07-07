@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:07:18 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 09:30:54 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/07 11:41:49 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ char	*expand_operators(char *s)
 		if (ft_char_cmp_str(s[i], OPERATORS) && s[i] != cur_operator)
 		{
 			cur_operator = s[i];
-			output[j++] = ' ';
+			if (i != 0)
+				output[j++] = ' ';
 			while (s[i] == cur_operator)
 				output[j++] = s[i++];
 			if (i < size && s[i] != ' ' && !ft_char_cmp_str(s[i], OPERATORS))
@@ -57,6 +58,8 @@ char	*expand_operators(char *s)
 		else
 			output[j++] = s[i++];
 	}
+	if (output[j - 1] == ' ')
+		output[j - 1] = '\0';
 	output[j] = '\0';
 	free(s);
 	return (ft_strdup(output));
