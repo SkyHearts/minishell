@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 13:04:20 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/07 10:24:44 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,32 @@ char	*insert_line(char *input, t_env *env_table)
 {
 	char	*nextline;
 	char	*new_input;
+	char	*rstr;
+	(void)env_table;
 
+	rstr = NULL;
 	nextline = readline(">");
-	store_rl_buffer(nextline, env_table);
+	if (!nextline)
+		return (NULL);
 	new_input = ft_strjoin(input, "\n");
-	new_input = ft_strjoin_f(new_input, nextline);
-	return (new_input);
+	rstr = ft_strjoin_f(new_input, nextline);
+	free(input);
+	free(nextline);
+	free(new_input);
+	return (rstr);
 }
 
 char	*read_input(t_env *env_table)
 {
 	char	*input;
-	int		need_free;
 
-	need_free = 0;
 	init_signal();
 	input = readline("minishell> ");
+	//store_rl_buffer(input, env_table);
 	if (input == NULL)
 		exit_error();
-	store_rl_buffer(input, env_table);
 	while (check_quotes(input))
-	{
 			input = insert_line(input, env_table);
-			need_free = 1;
-	}
 	if (!ft_strcmp(input, ""))
 		return (input);
 	add_history(input);
@@ -84,6 +86,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		printf("ret at main : [%d]\n", ret);
 		input = read_input(&env_table);
+		printf("Input before parse: %s$\n", input);
 		if (!ft_strcmp(input, "") || parse_cmds(input, &env_table))
 			continue ;
 		//if (parse_cmds(input, &env_table))
@@ -97,7 +100,7 @@ int	main(int argc, char **argv, char **env)
 		free_var(&env_table);
 	}
 	free_all(&env_table);
-	system("leaks -q minishell");
+	//system("leaks -q minishell");
 	return (0);
 }
 
