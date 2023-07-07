@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 14:30:25 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 14:45:37 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ int	main(int argc, char **argv, char **env)
 	init_func(&env_table, &ret, env);
 	while (1)
 	{
-		printf("ret at main : [%d]\n", ret);
+		// printf("ret at main : [%d]\n", ret);
 		input = read_input(&env_table);
-		printf("Input before parse: %s$\n", input);
+		// printf("Input before parse: %s$\n", input);
 		if (!ft_strcmp(input, "") || parse_cmds(input, &env_table))
 			continue ;
 		//if (parse_cmds(input, &env_table))

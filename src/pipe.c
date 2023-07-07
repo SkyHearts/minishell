@@ -53,8 +53,6 @@ int pipe_hdoc(int index, char **hdoc)
 
 void openfile(int index, int rdrfiles[2], char **hdoc, t_rdrinfo rdrinfo)
 {
-	//(void) hdoc;
-	//(void) index;
 	if (rdrinfo.rdr_type == IN || rdrinfo.rdr_type == HEREDOC)
 	{
 		if (rdrfiles[0] != -1)
@@ -107,7 +105,7 @@ int	run_builtins(t_env *env_table, int m)
 	int	i;
 
 	i = -1;
-	printf("args [%s]\n", env_table->cmdgroups[m].args[0]);
+	// printf("args [%s]\n", env_table->cmdgroups[m].args[0]);
 	if (!ft_strcmp(env_table->cmdgroups[m].args[0], "cd"))
 		i = 1;
 	else if (!ft_strcmp(env_table->cmdgroups[m].args[0], "export"))

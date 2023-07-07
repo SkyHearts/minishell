@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 13:04:57 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/07 14:50:20 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	input_rdr(char **splitted, t_pipe *cmdgroups)
 	{
 		if (is_pipes(splitted[i]) || splitted[i + 1] == NULL)
 		{
-			printf("Insert cmdgroups[%d].rdr\n", j);
-			printf("Start :[%d]  End :[%d]\n", start, i);
+			// printf("Insert cmdgroups[%d].rdr\n", j);
+			// printf("Start :[%d]  End :[%d]\n", start, i);
 			info = (t_rdrinfo *)malloc (sizeof(t_rdrinfo)
 					* (cmdgroups[j].rdr_count + 1));
 			rdr_to_cmdgroups(info, splitted, &start, i);
@@ -76,7 +76,7 @@ void	input_rdr(char **splitted, t_pipe *cmdgroups)
 		}
 		else if (is_rdr(splitted[i]))
 			cmdgroups[j].rdr_count++;
-		printf("cmdgroups[%d].rdr_count : [%d]\n", j, cmdgroups[j].rdr_count);
+		// printf("cmdgroups[%d].rdr_count : [%d]\n", j, cmdgroups[j].rdr_count);
 	}
 }
 
@@ -116,7 +116,7 @@ void	init_pipegroupsv2(char **splitted, t_env *env_table)
 
 	i = -1;
 	env_table->nos_pipe = has_pipes(splitted);
-	printf("number of pipes : [%d]\n", env_table->nos_pipe + 1);
+	// printf("number of pipes : [%d]\n", env_table->nos_pipe + 1);
 	env_table->cmdgroups = (t_pipe *)malloc (sizeof(t_pipe)
 			* (env_table->nos_pipe + 1));
 	cmdgroups = env_table->cmdgroups;
@@ -136,15 +136,11 @@ int	parse_cmds(char *input, t_env *env_table)
 	int		ret;
 
 	splitted = ft_split_quoted(input, ' ');
-	// printf("Here1\n");
 	handle_dollarsign(splitted, env_table, 0);
-	// printf("Here2\n");
 	init_pipegroupsv2(splitted, env_table);
-	// printf("Here3\n");
 	env_table->hdoc = handle_heredoc(env_table);
-	// printf("Here4\n");
 	ret = syntax_checking(splitted);
-	printf("ret: [%d]\n", ret);
+	// printf("ret: [%d]\n", ret);
 	if (ret > 0)
 	{
 		free_doublearray(splitted);

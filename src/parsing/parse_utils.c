@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 13:50:41 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 09:07:44 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/07 14:34:07 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	pipe_operators(char **split)
 	{	
 		if ((is_operator(split[i]) && split[i + 1]))
 		{
-			printf("Here1\n");
 			if (split[i + 1] == NULL)
 				return (printf("syntax error near unexpected token '%s'\n", split[i]), 258);
 			else if (is_pipes(split[i]) && split[i + 1] == NULL)
