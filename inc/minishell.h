@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/06 16:33:36 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 14:56:55 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ void	ft_dup(int m, int fd1, int fd2);
 void	multi_pipe(t_env *env_table, char **envp, int *pid);
 int		check_command(t_env *env_table, int m);
 void	call_cmd(t_env *env_table, t_pipe pipe, char **envp);
+void	check_rdr(int index, char **hdoc, t_pipe pipe, int rdrfiles[2]);
 
 # define ERR_CMD "Command not found"
 # define FAIL_DUP "Dup fail"

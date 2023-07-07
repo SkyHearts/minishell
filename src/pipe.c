@@ -84,6 +84,7 @@ void check_rdr(int index, char **hdoc, t_pipe pipe, int rdrfiles[2])
 	rdrfiles[0] = -1;
 	rdrfiles[1] = -1;
 	count = -1;
+
 	while (count++ < pipe.rdr_count)
 		openfile(index, rdrfiles, hdoc, pipe.rdr_info[count]);
 	if (rdrfiles[0] != -1)
@@ -104,7 +105,7 @@ int	run_builtins(t_env *env_table, int m)
 	int	i;
 
 	i = -1;
-	printf("args [%s]\n", env_table->cmdgroups[m].args[0]);
+	// printf("args [%s]\n", env_table->cmdgroups[m].args[0]);
 	if (!ft_strcmp(env_table->cmdgroups[m].args[0], "cd"))
 		i = 1;
 	else if (!ft_strcmp(env_table->cmdgroups[m].args[0], "export"))

@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 10:38:03 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 14:54:39 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int	parse_cmds(char *input, t_env *env_table)
 	init_pipegroupsv2(splitted, env_table);
 	env_table->hdoc = handle_heredoc(env_table);
 	ret = syntax_checking(splitted);
-	printf("ret: [%d]\n", ret);
+	// printf("ret: [%d]\n", ret);
 	if (ret > 0)
 		return (free_doublearray(splitted), env_table->errnumber = ret, ret);
 	free_doublearray(splitted);
