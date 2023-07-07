@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 09:37:42 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 10:34:37 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,17 +141,12 @@ void	init_pipegroupsv2(char **splitted, t_env *env_table)
 int	parse_cmds(char *input, t_env *env_table)
 {
 	char	**splitted;
-	// char	**split_err;
 	int		ret;
 
 	splitted = ft_split_quoted(input, ' ');
-	// printf("Here1\n");
 	handle_dollarsign(splitted, env_table, 0);
-	// printf("Here2\n");
 	init_pipegroupsv2(splitted, env_table);
-	// printf("Here3\n");
 	env_table->hdoc = handle_heredoc(env_table);
-	// printf("Here4\n");
 	ret = syntax_checking(splitted);
 	printf("ret: [%d]\n", ret);
 	if (ret > 0)

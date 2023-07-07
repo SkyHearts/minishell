@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 17:36:18 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/05 16:13:27 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/07 10:24:35 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	*read_hdoc(char *eof, t_env *env_table)
 	char	*input;
 	char	*tmp1;
 	char	*rstr;
+	(void)env_table;
 
 	rstr = NULL;
 	if (eof == NULL)
@@ -26,14 +27,14 @@ char	*read_hdoc(char *eof, t_env *env_table)
 		input = readline("HEREDOC>");
 		if (!input)
 			return (NULL);
-		store_rl_buffer(input, env_table);
 		if (!ft_strcmp(eof, input))
 			break ;
 		tmp1 = ft_strjoin(input, "\n");
 		rstr = ft_strjoin_f(rstr, tmp1);
 		free(tmp1);
+		free(input);
 	}
-	return (rstr);
+	return (free(input), rstr);
 }
 
 char	*input_hdoc(t_env *env_table, int i)
