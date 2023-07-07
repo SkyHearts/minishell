@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/05 16:10:42 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/07 14:28:41 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void init_func(t_env *env_table)
 {
 	env_table->func[E_ECHO] = ft_echo;
-	// env_table->func[E_CD] = func_cd;
-	// env_table->func[E_PWD] = func_pwd;
-	// env_table->func[E_EXPORT] = func_export;
-	// env_table->func[E_UNSET] = func_unset;
-	// env_table->func[E_ENV] = func_env;
+	env_table->func[E_CD] = ft_cd;
+	env_table->func[E_PWD] = ft_pwd;
+	env_table->func[E_EXPORT] = ft_export;
+	env_table->func[E_UNSET] = ft_unset;
+	env_table->func[E_ENV] = ft_env;
 	env_table->func[E_EXIT] = ft_exit;
 	env_table->functions = ft_split("echo cd pwd export unset env", ' ');
 }

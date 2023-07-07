@@ -58,6 +58,7 @@ void check_rdr(int index, char **hdoc, t_pipe pipe, int rdrfiles[2])
 	rdrfiles[0] = -1;
 	rdrfiles[1] = -1;
 	count = -1;
+
 	while (count++ < pipe.rdr_count)
 		openfile(index, rdrfiles, hdoc, pipe.rdr_info[count]);
 	if (rdrfiles[0] != -1)
