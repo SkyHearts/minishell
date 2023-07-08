@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 13:49:36 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 14:23:23 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char	*handle_last_pipe(char *input)
 
 	i = ft_strlen(input);
 	i -= 1;
-	next = NULL;
 	while (input[i] == ' ' || input[i] == '\t')
 		i--;
 	if (input[i] == '|')
@@ -92,18 +91,13 @@ char	*read_input(t_env *env_table)
 			input = insert_line(input, env_table);
 	if (!ft_strcmp(input, ""))
 		return (input);
-	input = handle_last_pipe(input);
+	if (!is_onlypipe(input))
+		input = handle_last_pipe(input);
 	add_history(input);
 	input = expand_operators(input);
 	reduce_white_spaces_3(input);
 	return (input);
 }
-	//input = handle_last_pipe(input);
-
-//void	store_rl_buffer(char *input, t_env *env_table)
-//{
-//	env_table->rl_buffer = ft_append_2d_nf(env_table->rl_buffer, input);
-//}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -127,6 +121,7 @@ int	main(int argc, char **argv, char **env)
 			break ;
 		free_var(&env_table);
 	}
+	system("leaks -q minishell");
 	free_all(&env_table);
 	system("leaks -q minishell");
 	return (0);

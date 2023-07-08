@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 12:29:08 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 14:11:33 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,8 @@ char	**ft_append_2d_nf(char **args, char *str);
 size_t	ft_strlen_n(const char *s);
 int		ft_isspace(int c);
 int		isempty(char *str);
+int		is_operator_char(char c);
+char	is_onlypipe(char *input);
 
 /* Handle Dollar sign */
 char	*find_env_cont(char *splitted, int start, t_env *env_table, char **str);
