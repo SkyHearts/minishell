@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 17:36:18 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 14:38:35 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 11:31:07 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,3 @@ char	**handle_heredoc(t_env *env_table)
 	handle_dollarsign(hdoc, env_table, 1);
 	return (hdoc);
 }
-
-	// int k = -1;
-	// while (hdoc[++k])
-	// 	printf("hdoc[%d] [%s]\n", k, hdoc[k]);

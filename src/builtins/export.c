@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 11:55:08 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/29 14:58:29 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 11:32:31 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_export(t_env *env_table, char **argv)
 			{
 				if (!ft_isalnum(argv[j][i]) && !ft_isalpha(argv[j][0]))
 				{
-					printf("env: %s: Invalid argument\n", argv[j]);
+					ft_printf("env: %s: Invalid argument\n", argv[j]);
 					return (1);
 				}
 			}

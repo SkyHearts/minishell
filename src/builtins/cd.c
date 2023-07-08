@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:52:52 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/29 14:46:31 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 11:31:58 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,3 @@ int	ft_cd(t_env *env_table, char **str)
 	free(home);
 	return (0);
 }
-
-// int	main(int argc, char **argv, char **env)
-// {
-// 	t_env	env_table;
-// 	char	*s[] = {"cd", "/Users/jyim/Desktop/"};
-
-// 	printf("PWD : %s\n", getcwd(NULL, 0));
-// 	env_table.env = dup_env(env);
-// 	ft_cd(&env_table, s);
-// }

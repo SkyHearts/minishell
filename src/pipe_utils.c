@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:54:32 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/08 11:07:44 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 11:31:41 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,10 @@ void	call_cmd(t_env *env_table, t_pipe pipe, char **envp, int m)
 	if (env_table->cmdgroups[m].args == NULL)
 		return ;
 	pipe.cmd = find_cmd(env_table->path, *pipe.args);
-	// printf("%s %s\n", pipe.cmd, *pipe.args);
 	if (!pipe.cmd)
 	{
 		free(pipe.cmd);
-		printf("%s: command not found\n", env_table->cmdgroups[m].args[0]);
+		ft_printf("%s: command not found\n", env_table->cmdgroups[m].args[0]);
 		exit(1);
 	}
 	execve(pipe.cmd, pipe.args, envp);

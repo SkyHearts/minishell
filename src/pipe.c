@@ -35,7 +35,7 @@ void	wait_pid(t_env *env_table, int *pid)
 					env_table->errnumber = 130;
 		}
 		else
-			printf("waitpid error");
+			ft_printf("waitpid error");
 	}
 }
 

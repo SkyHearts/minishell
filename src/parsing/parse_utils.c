@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 13:50:41 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 10:51:04 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 11:33:44 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	unsigned_operators(char *split)
 	{
 		if (is_operator(split) == 0)
 		{
-			printf("syntax error near unexpected token '%s'\n", split);
+			ft_printf("syntax error near unexpected token '%s'\n", split);
 			return (258);
 		}
 	}
@@ -60,14 +60,14 @@ int	pipe_operators(char **split)
 		if (is_operator(split[i]) && split[i + 1] == NULL)
 		{
 			if (ft_strcmp(split[0], "echo"))
-				return (printf("syntax error near unexpected token 'newline' \
+				return (ft_printf("syntax error near unexpected token 'newline' \
 				\n"), 258);
 		}
 		else if (is_operator(split[i]) && is_pipes(split[i + 1]))
-			return (printf("syntax error near unexpected token '%s'\n", \
+			return (ft_printf("syntax error near unexpected token '%s'\n", \
 			split[i + 1]), 258);
 		else if (is_rdr(split[i]) && is_rdr(split[i + 1]))
-			return (printf("syntax error near unexpected token '%s'\n", \
+			return (ft_printf("syntax error near unexpected token '%s'\n", \
 			split[i + 1]), 258);
 		i++;
 	}

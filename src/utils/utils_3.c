@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:33:32 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/30 15:21:25 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 11:35:49 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	free_doublearray(char **array)
 
 void	exit_error(void)
 {
-	printf("ERROR!!!");
+	ft_printf("Readline Error\n");
 	exit(1);
 }
 

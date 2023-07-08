@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multipipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:46:50 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/08 10:54:33 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 11:31:25 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,15 @@ void	multi_pipe(t_env *env_table, char **envp, int *pid)
 	m = -1;
 	while (++m < env_table->nos_pipe)
 	{
-		// pipe(pipe_fd[0]);
-		printf("here_mp\n");
+
 		if (m < env_table->nos_pipe && pipe(pipe_fd[0]) == -1)
 		{
-			printf("Bad pipe [%d]", m);
+			ft_printf("Bad pipe [%d]", m);
 			exit(1);
 		}
 		pid[m] = fork();
 		if (pid[m] == 0)
 		{
-			printf("here_pid[%d]\n", m);
 			if (m == 0)
 				first_child(env_table, env_table->cmdgroups[m], m, envp, pipe_fd);
 			else if (m == env_table->nos_pipe - 1)
