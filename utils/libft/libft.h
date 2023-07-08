@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 17:52:36 by jyim              #+#    #+#             */
-/*   Updated: 2023/05/03 12:27:57 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/07 23:11:22 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 typedef struct s_list
 {
@@ -71,7 +71,8 @@ int				ft_toupper(int c);
 // void			ft_lstdelone(t_list *lst, void (*del)(void*));
 // void			ft_lstclear(t_list **lst, void (*del)(void*));
 // void			ft_lstiter(t_list *lst, void (*f)(void*));
-// t_list			*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void *));
+// t_list			*ft_lstmap(t_list *lst, void *(*f)(void*),
+	// void (*del)(void *));
 char			*get_next_line(int fd);
 
 #endif

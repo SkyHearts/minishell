@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 18:06:09 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 10:58:50 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,32 +51,34 @@ char	*insert_line(char *input, t_env *env_table)
 
 //123456789101112 13 14
 //echo hell o _ | _   /0
-//char	*handle_last_pipe(char *input)
-//{
-//	int		i;
-//	char	*next;
-//	char	*rstr;
+char    *handle_last_pipe(char *input)
+{
+    int        i;
+    char    *next;
+    char    *rstr;
 
-//	i = ft_strlen(input);
-//	i -= 1;
-//	next = NULL;
-//	while (input[i] == ' ' || input[i] == '\t')
-//		i--;
-//	if (input[i] == '|')
-//	{
-//		while (isempty(next))
-//		{
-//			next = readline(">");
-//			rstr = ft_strjoin_f(input, " ");
-//			rstr = ft_strjoin_f(rstr, next);
-//			free(next);
-//		}
-//		rstr = ft_strjoin_f(input, " ");
-//		rstr = ft_strjoin_f(rstr, next);
-//		return (free(next), rstr);
-//	}
-//	return (input);
-//}
+    i = ft_strlen(input);
+    i -= 1;
+    next = NULL;
+    while (input[i] == ' ' || input[i] == '\t')
+        i--;
+    if (input[i] == '|')
+    {
+        rstr = ft_strjoin_f(input, " ");
+        while (1)
+        {
+            next = readline(">");
+            if (!next)
+                return (NULL);
+            rstr = ft_strjoin_f(rstr, next);
+            if (!isempty(next))
+                break ;
+            free(next);
+        }
+        return (free(next), rstr);
+    }
+    return (input);
+}
 
 char	*read_input(t_env *env_table)
 {
@@ -90,12 +92,13 @@ char	*read_input(t_env *env_table)
 			input = insert_line(input, env_table);
 	if (!ft_strcmp(input, ""))
 		return (input);
-	//input = handle_last_pipe(input);
+	input = handle_last_pipe(input);
 	add_history(input);
 	input = expand_operators(input);
 	reduce_white_spaces_3(input);
 	return (input);
 }
+	//input = handle_last_pipe(input);
 
 //void	store_rl_buffer(char *input, t_env *env_table)
 //{

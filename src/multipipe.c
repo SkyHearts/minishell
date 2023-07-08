@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:46:50 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/07 18:05:28 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 10:54:33 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	last_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2][2])
 {
 	int rdrfiles[2];
-	
-	ft_dup(m, pipe_fd[1][0], STDIN_FILENO);
+
+	ft_dup(pipe_fd[1][0], STDIN_FILENO);
 	close(pipe_fd[0][0]);
 	close(pipe_fd[0][1]);
 	check_rdr(m, env_table->hdoc, env_table->cmdgroups[m], rdrfiles);
@@ -26,10 +26,10 @@ void	last_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2
 
 void	middle_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2][2])
 {
-	int rdrfiles[2];
-	
-	ft_dup(m, pipe_fd[0][1], STDOUT_FILENO);
-	ft_dup(m ,pipe_fd[1][0], STDIN_FILENO);
+	int	rdrfiles[2];
+
+	ft_dup(pipe_fd[0][1], STDOUT_FILENO);
+	ft_dup(pipe_fd[1][0], STDIN_FILENO);
 	close(pipe_fd[0][0]);
 	close(pipe_fd[0][1]);
 	check_rdr(m, env_table->hdoc, env_table->cmdgroups[m], rdrfiles);
@@ -39,9 +39,9 @@ void	middle_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd
 
 void	first_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2][2])
 {
-	int rdrfiles[2];
-	
-	ft_dup(m, pipe_fd[0][1], STDOUT_FILENO);
+	int	rdrfiles[2];
+
+	ft_dup(pipe_fd[0][1], STDOUT_FILENO);
 	close(pipe_fd[0][0]);
 	close(pipe_fd[0][1]);
 	check_rdr(m, env_table->hdoc, env_table->cmdgroups[m], rdrfiles);
@@ -74,7 +74,7 @@ void	multi_pipe(t_env *env_table, char **envp, int *pid)
 {
 	int		pipe_fd[2][2];
 	int		m;
- 
+
 	m = -1;
 	while (++m < env_table->nos_pipe)
 	{

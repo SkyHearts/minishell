@@ -21,10 +21,9 @@ void	reset_signal(void)
 void	wait_pid(t_env *env_table, int *pid)
 {
 	int	status;
-	int i;
+	int	i;
 
 	i = -1;
-
 	while (++i < env_table->nos_pipe)
 	{
 		if (waitpid(pid[i], &status, 0) > 0)
@@ -40,7 +39,7 @@ void	wait_pid(t_env *env_table, int *pid)
 	}
 }
 
-int pipe_hdoc(int index, char **hdoc)
+int	pipe_hdoc(int index, char **hdoc)
 {
 	int	fd[2];
 
@@ -51,7 +50,7 @@ int pipe_hdoc(int index, char **hdoc)
 	return (fd[0]);
 }
 
-void openfile(int index, int rdrfiles[2], char **hdoc, t_rdrinfo rdrinfo)
+void	openfile(int index, int rdrfiles[2], char **hdoc, t_rdrinfo rdrinfo)
 {
 	if (rdrinfo.rdr_type == IN || rdrinfo.rdr_type == HEREDOC)
 	{
@@ -59,8 +58,8 @@ void openfile(int index, int rdrfiles[2], char **hdoc, t_rdrinfo rdrinfo)
 			close(rdrfiles[0]);
 		if (rdrinfo.rdr_type == IN)
 			rdrfiles[0] = open(rdrinfo.rdr_str, O_RDONLY);
-		 else if (rdrinfo.rdr_type == HEREDOC)
-		 	rdrfiles[0] = pipe_hdoc(index, hdoc);
+		else if (rdrinfo.rdr_type == HEREDOC)
+			rdrfiles[0] = pipe_hdoc(index, hdoc);
 		if (rdrfiles[0] < 0)
 			error(ERR_FILE);
 	}
@@ -88,9 +87,9 @@ void check_rdr(int index, char **hdoc, t_pipe pipe, int rdrfiles[2])
 	while (++count < pipe.rdr_count)
 		openfile(index, rdrfiles, hdoc, pipe.rdr_info[count]);
 	if (rdrfiles[0] != -1)
-		ft_dup(index, rdrfiles[0], STDIN_FILENO);
+		ft_dup(rdrfiles[0], STDIN_FILENO);
 	if (rdrfiles[1] != -1)
-		ft_dup(index, rdrfiles[1], STDOUT_FILENO);
+		ft_dup(rdrfiles[1], STDOUT_FILENO);
 	close(rdrfiles[0]);
 	close(rdrfiles[1]);
 }

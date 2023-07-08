@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 18:07:11 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 11:05:39 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int		check_quotes(char *input);
 char	**ft_split_quoted(char *input, char delim);
 int		parse_cmds(char *input, t_env *env_table);
 void	print_darray(char **array);
-void 	reduce_white_spaces_3(char *s);
+void	reduce_white_spaces_3(char *s);
 void	exit_error(void);
 int		syntax_checking(char **splitted);
 
@@ -177,7 +177,7 @@ void	free_var(t_env *env_table);
 /* Readline Buffer Collector */
 void	store_rl_buffer(char *input, t_env *env_table);
 int		ft_pipe(t_env *env_table, char **env);
-void	ft_dup(int m, int fd1, int fd2); 
+void	ft_dup(int fd1, int fd2);
 void	multi_pipe(t_env *env_table, char **envp, int *pid);
 void	check_rdr(int index, char **hdoc, t_pipe pipe, int rdrfiles[2]);
 int		check_command(t_env *env_table, int m);
@@ -186,7 +186,6 @@ void	check_rdr(int index, char **hdoc, t_pipe pipe, int rdrfiles[2]);
 
 # define ERR_CMD "Command not found"
 # define FAIL_DUP "Dup fail"
-# define FAIL_PIPE "Pipe failed"
 # define FAIL_WAITPID "Failed waitpid"
 # define ERR_FILE "No such file in directory"
 
