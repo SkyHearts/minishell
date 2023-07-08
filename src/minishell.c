@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 14:25:42 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 14:33:56 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,8 @@ int	main(int argc, char **argv, char **env)
 	free_all(&env_table);
 	return (0);
 }
-		// printf("Input before parse: [%s]\n", input);
+	// printf("Input before parse: [%s]\n", input);
+
 		//printf("=========CMDGROUPS=============\n");
 		//int m = -1;
 		//while (++m < env_table.nos_pipe)
