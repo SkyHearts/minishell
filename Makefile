@@ -32,17 +32,15 @@ LIBFT_LIB		= libft.a
 PRINT_DIR		= utils/ft_printf
 PRINT_LIB		= libftprintf.a
 
-all: ${NAME} 
-
 ${LIBFT_LIB}:
-	@echo "Compilling libft"
 	@make -C ${LIBFT_DIR}
 
 ${PRINT_LIB}:
-	@echo "Compilling printf"
 	@make -C ${PRINT_DIR}
 
-${NAME}:	${PRINT_LIB} ${LIBFT_LIB} ${SHELL_OBJS} ${BUILTINS_OBJS} ${EXPAND_OBJS} ${PARSE_OBJS} ${UTILS_OBJS}
+all:  ${LIBFT_LIB} ${PRINT_LIB} ${NAME} 
+
+${NAME}:	${SHELL_OBJS} ${BUILTINS_OBJS} ${EXPAND_OBJS} ${PARSE_OBJS} ${UTILS_OBJS}
 	@echo "Compiling minishell"
 	${CC} ${CFLAGS} ${LIBFT_DIR}/${LIBFT_LIB} ${PRINT_DIR}/${PRINT_LIB} ${SHELL_OBJS} ${BUILTINS_OBJS} ${EXPAND_OBJS} ${PARSE_OBJS} ${UTILS_OBJS} -o ${NAME} ${READLINE}
 
@@ -59,6 +57,7 @@ clean:
 fclean: clean
 	@make fclean -C ${LIBFT_DIR}
 	@make fclean -C ${PRINT_DIR}
+	@rm -rf ${NAME}
 
 re: clean all
 

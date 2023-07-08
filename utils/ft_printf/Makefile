@@ -24,10 +24,10 @@ OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES)))
 .c.o: $(SRCS)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
+all: $(NAME)
+
 $(NAME): $(OBJS)
 	$(AR) $@ $^
-
-all: $(NAME)
 
 clean:
 	$(RM) $(OBJS) $(OBJS_B)

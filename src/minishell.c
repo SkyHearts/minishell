@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 14:33:56 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 16:06:28 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ int	main(int argc, char **argv, char **env)
 	{
 		input = read_input(&env_table);
 		if (!ft_strcmp(input, "") || parse_cmds(input, &env_table))
+		{
+			free(input);
 			continue ;
+		}
 		ret = ft_pipe(&env_table, env_table.env);
 		free(input);
 		if (ret > 0)
@@ -121,11 +124,9 @@ int	main(int argc, char **argv, char **env)
 			break ;
 		free_var(&env_table);
 	}
-	system("leaks -q minishell");
 	free_all(&env_table);
-	return (0);
+	return (system("leaks -q minishell"), 0);
 }
-	// printf("Input before parse: [%s]\n", input);
 
 		//printf("=========CMDGROUPS=============\n");
 		//int m = -1;
@@ -147,5 +148,3 @@ int	main(int argc, char **argv, char **env)
 		//	}
 		//}
 		//printf("===============================\n");
-		////if (parse_cmds(input, &env_table))
-		////	continue ;

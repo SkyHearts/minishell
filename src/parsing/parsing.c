@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 12:45:53 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 15:02:22 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	parse_cmds(char *input, t_env *env_table)
 	{
 		free_doublearray(splitted);
 		free_var(env_table);
-		return (free(input), env_table->errnumber = ret, ret);
+		return (env_table->errnumber = ret, ret);
 	}
 	free_doublearray(splitted);
 	return (0);
