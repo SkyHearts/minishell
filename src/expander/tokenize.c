@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 09:01:37 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 23:08:31 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 12:24:48 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	isempty(char *str)
 	int	i;
 
 	i = 0;
-	printf("hereeee\n");
 	if (!str)
 		return (1);
 	while (str[i])

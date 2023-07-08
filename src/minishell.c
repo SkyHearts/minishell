@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 10:58:50 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 12:24:16 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = read_input(&env_table);
-		printf("Input before parse: [%s]\n", input);
+		// printf("Input before parse: [%s]\n", input);
 		if (!ft_strcmp(input, "") || parse_cmds(input, &env_table))
 			continue ;
 		ret = ft_pipe(&env_table, env_table.env);

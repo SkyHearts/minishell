@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 11:05:39 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 12:03:10 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int		syntax_checking(char **splitted);
 void	init_signal(void);
 void	sig_handler(int signum);
 void	sig_handler_nl(int signum);
+void	reset_signal(void);
 
 /* Utils */
 int		has_pipes(char **splitted);

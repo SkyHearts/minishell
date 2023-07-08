@@ -6,25 +6,25 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:46:50 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/08 10:54:33 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 12:23:07 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	last_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2][2])
+void	last_child(t_env *env_table, int m, char **envp, int pipe_fd[2][2])
 {
-	int rdrfiles[2];
+	int	rdrfiles[2];
 
 	ft_dup(pipe_fd[1][0], STDIN_FILENO);
 	close(pipe_fd[0][0]);
 	close(pipe_fd[0][1]);
 	check_rdr(m, env_table->hdoc, env_table->cmdgroups[m], rdrfiles);
 	if (check_command(env_table, m) == 0)
-		call_cmd(env_table, pipe, envp, m);
+		call_cmd(env_table, env_table->cmdgroups[m], envp, m);
 }
 
-void	middle_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2][2])
+void	middle_child(t_env *env_table, int m, char **envp, int pipe_fd[2][2])
 {
 	int	rdrfiles[2];
 
@@ -34,10 +34,10 @@ void	middle_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd
 	close(pipe_fd[0][1]);
 	check_rdr(m, env_table->hdoc, env_table->cmdgroups[m], rdrfiles);
 	if (check_command(env_table, m) == 0)
-		call_cmd(env_table, pipe, envp, m);
+		call_cmd(env_table, env_table->cmdgroups[m], envp, m);
 }
 
-void	first_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[2][2])
+void	first_child(t_env *env_table, int m, char **envp, int pipe_fd[2][2])
 {
 	int	rdrfiles[2];
 
@@ -46,28 +46,21 @@ void	first_child(t_env *env_table, t_pipe pipe, int m, char **envp, int pipe_fd[
 	close(pipe_fd[0][1]);
 	check_rdr(m, env_table->hdoc, env_table->cmdgroups[m], rdrfiles);
 	if (check_command(env_table, m) == 0)
-		call_cmd(env_table, pipe, envp, m);
+		call_cmd(env_table, env_table->cmdgroups[m], envp, m);
 }
 
+// middle, last
+// first cmd, middle cmd
+// last
 void	parent(int num_pipe, int m, int pipe_fd[2][2])
 {
 	if (m != 0)
-	{
-		// middle, last
 		close(pipe_fd[1][0]);
-	}
 	if (m != num_pipe - 1)
-	{
-		// first cmd, middle cmd
 		pipe_fd[1][0] = pipe_fd[0][0];
-	}
-	// all
 	close(pipe_fd[0][1]);
 	if (m == num_pipe - 1)
-	{
-		// last
 		close(pipe_fd[0][0]);
-	}
 }
 
 void	multi_pipe(t_env *env_table, char **envp, int *pid)
@@ -78,8 +71,6 @@ void	multi_pipe(t_env *env_table, char **envp, int *pid)
 	m = -1;
 	while (++m < env_table->nos_pipe)
 	{
-		// pipe(pipe_fd[0]);
-		printf("here_mp\n");
 		if (m < env_table->nos_pipe && pipe(pipe_fd[0]) == -1)
 		{
 			printf("Bad pipe [%d]", m);
@@ -88,13 +79,12 @@ void	multi_pipe(t_env *env_table, char **envp, int *pid)
 		pid[m] = fork();
 		if (pid[m] == 0)
 		{
-			printf("here_pid[%d]\n", m);
 			if (m == 0)
-				first_child(env_table, env_table->cmdgroups[m], m, envp, pipe_fd);
+				first_child(env_table, m, envp, pipe_fd);
 			else if (m == env_table->nos_pipe - 1)
-				last_child(env_table, env_table->cmdgroups[m], m, envp, pipe_fd);
+				last_child(env_table, m, envp, pipe_fd);
 			else
-				middle_child(env_table, env_table->cmdgroups[m], m, envp, pipe_fd);
+				middle_child(env_table, m, envp, pipe_fd);
 		}
 		else
 			parent(env_table->nos_pipe, m, pipe_fd);

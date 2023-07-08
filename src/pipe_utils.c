@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:54:32 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/08 11:07:44 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 11:59:25 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 void	ft_dup(int fd1, int fd2)
 {
 	int	ret;
-	
-	ret = dup2(fd1, fd2);
 
+	ret = dup2(fd1, fd2);
 	if (ret == -1)
 		error(FAIL_DUP);
 }
@@ -27,6 +26,7 @@ char	*find_cmd(char **path, char *cmd)
 	char	*directory;
 	char	*dir_cmd;
 	int		i;
+
 	i = -1;
 	while (path[++i])
 	{
@@ -42,13 +42,12 @@ char	*find_cmd(char **path, char *cmd)
 
 void	call_cmd(t_env *env_table, t_pipe pipe, char **envp, int m)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (env_table->cmdgroups[m].args == NULL)
 		return ;
 	pipe.cmd = find_cmd(env_table->path, *pipe.args);
-	// printf("%s %s\n", pipe.cmd, *pipe.args);
 	if (!pipe.cmd)
 	{
 		free(pipe.cmd);
@@ -58,19 +57,23 @@ void	call_cmd(t_env *env_table, t_pipe pipe, char **envp, int m)
 	execve(pipe.cmd, pipe.args, envp);
 	free(pipe.cmd);
 }
+	// printf("%s %s\n", pipe.cmd, *pipe.args);
 
 int	check_command(t_env *env_table, int m)
 {
-	int i = -1;
+	int	i;
+
+	i = -1;
 	if (env_table->cmdgroups[m].args == NULL)
 		exit(0);
 	while (++i < 7)
 	{
-		if (ft_strcmp(env_table->cmdgroups[m].args[0], env_table->functions[i]) == 0)
+		if (ft_strcmp(env_table->cmdgroups[m].args[0], \
+		env_table->functions[i]) == 0)
 		{
 			env_table->func[i](env_table, env_table->cmdgroups[m].args);
 			exit(0);
 		}
 	}
-	return 0;
+	return (0);
 }

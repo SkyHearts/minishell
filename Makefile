@@ -6,7 +6,7 @@ INCLUDES = -I inc -I ${LIBFT_DIR} -I ${PRINT_DIR} -I/usr/local/opt/readline/incl
 READLINE	= -lreadline -L/usr/local/opt/readline/lib 
 #valgrind --leak-check=full --show-leak-kinds=all ./minishell
 
-SHELL_SRCS	=	minishell.c pipe.c multipipe.c pipe_utils.c signal.c hdoc_handler.c
+SHELL_SRCS	=	minishell.c pipe.c multipipe.c pipe_utils.c signal.c hdoc_handler.c rdr.c
 SHELL_SRCS_DIR	= src/
 SHELL_OBJS = $(addprefix $(SHELL_SRCS_DIR), $(SHELL_SRCS:.c=.o))
 
