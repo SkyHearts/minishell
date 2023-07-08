@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 17:36:18 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 11:31:07 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 14:27:58 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*read_hdoc(char *eof, t_env *env_table)
 	{
 		input = readline("HEREDOC>");
 		if (!input)
-			return (NULL);
+			return (rstr);
 		if (!ft_strcmp(eof, input))
 			break ;
 		tmp1 = ft_strjoin(input, "\n");

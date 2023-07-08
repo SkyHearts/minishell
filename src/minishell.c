@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 14:14:13 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 14:25:42 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*read_input(t_env *env_table)
 	init_signal();
 	input = readline("minishell> ");
 	if (input == NULL)
-		exit_error();
+		return (ft_strdup("exit"));
 	while (check_quotes(input))
 			input = insert_line(input, env_table);
 	if (!ft_strcmp(input, ""))
