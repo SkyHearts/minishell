@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 12:28:22 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 14:14:13 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char	*handle_last_pipe(char *input)
 
 	i = ft_strlen(input);
 	i -= 1;
-	next = NULL;
 	while (input[i] == ' ' || input[i] == '\t')
 		i--;
 	if (input[i] == '|')
@@ -92,18 +91,13 @@ char	*read_input(t_env *env_table)
 			input = insert_line(input, env_table);
 	if (!ft_strcmp(input, ""))
 		return (input);
-	input = handle_last_pipe(input);
+	if (!is_onlypipe(input))
+		input = handle_last_pipe(input);
 	add_history(input);
 	input = expand_operators(input);
 	reduce_white_spaces_3(input);
 	return (input);
 }
-	//input = handle_last_pipe(input);
-
-//void	store_rl_buffer(char *input, t_env *env_table)
-//{
-//	env_table->rl_buffer = ft_append_2d_nf(env_table->rl_buffer, input);
-//}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -117,7 +111,6 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = read_input(&env_table);
-		// printf("Input before parse: [%s]\n", input);
 		if (!ft_strcmp(input, "") || parse_cmds(input, &env_table))
 			continue ;
 		ret = ft_pipe(&env_table, env_table.env);
@@ -128,11 +121,11 @@ int	main(int argc, char **argv, char **env)
 			break ;
 		free_var(&env_table);
 	}
+	system("leaks -q minishell");
 	free_all(&env_table);
 	return (0);
 }
-
-	//system("leaks -q minishell");
+		// printf("Input before parse: [%s]\n", input);
 		//printf("=========CMDGROUPS=============\n");
 		//int m = -1;
 		//while (++m < env_table.nos_pipe)

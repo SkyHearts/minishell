@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:57:50 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 12:58:15 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 14:11:24 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,25 @@ char	*ft_strjoin_f(char *s1, char *s2)
 	if (s1 != NULL)
 		free(s1);
 	return (strjoin);
+}
+
+int	is_operator_char(char c)
+{
+	if (c == PIPE || c == REDIRECT_LEFT || c == REDIRECT_RIGHT)
+		return (1);
+	return (0);
+}
+
+char	is_onlypipe(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (!ft_isspace(input[i]) && !is_operator_char(input[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
