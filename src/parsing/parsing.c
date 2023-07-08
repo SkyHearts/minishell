@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 18:05:06 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 11:34:24 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,19 @@ int	rdr_to_cmdgroups(t_rdrinfo *rdr_info, char **s, int *start, int end)
 	i = 0;
 	while (s[(*start)] && (*start) < end)
 	{
-		// printf("s[%d]: [%s]\n", *start, s[*start]);
 		if (is_rdr(s[(*start)]))
 		{
-			// printf("Copy rdr_type s[%d]: [%s]\n", *start, s[*start]);
 			(rdr_info)[i].rdr_type = is_rdr(s[(*start)++]);
 			if (!is_operator(s[(*start)]))
 			{
 				(rdr_info)[i].rdr_str = ft_strdup(s[(*start)]);
-				// printf("Copy rdr_str s[%d]: [%s]\n", *start, (rdr_info)[i].rdr_str);
 			}
 			else
 				rdr_info[i].rdr_str = NULL;
 			i++;
 		}
-		// else
-		// {
-		// 	printf("syntax error near unexpected token '%s'\n", s[*start]);
-		// 	return (258);
-		// 	break;
-		// 	exit(1);
-		// }
 		(*start)++;
 	}
-	//rdr_info[i].rdr_str = NULL;
-	//rdr_info[i].rdr_type = EMPTY;
 	return(0);
 }
 
@@ -105,10 +93,6 @@ void	input_commands(char **splitted, t_pipe *cmdgroups)
 		else if (is_pipes(splitted[i]) && splitted[i])
 			j++;
 	}
-	// if (!(cmdgroups)[j].args)
-	// {
-	// 	(cmdgroups)[j].args = NULL;
-	// }
 }
 
 // 1  2  3 4  5

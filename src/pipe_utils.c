@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:54:32 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/08 11:59:25 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 12:27:32 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	call_cmd(t_env *env_table, t_pipe pipe, char **envp, int m)
 	if (!pipe.cmd)
 	{
 		free(pipe.cmd);
-		printf("%s: command not found\n", env_table->cmdgroups[m].args[0]);
+		ft_printf("%s: command not found\n", env_table->cmdgroups[m].args[0]);
 		exit(1);
 	}
 	execve(pipe.cmd, pipe.args, envp);

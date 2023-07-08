@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 12:24:16 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 12:28:22 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*insert_line(char *input, t_env *env_table)
 	if (!nextline)
 		return (NULL);
 	new_input = ft_strjoin(input, "\n");
-	rstr = ft_strjoin_f(new_input, nextline);
+	rstr = ft_strjoin(new_input, nextline);
 	free(input);
 	free(nextline);
 	free(new_input);
@@ -51,33 +51,33 @@ char	*insert_line(char *input, t_env *env_table)
 
 //123456789101112 13 14
 //echo hell o _ | _   /0
-char    *handle_last_pipe(char *input)
+char	*handle_last_pipe(char *input)
 {
-    int        i;
-    char    *next;
-    char    *rstr;
+	int		i;
+	char	*next;
+	char	*rstr;
 
-    i = ft_strlen(input);
-    i -= 1;
-    next = NULL;
-    while (input[i] == ' ' || input[i] == '\t')
-        i--;
-    if (input[i] == '|')
-    {
-        rstr = ft_strjoin_f(input, " ");
-        while (1)
-        {
-            next = readline(">");
-            if (!next)
-                return (NULL);
-            rstr = ft_strjoin_f(rstr, next);
-            if (!isempty(next))
-                break ;
-            free(next);
-        }
-        return (free(next), rstr);
-    }
-    return (input);
+	i = ft_strlen(input);
+	i -= 1;
+	next = NULL;
+	while (input[i] == ' ' || input[i] == '\t')
+		i--;
+	if (input[i] == '|')
+	{
+		rstr = ft_strjoin_f(input, " ");
+		while (1)
+		{
+			next = readline(">");
+			if (!next)
+				return (NULL);
+			rstr = ft_strjoin_f(rstr, next);
+			if (!isempty(next))
+				break ;
+			free(next);
+		}
+		return (free(next), rstr);
+	}
+	return (input);
 }
 
 char	*read_input(t_env *env_table)
@@ -129,10 +129,10 @@ int	main(int argc, char **argv, char **env)
 		free_var(&env_table);
 	}
 	free_all(&env_table);
-	system("leaks -q minishell");
 	return (0);
 }
 
+	//system("leaks -q minishell");
 		//printf("=========CMDGROUPS=============\n");
 		//int m = -1;
 		//while (++m < env_table.nos_pipe)

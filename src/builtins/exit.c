@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 11:55:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/28 15:29:02 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 11:32:12 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ int	ft_exit(t_env *env_table, char **str)
 {
 	(void)env_table;
 	(void)str;
-	printf("exit\n");
+	ft_printf("exit\n");
 	return (-2);
 }

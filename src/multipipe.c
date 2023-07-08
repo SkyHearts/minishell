@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:46:50 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/08 12:23:07 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 12:27:57 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	multi_pipe(t_env *env_table, char **envp, int *pid)
 	{
 		if (m < env_table->nos_pipe && pipe(pipe_fd[0]) == -1)
 		{
-			printf("Bad pipe [%d]", m);
+			ft_printf("Bad pipe [%d]", m);
 			exit(1);
 		}
 		pid[m] = fork();
