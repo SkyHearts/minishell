@@ -6,7 +6,7 @@
 /*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:56:35 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 12:28:22 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 13:49:36 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = read_input(&env_table);
-		// printf("Input before parse: [%s]\n", input);
 		if (!ft_strcmp(input, "") || parse_cmds(input, &env_table))
 			continue ;
 		ret = ft_pipe(&env_table, env_table.env);
@@ -129,10 +128,11 @@ int	main(int argc, char **argv, char **env)
 		free_var(&env_table);
 	}
 	free_all(&env_table);
+	system("leaks -q minishell");
 	return (0);
 }
+	// printf("Input before parse: [%s]\n", input);
 
-	//system("leaks -q minishell");
 		//printf("=========CMDGROUPS=============\n");
 		//int m = -1;
 		//while (++m < env_table.nos_pipe)

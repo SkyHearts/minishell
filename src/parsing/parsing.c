@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:13:48 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 11:34:24 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 12:45:53 by sulim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	rdr_to_cmdgroups(t_rdrinfo *rdr_info, char **s, int *start, int end)
 		}
 		(*start)++;
 	}
-	return(0);
+	return (0);
 }
 
 // 1  2  3 4  5
@@ -138,4 +138,3 @@ int	parse_cmds(char *input, t_env *env_table)
 	free_doublearray(splitted);
 	return (0);
 }
-     
