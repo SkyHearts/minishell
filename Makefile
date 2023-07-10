@@ -4,7 +4,6 @@ FSAN	= -fsanitize=address
 CFLAGS	= -Wall -Wextra -Werror $(INCLUDES) -g3
 INCLUDES = -I inc -I ${LIBFT_DIR} -I ${PRINT_DIR} -I/usr/local/opt/readline/include
 READLINE	= -lreadline -L/usr/local/opt/readline/lib 
-#valgrind --leak-check=full --show-leak-kinds=all ./minishell
 
 SHELL_SRCS	=	minishell.c pipe.c multipipe.c pipe_utils.c signal.c hdoc_handler.c rdr.c
 SHELL_SRCS_DIR	= src/
@@ -28,21 +27,23 @@ UTILS_OBJS = $(addprefix $(UTILS_DIR), $(UTILS_SRC:.c=.o))
 
 LIBFT_DIR		= utils/libft
 LIBFT_LIB		= libft.a
+LIB             = -L$(LIBFT_DIR) -lft
 
 PRINT_DIR		= utils/ft_printf
 PRINT_LIB		= libftprintf.a
+PRINT            = -L$(PRINT_DIR) -lftprintf
 
-${LIBFT_LIB}:
+all:  ${NAME}
+
+${NAME}:	${LIBFT_DIR}/${LIBFT_LIB} ${PRINT_DIR}/${PRINT_LIB} ${SHELL_OBJS} ${BUILTINS_OBJS} ${EXPAND_OBJS} ${PARSE_OBJS} ${UTILS_OBJS} 
+	@echo "Compiling minishell"
+	${CC} ${CFLAGS} ${SHELL_OBJS} ${BUILTINS_OBJS} ${EXPAND_OBJS} ${PARSE_OBJS} ${UTILS_OBJS} -o ${NAME} ${LIB} ${PRINT} ${READLINE}
+	
+${LIBFT_DIR}/${LIBFT_LIB}:
 	@make -C ${LIBFT_DIR}
 
-${PRINT_LIB}:
+${PRINT_DIR}/${PRINT_LIB}:
 	@make -C ${PRINT_DIR}
-
-all:  ${LIBFT_LIB} ${PRINT_LIB} ${NAME} 
-
-${NAME}:	${SHELL_OBJS} ${BUILTINS_OBJS} ${EXPAND_OBJS} ${PARSE_OBJS} ${UTILS_OBJS}
-	@echo "Compiling minishell"
-	${CC} ${CFLAGS} ${LIBFT_DIR}/${LIBFT_LIB} ${PRINT_DIR}/${PRINT_LIB} ${SHELL_OBJS} ${BUILTINS_OBJS} ${EXPAND_OBJS} ${PARSE_OBJS} ${UTILS_OBJS} -o ${NAME} ${READLINE}
 
 clean:
 	@echo "cleaning files"
