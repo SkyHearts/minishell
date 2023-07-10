@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 09:01:37 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 12:28:48 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 20:03:23 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	reduce_white_spaces_3(char *s)
 
 	i = 0;
 	j = 0;
+	if (isempty(s))
+		return ;
 	while (s[i])
 	{
 		if (s[i] == SINGLE_QUOTE || s[i] == DOUBLE_QUOTE)
