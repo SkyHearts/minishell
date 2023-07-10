@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 13:50:41 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 11:33:44 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 20:03:26 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ int	pipe_operators(char **split)
 	int	i;
 
 	i = 0;
+	if (is_pipes(split[0]))
+		return (ft_printf("syntax error near unexpected token '%s'\n",
+				split[0]), 258);
 	while (split[i])
 	{	
 		if (is_operator(split[i]) && split[i + 1] == NULL)
