@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rdr.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:06:03 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/08 12:10:46 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 20:03:21 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	openfile(int index, int rdrfiles[2], char **hdoc, t_rdrinfo rdrinfo)
 		else if (rdrinfo.rdr_type == HEREDOC)
 			rdrfiles[0] = pipe_hdoc(index, hdoc);
 		if (rdrfiles[0] < 0)
-			error(ERR_FILE);
+			error("minishell");
 	}
 	else if (rdrinfo.rdr_type == OUT || rdrinfo.rdr_type == APPEND)
 	{
@@ -47,7 +47,7 @@ void	openfile(int index, int rdrfiles[2], char **hdoc, t_rdrinfo rdrinfo)
 			rdrfiles[1] = open(rdrinfo.rdr_str, O_APPEND | O_CREAT | O_RDWR, \
 			S_IRWXU | S_IRGRP | S_IROTH);
 		if (rdrfiles[1] < 0)
-			error(ERR_FILE);
+			error("minishell");
 	}
 }
 
@@ -58,8 +58,10 @@ void	check_rdr(int index, char **hdoc, t_pipe pipe, int rdrfiles[2])
 	rdrfiles[0] = -1;
 	rdrfiles[1] = -1;
 	count = -1;
-	while (++count < pipe.rdr_count)
+	while (++count < pipe.rdr_count && pipe.rdr_info)
+	{
 		openfile(index, rdrfiles, hdoc, pipe.rdr_info[count]);
+	}
 	if (rdrfiles[0] != -1)
 		ft_dup(rdrfiles[0], STDIN_FILENO);
 	if (rdrfiles[1] != -1)

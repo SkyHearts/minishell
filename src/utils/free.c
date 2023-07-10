@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 13:37:41 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/07 14:31:22 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 20:11:34 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	free_var(t_env *env_table)
 void	free_all(t_env *env_table)
 {
 	free_doublearray(env_table->env);
-	free_doublearray(env_table->path);
+	if (env_table->path)
+		free_doublearray(env_table->path);
 	free_doublearray(env_table->functions);
 	free_cmdgroups(env_table);
 	if (env_table->hdoc != NULL)

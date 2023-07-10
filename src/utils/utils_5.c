@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:57:50 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 14:11:24 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 20:03:27 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,42 @@ char	is_onlypipe(char *input)
 		i++;
 	}
 	return (1);
+}
+
+int	split_len(char **split)
+{
+	int	i;
+	int	size;
+
+	i = -1;
+	size = 0;
+	while (split[++i])
+	{
+		if (!isempty(split[i]))
+			size++;
+	}
+	return (size);
+}
+
+char	**clear_empty(char **split)
+{
+	int		size;
+	char	**rsplit;
+	int		i;
+	int		j;
+
+	i = -1;
+	size = split_len(split);
+	rsplit = malloc(sizeof(char *) * (size + 1));
+	if (!rsplit)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (split[++i])
+	{
+		if (!isempty(split[i]))
+			rsplit[j++] = split[i];
+	}
+	rsplit[j] = NULL;
+	return (free(split), rsplit);
 }
