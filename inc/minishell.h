@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:05:43 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 14:11:33 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 20:03:24 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	print_darray(char **array);
 
 /* Input Manipulations */
 char	*expand_operators(char *s);
-void	store_rl_buffer(char *input, t_env *env_table);
+char	**clear_empty(char **split);
 
 /* Parsing */
 /* quotes split */
@@ -154,6 +154,7 @@ int		ft_isspace(int c);
 int		isempty(char *str);
 int		is_operator_char(char c);
 char	is_onlypipe(char *input);
+int		split_len(char **split);
 
 /* Handle Dollar sign */
 char	*find_env_cont(char *splitted, int start, t_env *env_table, char **str);
