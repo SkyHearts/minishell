@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sulim <sulim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:54:32 by sulim             #+#    #+#             */
-/*   Updated: 2023/07/08 12:27:32 by sulim            ###   ########.fr       */
+/*   Updated: 2023/07/08 20:04:33 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ char	*find_cmd(char **path, char *cmd)
 	i = -1;
 	while (path[++i])
 	{
-		directory = ft_strjoin(path[i], "/");
+		if (cmd[0] != '.')
+			directory = ft_strjoin(path[i], "/");
+		else
+			directory = ft_strdup("");
 		dir_cmd = ft_strjoin(directory, cmd);
 		free(directory);
 		if (access(dir_cmd, X_OK) == 0)
