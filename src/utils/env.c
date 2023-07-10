@@ -6,7 +6,7 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:37:53 by jyim              #+#    #+#             */
-/*   Updated: 2023/06/29 14:31:47 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/08 20:12:44 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	**extract_path(t_env *env, char **env_table)
 	char	**path_split;
 
 	i = 0;
+	path_split = NULL;
 	if (env->path)
 		free_doublearray(env->path);
 	while (env_table[i])
@@ -49,5 +50,6 @@ char	**extract_path(t_env *env, char **env_table)
 		}
 		i++;
 	}
-	return (NULL);
+	path_split = ft_append_2d(path_split, "");
+	return (path_split);
 }
