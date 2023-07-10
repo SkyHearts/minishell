@@ -6,12 +6,13 @@
 /*   By: jyim <jyim@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:52:52 by jyim              #+#    #+#             */
-/*   Updated: 2023/07/08 11:31:58 by jyim             ###   ########.fr       */
+/*   Updated: 2023/07/10 12:05:45 by jyim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+/* Return Home directory from env or NULL if var don't exist  */
 char	*gethome(char **env_table)
 {
 	int		i;
@@ -26,6 +27,7 @@ char	*gethome(char **env_table)
 	return (NULL);
 }
 
+/* Only updates PWD and OLDPWD if env var still exist */
 void	update_pwd(t_env *env_table, char *oldpwd)
 {
 	char	**env;
@@ -60,13 +62,17 @@ int	ft_cd(t_env *env_table, char **str)
 	cwd = getcwd(NULL, 0);
 	home = gethome(env_table->env);
 	if (str[1] == NULL || !ft_strcmp(str[1], "~"))
+	{
+		if (!home)
+			return (free(cwd), ft_printf("cd: HOME not set\n"), 1);
 		chdir(home);
+	}
 	else
 	{
 		if (chdir(str[1]))
 		{
 			perror("cd: ");
-			return (errno);
+			return (free(home), free(cwd), errno);
 		}
 	}
 	update_pwd(env_table, cwd);
